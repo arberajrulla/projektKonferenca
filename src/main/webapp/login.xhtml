@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+  <title>Hyrja ne sistem - Konferenca X 2020</title>
+  <h:outputStylesheet library="css" name="styles.css"></h:outputStylesheet>
+  
+</h:head>
+
+
+<h:body>
+
+
+	<div>
+	<h:panelGrid id = "panel" columns = "2" border = "0"
+      cellpadding = "10" cellspacing = "1">
+	<div class = "katror">
+			<h2 class= "knf">KONFERENCA&nbsp; X&nbsp; 2020</h2>
+	</div>
+	
+	<h:form>
+	<h:commandButton class="fontiR" action="regjistrim" id="regjistrohuButon" value = "REGJISTROHU" />	
+	</h:form>
+
+	</h:panelGrid>
+	<h2 class= "fontiqu">PER TE AKSESUAR MATERIALET 
+		E KONFERENCES, SE PARI DUHET TE LOGOHENI</h2>
+	<div align="center" >
+	
+<h:form id= "form" >
+
+        	<h:panelGrid id = "gridFushat" columns = "3" 
+            	cellpadding = "10" cellspacing = "1">
+            	<f:facet name = "header">
+            		<h:outputText class="fontiR" value = "VENDOSNI KREDENCIALET"/>
+            	</f:facet>
+            	
+            	<h:outputLabel class="fontiBo" value = "ID"  />
+            	<h:inputText  id="fushaId" value = "#{autentikim.id}" />
+            	<h:outputLabel style="color:red" id="errorId" value="#{autentikim.msg1}" />
+            	
+            	<h:outputLabel class="fontiBo" value = "Fjalekalimi"  />
+            	<h:inputSecret id = "fushaPassword" value = "#{autentikim.fjalekalim}" />
+            	<h:outputLabel style="color:red" id="errorPass" value="#{autentikim.msg2}"/>
+            	
+            	<f:facet name = "footer">
+               		<h:panelGroup style = "display:block; text-align:center">
+                  		<h:commandButton id = "hyr" class="fontiR" value = "Hyr"
+                  			action="#{autentikim.hyr}" />
+               		</h:panelGroup>
+            	</f:facet>
+         </h:panelGrid>
+     
+</h:form>
+
+		</div>
+	
+		 <!-- h:form i ben te paaksesueshem komponentet nga JavaScript -->
+		 <p class= "fontiR" >
+		 NESE DESHIRONI NJE VESHTRIM TE PERGJITHSHEM MBI KONFERENCEN,
+		 MUND TE VAZHDONI SI SHIKUES.
+		 </p>
+		 
+		 <h:form>
+		 	<h:panelGroup style = "display:block; text-align:center">
+         		<h:commandButton id="butoniShikues" class = "fontiR" value = "Vazhdo si Shikues"
+               		action="shikues"/>
+         	</h:panelGroup>
+		 </h:form>
+
+	</div>
+	
+</h:body>
+</html>
