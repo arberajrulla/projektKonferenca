@@ -13,7 +13,6 @@ import javax.validation.constraints.Size;
 public class Autentikim {
 	
 	private String id;
-	private String mes;
 	private String fjalekalim;
 	private Perdorues perdorues;
 	private String msg1,msg2;
