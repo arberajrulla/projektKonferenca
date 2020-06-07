@@ -1,10 +1,6 @@
 package Projekti2.Projekti2;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.*;
-import javax.faces.context.FacesContext;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @ManagedBean (name = "autentikim")
 @SessionScoped
@@ -16,7 +12,7 @@ public class Autentikim {
 	private String fjalekalim;
 	private Perdorues perdorues;
 	private String msg1,msg2;
-
+	private static PerdoruesLookup lookupPerdorues = new PerdoruesDBinfo();
 
 	public String getMsg1() {
 		return msg1;
@@ -34,7 +30,7 @@ public class Autentikim {
 		this.msg2 = msg2;
 	}
 
-	private static PerdoruesLookup lookupPerdorues = new PerdoruesDBinfo();
+
 	
 	public String gabim(int poz) {
 		
@@ -57,9 +53,9 @@ public class Autentikim {
    
 	public void setId(String id) {
 		this.id = id.trim();
+		System.out.println("id e futur eshte " + id);
 		if (this.id.isEmpty()) {
 			System.out.println("id eshte bosh");
-			this.id = null;
 		}
 	}
 
@@ -68,39 +64,40 @@ public class Autentikim {
 	}
 
 	public void setFjalekalim(String fjalekalim) {
+		System.out.println("Pswd i futur eshte " + fjalekalim);
 		this.fjalekalim = fjalekalim;
 		
 	}
 
 	public String hyr() {
+		System.out.println("u thirr hyr " + id + " i "+ fjalekalim);
 		
-		if(this.id.toString().trim() == null && this.fjalekalim.toString().trim() == null) {
-			msg1 = gabim(1);
+		if((this.id.equals("")) && (this.fjalekalim.equals(""))) {
+			msg1 = gabim(0);
 			msg2 = gabim(1);
 			System.out.println("ketu");
 			return("login");
-		} else if(this.id == null){
+		}else if(this.id.equals("")){
 			msg1 = gabim(0);
 			System.out.println("ketrrr");
 			return("login");
 		
-			}else if(this.fjalekalim == null){
+		}else if(this.fjalekalim.equals("")){
 					msg2 = gabim(1);
 					return("login");
 		
-				}else{
-
-					perdorues = lookupPerdorues.gjejPerdoruesin(this.id);
-
-
-		
+		}else{
+			System.out.println("lookup");
+			perdorues = lookupPerdorues.gjejPerdoruesin(this.id);
 			
-			if(perdorues.getId() != this.id) {
+			System.out.println("nga dbja perd "+ perdorues.getId());
+
+			if(!this.id.equals(perdorues.getId())) {
 			System.out.println(perdorues.getId()  + "  id  "+ this.id);
 			
 			return ("error");
 			
-			}else if (perdorues.getFjalekalimi() != this.fjalekalim) {
+			}else if (!perdorues.getFjalekalimi().equals(this.fjalekalim) ) {
 				System.out.println(perdorues.getFjalekalimi() +"  psw   " + this.fjalekalim);
 				return ("error");
 			

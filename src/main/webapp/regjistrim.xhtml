@@ -32,16 +32,20 @@
             	<h:inputText  id="fushaEmri" value = "#{autentikim.id}" />
             	
             	<h:outputLabel class="fontiBo" value = "Mbiemri"  />
-            	<h:inputSecret id = "fushaMbiemri" value = "#{autentikim.fjalekalim}" />
+            	<h:inputText id = "fushaMbiemri" value = "#{autentikim.fjalekalim}" />
             	
             	<h:outputLabel class="fontiBo" value = "E-mail"  />
-            	<h:inputSecret id = "fushaEmail" value = "#{autentikim.fjalekalim}" />         	
+            	<h:inputText id = "fushaEmail" value = "#{autentikim.fjalekalim}" />         	
             	
             	<h:outputLabel class="fontiBo" value = "Kategoria"  />
-            	<h:inputSecret id = "fushaKategoria" value = "#{autentikim.fjalekalim}" />         	
+            	
+            	<h:selectOneMenu value = "aa"> 
+   					<f:selectItem itemValue = "1" itemLabel = "Autor" /> 
+   					<f:selectItem itemValue = "2" itemLabel = "Shqyrtues" /> 
+				</h:selectOneMenu>       	
             	
             	<h:outputLabel class="fontiBo" value = "Numer kontakti"  />
-            	<h:inputSecret id = "fushaNr" value = "#{autentikim.fjalekalim}" />
+            	<h:inputText id = "fushaNr" value = "#{autentikim.fjalekalim}" />
             	
             	<h:outputLabel class="fontiBo" value = "Fjalekalimi"  />
             	<h:inputSecret id = "fushaPsw" value = "#{autentikim.fjalekalim}" />
@@ -70,9 +74,15 @@
 		 NESE DESHIRONI NJE VESHTRIM TE PERGJITHSHEM MBI KONFERENCEN,
 		 MUND TE VAZHDONI SI SHIKUES.
 		 </p>
+		 
+		 
+		 <h:form>
 		 <h:panelGroup style = "display:block; text-align:center">
-               <h:commandButton id="butoniShikues" class = "fontiR" value = "Vazhdo si Shikues" />
-         </h:panelGroup>
+               <h:commandButton id="butoniShikues" class = "fontiR" value = "Vazhdo si Shikues" 
+               action="shikues"/>
+         </h:panelGroup>		 
+		 </h:form>
+
 	</div>
 	
 </h:body>
