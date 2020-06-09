@@ -17,41 +17,37 @@ public class PerdoruesDBinfo implements PerdoruesLookup{
 	private String db_username = "postgres";
 	private String db_password = "toor";
 	
-	
-	
+
+
 	@Override
 	public Perdorues gjejPerdoruesin(String id) {
+		
 		/*
-		 * if(id == null) { System.out.println("ka hyre id null");
+		 * if(id.equals(null)) { System.out.println("ka hyre id null");
 		 * perdorues.setId("aaa"); return perdorues; }
 		 */
+		 
 		 
 		
 		try {
 			Class.forName(JDBC_DRIVER);
 			Connection con = null;
-			Statement stmt = null;
+			PreparedStatement prpStm = null;
 			con = DriverManager.getConnection(db_url, db_username, db_password);
-			stmt = con.createStatement();
 			
 			String sql = "SELECT id, password, kategoria FROM login "
-						+ " WHERE id = '" + id.trim() + "';";      
-			
-			System.out.println(sql);
-			
-			/*
-			 * PreparedStatement dbId = con.prepareStatement(sql); dbId.setString(0,
-			 * id.trim());
-			 */
+						+ " WHERE id = ? ;";
+			prpStm = con.prepareStatement(sql);
+			prpStm.setString(1, id.trim());
 			
 			
-			ResultSet rezultati = stmt.executeQuery(sql);
-			
+			ResultSet rezultati = prpStm.executeQuery();
 			
 			
 			if(rezultati.next() == false) { 
 				System.out.println("perdoruesi nuk ekziston");
-				perdorues.setId(null); 
+				perdorues = new Perdorues("", "", '0');
+				con.close();
 			} else {
 				  	do {
 					  String ngaDBid = rezultati.getString(1);
@@ -64,10 +60,12 @@ public class PerdoruesDBinfo implements PerdoruesLookup{
 					  System.out.println(ngaDBid + "  " + ngaDBpassword);
 					  
 				  	}while(rezultati.next());
+				  	
+				  	con.close();
 			}
-			
-			
+		con.close();
 	return perdorues;
+	
 		} catch (HeadlessException | ClassNotFoundException | NumberFormatException | SQLException e) {
 		e.printStackTrace();
 		return null;
