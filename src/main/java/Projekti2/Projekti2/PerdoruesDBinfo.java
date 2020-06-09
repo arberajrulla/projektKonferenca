@@ -24,7 +24,7 @@ public class PerdoruesDBinfo implements PerdoruesLookup{
 		
 		/*
 		 * if(id.equals(null)) { System.out.println("ka hyre id null");
-		 * perdorues.setId("aaa"); return perdorues; }
+		 * perdorues.setId(""); return perdorues; }
 		 */
 		 
 		 
@@ -37,12 +37,10 @@ public class PerdoruesDBinfo implements PerdoruesLookup{
 			
 			String sql = "SELECT id, password, kategoria FROM login "
 						+ " WHERE id = ? ;";
+			
 			prpStm = con.prepareStatement(sql);
 			prpStm.setString(1, id.trim());
-			
-			
 			ResultSet rezultati = prpStm.executeQuery();
-			
 			
 			if(rezultati.next() == false) { 
 				System.out.println("perdoruesi nuk ekziston");

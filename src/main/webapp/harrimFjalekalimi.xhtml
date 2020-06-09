@@ -25,8 +25,7 @@
 	</h:form>
 
 	</h:panelGrid>
-	<h2 class= "fontiqu">PER TE AKSESUAR MATERIALET 
-		E KONFERENCES, SE PARI DUHET TE LOGOHENI</h2>
+	<h2 class= "fontiqu">Keni harruar fjalekalimin? Ju lutemi ndiqni procesin e meposhtem per ta ndryshuar.</h2>
 	<div align="center" >
 	
 <h:form id= "form" >
@@ -41,24 +40,19 @@
             	<h:inputText  id="fushaId" value = "#{autentikim.id}" />
             	<h:outputLabel style="color:red" id="errorId" value="#{autentikim.msg1}" />
             	
-            	<h:outputLabel class="fontiBo" value = "Fjalekalimi"  />
-            	<h:inputSecret id = "fushaPassword" value = "#{autentikim.fjalekalim}" />
-            	<h:outputLabel style="color:red" id="errorPass" value="#{autentikim.msg2}"/>
-            	
-            	
-            	<div align="right" >
-            	
-            	      <h:panelGroup style = "display:block; text-align:right">
-         		<h:commandLink style="color:black; text-decoration: none" 
-         		value = "Harruat fjalekalimin?" action = "harrimFjalekalimi" />                  		
-               		</h:panelGroup>
+				<br/>
+            	<h:panelGroup style = "display:block; text-align:left">
+                  		<h:outputText class="fontiBo" value = "Ose"/>
+               	</h:panelGroup>
+				<br/>
 
-            	</div>
-
+            	<h:outputLabel class="fontiBo" value = "E-mail"  />
+            	<h:inputText id = "fushaEmail" value = "#{autentikim.fjalekalim}" />
+            	<h:outputLabel style="color:red" id="errorPass" value=""/>
             	
             	<f:facet name = "footer">
                		<h:panelGroup style = "display:block; text-align:center">
-                  		<h:commandButton id = "hyr" class="fontiR" value = "Hyr"
+                  		<h:commandButton id = "hyr" class="fontiR" value = "Vazhdo"
                   			action="#{autentikim.hyr}" />
                		</h:panelGroup>
             	</f:facet>
@@ -66,6 +60,7 @@
      
 </h:form>
 
+		<br/><br/>
 		</div>
 	
 		 <!-- h:form i ben te paaksesueshem komponentet nga JavaScript -->
@@ -82,6 +77,5 @@
 		 </h:form>
 
 	</div>
-	
 </h:body>
 </html>
