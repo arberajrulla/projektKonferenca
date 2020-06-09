@@ -1,109 +1,104 @@
 @font-face {
 	src: url(fonts/Questrial-Regular.ttf);
 	font-family: questrial;
-} 
+}
 
 @font-face {
 	src: url(fonts/Cinzel-Regular.ttf);
 	font-family: cinzelR;
-} 
+}
 
 @font-face {
 	src: url(fonts/Cinzel-Black.ttf);
 	font-family: cinzelBl;
-} 
+}
 
 @font-face {
 	src: url(fonts/Cinzel-Bold.ttf);
 	font-family: cinzelBo;
-} 
+}
 
 .welcome {
 	text-align: center;
 	padding: 20pt;
- 	font-family: cinzelR;
- 	font-size: 1vw;
+	font-family: cinzelR;
+	font-size: 1vw;
 }
 
-.mireseerdhet{
+.mireseerdhet {
 	text-align: center;
 	padding: 20pt;
- 	font-family: cinzelBo;
- 	font-size: 2vw;
+	font-family: cinzelBo;
+	font-size: 2vw;
 }
-
 
 .wknf {
 	text-align: center;
 	color: #ffeacc;
 	padding: 1pt;
- 	font-family: cinzelBl;
- 	font-size: 4vw;
- 	text-shadow: 1px 1px 8px #000000;
- /* 	#ff8000 */
+	font-family: cinzelBl;
+	font-size: 4vw;
+	text-shadow: 1px 1px 8px #000000;
+	/* 	#ff8000 */
 }
 
 .knf {
 	text-align: center;
 	color: #ffeacc;
 	margin-bottom: 1vw;
- 	font-family: cinzelBl;
- 	font-size: 4vw;
- 	text-shadow: 1px 1px 8px #000000;
- /* 	#ff8000 */
+	font-family: cinzelBl;
+	font-size: 4vw;
+	text-shadow: 1px 1px 8px #000000;
+	/* 	#ff8000 */
 }
 
 body {
 	/* background-color: linear-gradient(to right,  #ffeacc, #000000);
 	 */
-	 background-image: linear-gradient(to right, #ffeacc, #ffba57);
+	background-image: linear-gradient(to right, #ffeacc, #ffba57);
 }
 
-.fontiR{
+.fontiR {
 	text-align: center;
 	font-family: cinzelR;
 }
 
-.fontiBl{
+.fontiBl {
 	text-align: center;
 	font-family: cinzelBl;
 }
 
-.fontiBo{
+.fontiBo {
 	text-align: center;
 	font-family: cinzelBo;
 }
 
-
-.fontiqu{
+.fontiqu {
 	text-align: center;
 	font-family: questrial;
 	color: #4d4d4d;
 }
 
-
-#panel{
-	margin : auto;
+#panel {
+	margin: auto;
 }
 
-#regjistrohuButon{
+#regjistrohuButon {
 	margin-left: 50px;
 	font-family: cinzelR;
 }
 
-#butoniShikues{
-	margin : auto;
-	
+#butoniShikues {
+	margin: auto;
 }
 
-.butonatFormat{
-	
+.butonatFormat {
 	background: url('/resources/images/b4.png') no-repeat top left;
-	border: none;	
+	border: none;
 	padding: 15px 32px;
 	text-align: center;
 	font-family: cinzelR;
-} 
+}
 
 /* .butonatFormat:hover{
 	transition-duration: 0.4s;
@@ -111,11 +106,8 @@ body {
 	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
  */
- 
- 
- .butonMenu {
-
-  	font-size: 1vw;
+.butonMenu {
+	font-size: 1vw;
 	padding: 15px 32px;
 	text-align: center;
 	font-family: cinzelBo;
@@ -124,21 +116,21 @@ body {
 	background-color: #ffba57;
 	text-shadow: 2px 2px 12px #965a00;
 	border: 1px solid #ffeacc;
-	cursor:pointer;
- 	outline: none;
- }
- 
- .butonMenu:hover {
- transition-duration: 0.4s;
+	cursor: pointer;
+	outline: none;
+}
+
+.butonMenu:hover {
+	transition-duration: 0.4s;
 	background-color: #ff9c0d;
-	box-shadow: 0 2px 20px 0 rgba(0,0,0,0.15), 0 3px 30px 0 rgba(0,0,0,0.12);
+	box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.15), 0 3px 30px 0
+		rgba(0, 0, 0, 0.12);
 	text-shadow: 2px 2px 12px white;
-	
- }
- 
- .butonMenu:active {
-  background-color: #c77500;
-  background-size: 100%;
-  transition: background 0s;
-  transform: translateY(4px);
+}
+
+.butonMenu:active {
+	background-color: #c77500;
+	background-size: 100%;
+	transition: background 0s;
+	transform: translateY(4px);
 }
