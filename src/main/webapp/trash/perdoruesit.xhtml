@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="kryesore.xhtml"
+     			xmlns:h="http://java.sun.com/jsf/html"
+      			xmlns:f="http://java.sun.com/jsf/core"
+      			xmlns:p="http://primefaces.org/ui"
+                xmlns:utils="http://xmlns.jcp.org/jsf/composite/utils">
+                
+	<ui:define name="title">Perdoruesit - Te gjithe</ui:define>
+	 
+    <ui:define name="content">
+    	<utils:tabelaAll 
+    	idTab="ttttt" 
+    	titulliTabeles="tab badfsgdsgrd" 
+    	listaMeObjekte="#{adminDB.perdoruesitAll}"
+    	teSelektuar="#{adminDB.perdoruesitEPerzgjedhur}"
+    	rreshtiCeles="#{teDhena.username}"
+    	menyraEPerzgjedhjes="multiple"
+    	eEditueshme="true"
+		nrRreshtaDefault="5"
+		shfaqPaginator="true"
+		pozicioniPaginator="bottom"
+		templatePaginator="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		rreshtaPerFaqePg="5,10,15,20,50,100"
+		vleraEFiltruar="#{adminDB.perdoruesitFiltruar}"
+		headeratETabeles="#{adminDB.listaHeader}"
+    	
+    	></utils:tabelaAll>
+    </ui:define>
+
+</ui:composition>

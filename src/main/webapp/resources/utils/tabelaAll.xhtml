@@ -1,0 +1,301 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite">
+
+
+
+	<cc:interface>
+		<cc:attribute name="idTab" ></cc:attribute>
+		<cc:attribute name="teSelektuar" ></cc:attribute>
+		<cc:attribute name="rreshtiCeles" ></cc:attribute>
+		<cc:attribute name="listaMeObjekte" ></cc:attribute>
+		<cc:attribute name="eEditueshme" ></cc:attribute>
+		<cc:attribute name="nrRreshtaDefault" ></cc:attribute>
+		<cc:attribute name="menyraEPerzgjedhjes"></cc:attribute>
+		<cc:attribute name="shfaqPaginator"></cc:attribute>
+		<cc:attribute name="pozicioniPaginator"></cc:attribute>
+		<cc:attribute name="templatePaginator"></cc:attribute>
+		<cc:attribute name="rreshtaPerFaqePg"></cc:attribute>
+		<cc:attribute name="vleraEFiltruar"></cc:attribute>
+		<cc:attribute name="titulliTabeles"></cc:attribute>
+		<cc:attribute name="titulliFaqes"></cc:attribute>
+		<cc:attribute name="pozicioniDropdownkontroll"></cc:attribute>
+		<cc:attribute name="dropdownLista"></cc:attribute>
+		<cc:attribute name="fshiRekord"></cc:attribute>
+		<cc:attribute name="editimRreshti"></cc:attribute>
+		<cc:attribute name="headeratETabeles"></cc:attribute>
+		
+	
+	</cc:interface>
+
+	
+
+	<cc:implementation>
+
+<h:form>
+		<div style="padding: 60px 100px 0px 100px;">
+
+			<p:dataTable id="#{cc.attrs.idTab}" styleClass="table table-dark"
+				var="teDhena" 
+				widgetVar="tabelaAll"
+				selection="#{cc.attrs.teSelektuar}" 
+				rowKey="#{cc.attrs.rreshtiCeles}"
+				value="#{cc.attrs.listaMeObjekte}" 
+				editable="#{cc.attrs.eEditueshme}" 
+				editMode="row"
+				reflow="true"
+				rows="#{cc.attrs.nrRreshtaDefault}" 
+				sortMode="#{cc.attrs.menyraEPerzgjedhjes}" 
+				paginator="#{cc.attrs.shfaqPaginator}"
+				paginatorPosition="#{cc.attrs.pozicioniPaginator}"
+				paginatorTemplate="#{cc.attrs.templatePaginator}"
+				rowsPerPageTemplate="#{cc.attrs.rreshtaPerFaqePg}"
+				filteredValue="#{cc.attrs.vleraEFiltruar}">
+
+				<f:facet name="header">
+					<p:outputPanel>
+            			#{cc.attrs.titulliFaqes}
+            		</p:outputPanel>
+				</f:facet>
+
+				<f:facet name="header">
+					<p:outputPanel>
+						<div style="text-align: center; padding-top: 10px;">
+							<h:outputText class="textColor fontiOEL" style="align:center"
+								value="#{cc.attrs.titulliTabeles}" />
+						</div>
+						<p:separator
+							style="background: rgba(107, 247, 255, 0.2); border-color: rgba(107, 247, 255, 0.2);height:0.2px " />
+						<div style="padding-bottom: 5px; margin-top: -7px;">
+							<p:commandButton style="float: left; left: 10px;"
+								process="#{cc.attrs.idTab}"
+								actionListener="#{cc.attrs.fshiRekord}" value="Fshi"
+								update="#{cc.attrs.idTab}">
+								<p:confirm header="Konfirmo"
+									message="Kujdes, fushat e perzgjedhura do te fshihen!" />
+							</p:commandButton>
+							<h:outputText class="textColor fontiOEL"
+								style="padding-right:10px; align: right; " value="Kerko:" />
+							<p:inputText id="globalFilter"
+								onkeyup="PF('tabelaAll').filter()"
+								style="padding-right:10px; " styleClass="inputFushaFilterKerko"
+								placeholder="Vendos keyword" />
+						</div>
+					</p:outputPanel>
+				</f:facet>
+
+			
+			    <p:ajax event="rowEdit" listener="#{cc.attrs.editimRreshti}"/>
+        		<p:ajax event="rowEditCancel"/>
+
+
+
+
+				<p:column selectionMode="multiple"
+					style="width:35px;text-align:center; margin:auto;" />
+					
+					
+				<ui:repeat value="teDhena" var="variabli" >
+					<p:column styleClass="hiqOutline" headerText="#{cc.attrs.headeratETabeles}"
+						filterMatchMode="exact" sortBy="#{cc.attrs.headeratETabeles}"
+						filterStyle="display:none" filterBy="#{cc.attrs.headeratETabeles}">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText style="display:block;" value="#{variabli}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText id="modelInput" value="#{variabli}" 
+									rendered="#{cc.attrs.pozicioniDropdownkontroll} ne 'kategoria'"
+									style="width:100%" />
+								<p:selectOneMenu value="#{selectOneMenuView.city}" effect="fold" 
+												 rendered="#{cc.attrs.pozicioniDropdownkontroll} eq 'kategoria'">
+									<f:selectItem itemLabel="--Zgjidh--" itemValue="" />
+           							<f:selectItems value="#{cc.attrs.dropdownLista}" />
+								</p:selectOneMenu>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+				</ui:repeat>
+					
+					
+				
+				
+
+				<p:column style="width:80px" headerText="Modifiko"
+					styleClass="editoBorderTabela">
+					<p:rowEditor />
+				</p:column>
+				<!--     <p:column style="margin:auto;" >
+         					<p:commandButton value="Fshi Rekordin" style="margin:auto; display: flex"/>
+    					</p:column> -->
+
+				<f:facet name="footer">
+					<p:commandButton process="@this" value="Shto Autor"
+						oncomplete="PF('dialogPerdoruesIRI').show()"
+						update="#{cc.attrs.idTab}">
+					</p:commandButton>
+				</f:facet>
+			</p:dataTable>
+
+
+			<p:contextMenu for="#{cc.attrs.idTab}" widgetVar="menujacntx">
+				<p:menuitem process="@form"
+					actionListener="#{adminDB.fshiPerdorues()}" value="Fshi"
+					update="#{cc.attrs.idTab}">
+					<p:confirm header="Konfirmim"
+						message="Deshironi ta fshini kete perdorues?!" />
+				</p:menuitem>
+				<p:separator />
+				<p:menuitem value="Mbyll" onclick="PF('menujacntx').hide()" />
+			</p:contextMenu>
+
+
+			<p:confirmDialog id="konfirmoDialog" global="true" showEffect="fade" hideEffect="fade" >
+			        <p:commandButton style="align:center;" value="Konfirmo" type="button" styleClass="ui-confirmdialog-yes" />
+			        <p:commandButton style="align:center;" value="Kthehu" type="button" styleClass="ui-confirmdialog-no" />
+			</p:confirmDialog>
+			
+		</div>
+</h:form>
+
+
+		<h:form>
+			<p:dialog showEffect="fade" hideEffect="fade" id="dialogNewUser" 
+						header="Perdorues i ri" widgetVar="dialogPerdoruesIRI" 
+						resizable="false" >
+						
+						<p:outputPanel id="carDetail" style="text-align:center;">
+			        
+			        <h:outputText value="Ndryshimet nuk u ruajten, Plotesoni fushat bosh!" 
+			            	style="color:red; font-family:oswaldB; font-size:15px;"
+			            	rendered="true" />
+						</p:outputPanel>
+						
+			</p:dialog>	
+		</h:form>				
+
+
+
+
+
+
+				
+				
+		<h:form>
+			<p:dialog showEffect="fade" hideEffect="fade" id="dialogNewUser" 
+						header="Perdorues i ri" widgetVar="dialogPerdoruesIRI" 
+						resizable="false" >
+				<p:outputPanel style="text-align:center;">
+			        
+			        <h:outputText value="Ju lutemi kontrolloni fushat e meposhtme!" 
+			            	style="color:red; font-family:oswaldB; font-size:15px;"
+			            	rendered="#{facesContext.validationFailed}" />
+			         
+			            	
+			        <h:panelGrid style="width: auto; font-size:15px" columns="2" styleClass="textColorGold fontiOL"
+			            	cellpadding ="10" cellspacing="1">
+			            	
+			            	
+			            	<ui:repeat>
+				            	<h:outputLabel value="Emri" />
+				            	<p:inputText styleClass="inputFushat" id="fushaEmriR" value="#{adminDB.perdoruesIRi.emri}"
+				            					required="true"
+				            					requiredMessage="Emri nuk mund te jete bosh"
+				            					validatorMessage="Id-ja duhet te permbaje te pakten 6 karaktere"
+				            					rendered="">          			
+				            	</p:inputText>  
+				            	
+				            	
+				            	<p:selectOneMenu value="#{selectOneMenuView.city}" effect="fold" 
+												rendered="#{cc.attrs.pozicioniDropdownkontroll} eq 'kategoria'">
+									<f:selectItem itemLabel="--Zgjidh--" itemValue="" />
+			           				<f:selectItems value="#{cc.attrs.dropdownLista}" />
+								</p:selectOneMenu>
+				            	
+				            	<p:password placeholder="Fjalekalimi" id="fushaPswR" styleClass="inputFushat"
+						            	required="true"
+						            	requiredMessage="Fjalekalimi nuk mund te jete bosh"
+						            	validatorMessage="Fjalekalimet nuk perputhen"
+						            	value="#{adminDB.perdoruesIRi.fjalekalimi1}" 
+						            	match="fushaPswRe" 
+						            	renderd="" />
+				            	
+			            		<p:password styleClass="inputFushat" id="fushaPswRe" value="#{adminDB.perdoruesIRi.fjalekalimi2}"
+			            				rendered=""/>	            	
+			            		<p:textEditor></p:textEditor>		
+				            	
+				            	<p:inputTextarea styleClass="inputFushat" value="" 
+				            	rendered=""></p:inputTextarea>
+			
+			            	</ui:repeat>
+			            	
+			
+			
+			
+			            	<f:facet name="footer">
+			               		<h:panelGroup style="display:block; text-align:center">
+			                  		<h:commandButton class="fontiOL btn btn-primary" value="Ruaj" process="@this"
+			                  			 actionListener="#{adminDB.shtimPerdoruesi()}"
+			                  			 >
+			                  			 <f:ajax execute="@form" render="@form"></f:ajax>
+			                  			 <f:ajax execute="@this" render="@this"></f:ajax>
+			                  			 </h:commandButton>
+			              			 
+			               		</h:panelGroup>
+			            	</f:facet> 
+			
+			        </h:panelGrid>
+			        </p:outputPanel>
+			</p:dialog>
+		</h:form>
+				
+		
+		<h:form>
+			<p:dialog showEffect="fade" hideEffect="fade" id="dialogKujdesBosh" 
+						header="Kujdes!" widgetVar="dialogKujdesBosh" 
+						resizable="false" >
+				<p:outputPanel style="text-align:center;">
+			        
+			        <h:outputText value="Ndryshimet nuk u ruajten, ju lutem plotesoni vendet bosh!" 
+			            	style="color:red; font-family:oswaldB; font-size:15px;" />
+	        		
+	        		<f:facet name="footer">
+	               		<h:panelGroup style="display:block; text-align:center">
+	                  		<h:commandButton class="fontiOL btn btn-primary" value="Mbyll" 
+	                  						onClick="PF('dialogKujdesBosh').hide()">
+	                  			 </h:commandButton>
+	               		</h:panelGroup>
+	            	</f:facet>     	
+				</p:outputPanel>
+			</p:dialog>
+
+
+			<p:dialog showEffect="fade" hideEffect="fade" id="dialogSukses" 
+						header="Sukses!" widgetVar="dialogSukses" 
+						resizable="false" >
+				<p:outputPanel style="text-align:center;">
+			        
+			        <h:outputText value="Ndryshimet u ruajten me sukses!" 
+			            	style="color:green; font-family:oswaldB; font-size:15px;" />
+	        		<f:facet name="footer">
+	               		<h:panelGroup style="display:block; text-align:center">
+	                  		<h:commandButton class="fontiOL btn btn-primary" value="Mbyll"
+	                  						onClick="PF('dialogSukses').hide()">
+	                  			 </h:commandButton>
+	               		</h:panelGroup>
+	            	</f:facet>     			            	
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
+		
+		
+		
+
+
+	</cc:implementation>
+
+</html>

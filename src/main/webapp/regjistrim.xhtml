@@ -1,89 +1,165 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
 <h:head>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
+
   <title>Regjistrohu - Konferenca X 2020</title>
   <h:outputStylesheet library="css" name="styles.css"></h:outputStylesheet>
-  <h:outputScript library = "js" name="script.js"></h:outputScript>
+  <h:outputStylesheet library="css" name="fonts.css"></h:outputStylesheet>
 </h:head>
 
 
 <h:body>
-	<div>
-	<h:panelGrid id = "panel" columns = "2" border = "0"
-      cellpadding = "10" cellspacing = "1">
-	<div class = "katror">
-			<h2 class= "knf">KONFERENCA&nbsp; X&nbsp; 2020</h2>
-	</div>
+	<div class="paneliKryesor" style="padding: 0px 0px 30px 0px; " >
+		<div class="row" style="padding: 50px 50px 50px 70px; height: 100%; ">
+		
+			<div class="col-md-6"  style="padding: 30px 50px 200px 50px; min-width:500px;">
 	
-	</h:panelGrid>
-	<h2 class= "fontiqu">KONFERENCA JU LEJON TE BEHENI PJESE E SAJ 
-	DUKE REGJISTRUAR TE DHENAT SI ME POSHTE</h2>
-	<div align="center" >
+				<div class="row" style="">
+					<h:panelGrid id="panel" columns="2" border="0"
+					     	cellpadding = "10" cellspacing="1">
+							
+							<div class="fontiOL knf ">KONFERENCA&nbsp; X <br/>
+							<p class="fontiOEL" style="color:white; font-size: 27px;">2020 </p>
+							</div>
+					</h:panelGrid>
+				</div>
+			</div>
+		
 
-            <h:outputText class="fontiR" value = "JU LUTEMI TE PLOTESONI TE GJITHA FUSHAT E MEPOSHTME"/>
+<div class="col-md-6"  style=" padding: 0px 50px 50px 50px;">
+	
+	
+				<div class="row" style="padding: 0px 0px 30px 0px;">
+				
+				<div class="col-md-12"  style="padding: 4px 0px 0px 0px; min-width:400px; " >
+            	<p class= "fontiOL textColor" style="padding: 0px 0px 5px 0px; font-size:20px;">
+            	KONFERENCA JU LEJON TE BEHENI PJESE E SAJ 
+				DUKE REGJISTRUAR TE DHENAT SI ME POSHTE</p>
+				</div>
+				
+			</div>	
 
-        	<h:panelGrid id = "gridFushat" columns = "2" 
-            	cellpadding = "10" cellspacing = "1">
-            	
-            	<h:outputLabel class="fontiBo" value = "Emri"  />
-            	<h:inputText  id="fushaEmri" value = "#{autentikim.id}" />
-            	
-            	<h:outputLabel class="fontiBo" value = "Mbiemri"  />
-            	<h:inputText id = "fushaMbiemri" value = "#{autentikim.fjalekalim}" />
-            	
-            	<h:outputLabel class="fontiBo" value = "E-mail"  />
-            	<h:inputText id = "fushaEmail" value = "#{autentikim.fjalekalim}" />         	
-            	
-            	<h:outputLabel class="fontiBo" value = "Kategoria"  />
-            	
-            	<h:selectOneMenu value = "aa"> 
-   					<f:selectItem itemValue = "1" itemLabel = "Autor" /> 
-   					<f:selectItem itemValue = "2" itemLabel = "Shqyrtues" /> 
-				</h:selectOneMenu>       	
-            	
-            	<h:outputLabel class="fontiBo" value = "Numer kontakti"  />
-            	<h:inputText id = "fushaNr" value = "#{autentikim.fjalekalim}" />
-            	
-            	<h:outputLabel class="fontiBo" value = "Fjalekalimi"  />
-            	<h:inputSecret id = "fushaPsw" value = "#{autentikim.fjalekalim}" />
-            	
-            	<h:outputLabel class="fontiBo" value = "Perserisni fjalekalimin"  />
-            	<h:inputSecret id = "fushaPswRe" value = "#{autentikim.fjalekalim}" />       	
-            	    	
+<div align="center" class="loginWhite" style="min-width:400px;" >
+			<br/><br/>
+            <h:outputText class="fontiOM textColor" value="JU LUTEMI TE PLOTESONI TE GJITHA FUSHAT"/>
+			<br/><br/>
+			
 
-            	<f:facet name = "footer">
-               		<h:panelGroup style = "display:block; text-align:center">
-                  		<h:commandButton class="fontiR" value = "Regjistrohu"
-                  			 />
+<h:form class="row" style=" display: inline-block;" >
+	
+        <h:panelGrid style="width: auto;" id = "gridFushat" columns="2" 
+            	cellpadding = "10" cellspacing="1">
+            	
+            	
+            	<h:outputLabel class="fontiOSB textColor" value="Emri" />
+            	<p:inputText styleClass="inputFushat" id="fushaEmriR" value="#{perdoruesiRi.emri}"
+            					required="true"
+            					requiredMessage="Emri nuk mund te jete bosh">          			
+            	</p:inputText>
+            	
+				
+            	
+            	
+            	<h:outputLabel class="fontiOSB textColor" value="Mbiemri"  />
+            	<p:inputText styleClass="inputFushat" id="fushaMbiemriR" value="#{perdoruesiRi.mbiemri}"
+            					required="true"
+            					requiredMessage="Mbiemri nuk mund te jete bosh">          			
+            	</p:inputText>
+            	
+            	
+            	<h:outputLabel class="fontiOSB textColor" value="E-mail"  />
+            	<p:inputText styleClass="inputFushat" id="fushaEmailR" value="#{perdoruesiRi.email}" 
+            					required="true"
+            					requiredMessage="E-mail nuk mund te jete bosh">          			
+            	</p:inputText>
+            	     	 
+            	
+            	<h:outputLabel class="fontiOSB textColor" value="Id"  />
+            	<p:inputText styleClass="inputFushat" id="fushaIdR" value="#{perdoruesiRi.username}"
+            			required="true"
+            			requiredMessage="Id nuk mund te jete bosh"
+            			validatorMessage="Id-ja duhet te permbaje te pakten 6 karaktere"
+            			>
+            		<f:validateLength min="6" />
+            	</p:inputText>
+            	
+
+
+            	<h:outputLabel class="fontiOSB textColor" value="Kategoria"  />
+            	<p:selectOneMenu id="menuR" style="width:100%" styleClass="inputFushat" value="#{perdoruesiRi.kategoria}"
+            					 required="true"
+                               	 requiredMessage="Zgjidhni te pakten nje kategori"> 
+   					<f:selectItem itemValue="#{null}" itemLabel="--Zgjidh--" />
+   					<f:selectItem itemValue="autor" itemLabel="Autor" /> 
+   					<f:selectItem itemValue="shqyrtues" itemLabel="Shqyrtues" /> 
+				</p:selectOneMenu>
+				
+
+            	<h:outputLabel class="fontiOSB textColor" value="Numer kontakti"  />
+            	<p:inputText styleClass="inputFushat" id="fushaNrR" value="#{perdoruesiRi.nrCel}" 
+            					required="true"
+            					requiredMessage="Numri nuk mund te jete bosh">          			
+            	</p:inputText>
+            	        	
+            	
+            	
+            	
+            	<h:outputLabel class="fontiOSB textColor" value="Fjalekalimi"  />
+            	<p:password placeholder="Fjalekalimi" id="fushaPswR" styleClass="inputFushat"
+			            	required="true"
+			            	requiredMessage="Fjalekalimi nuk mund te jete bosh"
+			            	validatorMessage="Fjalekalimet nuk perputhen"
+			            	value="#{perdoruesiRi.fjalekalimi1}" match="fushaPswRe" />
+            	
+            	
+            	
+            	
+            	<h:outputLabel class="fontiOSB textColor" value="Perserisni fjalekalimin"  />
+            	<p:password styleClass="inputFushat" id="fushaPswRe" value="#{perdoruesiRi.fjalekalimi2}"/>
+
+            	<f:facet name="footer">
+               		<h:panelGroup style="display:block; text-align:center">
+                  		<h:commandButton class="fontiOL btn btn-primary" value="Regjistrohu"
+                  			 action="#{perdoruesiRi.regjistrohu}">
+                  			 <f:ajax execute="@form" render="@form"/>
+                  			 </h:commandButton>
                		</h:panelGroup>
             	</f:facet>
+
          </h:panelGrid>
-     
-		</div>
-		
+         
+         		<p:messages showIcon="false" id="messages" showDetail="false" closable="true"  >
+        		</p:messages>
+</h:form>
+</div>
+
+
 		
 		<h:form>
 		 <!-- h:form i ben te paaksesueshem komponentet nga JavaScript -->
 		</h:form>
 		
-		
-		 <p class= "fontiR" >
-		 NESE DESHIRONI NJE VESHTRIM TE PERGJITHSHEM MBI KONFERENCEN,
-		 MUND TE VAZHDONI SI SHIKUES.
-		 </p>
-		 
+         	<h:panelGroup style="display:block; text-align:center">
+				<p class="fontiOEL textColor" style="padding: 70px 0px 0px 0px; font-size:15px;">
+		 			NESE DESHIRONI NJE VESHTRIM TE PERGJITHSHEM MBI KONFERENCEN,
+		 			MUND TE VAZHDONI SI SHIKUES.</p>
+			</h:panelGroup>
 		 
 		 <h:form>
 		 <h:panelGroup style = "display:block; text-align:center">
-               <h:commandButton id="butoniShikues" class = "fontiR" value = "Vazhdo si Shikues" 
+               <h:commandButton id="butoniShikues" class="fontiOL btn btn-primary" value="Vazhdo si Shikues" 
                action="shikues"/>
          </h:panelGroup>		 
 		 </h:form>
-
-	</div>
-	
+</div>
+</div>
+</div>
 </h:body>
 </html>

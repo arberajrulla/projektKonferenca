@@ -13,6 +13,8 @@
 //<h:outputScript library = "js" name="script.js"></h:outputScript>
 
 
+
+
 window.onload = function() {
 	
     load();

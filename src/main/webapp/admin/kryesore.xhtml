@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+  <title><ui:insert name="title"></ui:insert></title>
+  <h:outputStylesheet library="css" name="styles.css"></h:outputStylesheet>
+  <h:outputStylesheet library="css" name="fonts.css"></h:outputStylesheet>
+  <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+  <h:outputStylesheet library="css" name="primefaces_edit.css"></h:outputStylesheet>	
+</h:head>
+
+
+<h:body>
+
+	<div class="paneliKryesor" style="position: absolute; padding-top:10px;">
+<h:form>
+				<div class="row d-flex justify-content-center"  style="">
+					<h:panelGrid id="panel" columns="1" border="0"
+							     	cellpadding = "10" cellspacing="1">
+						<div class="fontiR mireseerdhet" style=" font-size: 35px;">KONFERENCA X 
+						<p class="fontiOEL" style="color:white; font-size: 20px;">2020</p>
+						</div>
+					</h:panelGrid>
+				</div>
+
+
+<div class="row" style="margin-left:40px; margin-right:40px; background-color:#002f77">
+	<div style="margin:0px; ">
+			<h:panelGroup style="text-align:center;">
+         		<h:commandButton value="Faqja Kryesore" class="butonMenu" action="#{admin.kryesoreLinkAdmin}">
+         		</h:commandButton>
+         		<h:commandButton value="Perdoruesit" class="butonMenu" action="#{perdorues.tabelaPerdoruesAdmin}" />
+         		<h:commandButton value="Autoret" class="butonMenu"  
+         				action="#{autor.tabelaAutoretAdmin}"/>
+     			<h:commandButton value="Artikujt" class="butonMenu"  
+     					action="#{artikull.tabelaArtikujAdmin}"/>
+     			<h:commandButton value="Shqyrtuesit" class="butonMenu" action="#{shqyrtues.tabelaShqyrtuesitAdmin}" />
+     			<h:commandButton value="Vleresimet" class="butonMenu" action="#{vleresim.tabelaVleresimetAdmin}" />
+        	</h:panelGroup>	
+	</div>
+	
+	<div style="margin-left: auto; display: block;" >
+	<p:menuButton styleClass="butonDropdownMenu" iconPos="right" value="Profili" style="height:100%;" >
+		        <p:menuitem value="Modifiko Profilin" action="#{admin.modifikoProfilinAdmin}" />
+		        <p:menuitem value="Ndrysho fjalekalimin" action="#{admin.ndryshoPasswordAdmin}" />
+		        <p:separator />
+		        <p:menuitem value="Dil" action="#{admin.dilAdmin}" />
+		    </p:menuButton> 
+	</div>
+	
+</div>
+
+		<ui:insert name="content"></ui:insert>
+		
+</h:form>
+			
+</div>
+
+</h:body>
+</html>

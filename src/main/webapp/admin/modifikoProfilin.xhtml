@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="kryesore.xhtml"
+     			xmlns:h="http://java.sun.com/jsf/html"
+      			xmlns:f="http://java.sun.com/jsf/core"
+      			xmlns:p="http://primefaces.org/ui"
+                xmlns:utils="http://xmlns.jcp.org/jsf/composite/utils">
+                
+	<ui:define name="title">Modifiko Profilin</ui:define>
+	 
+    <ui:define name="content">
+
+<div class="col-md-12"  style=" padding: 0px 50px 50px 50px;">
+	
+
+<div align="center" class="loginWhite" style="min-width:400px;" >
+			<br/><br/>
+            <h:outputText class="fontiOM textColor" value="JU LUTEMI TE PLOTESONI TE GJITHA FUSHAT"/>
+			<br/><br/>
+			
+
+<h:form class="row" style=" display: inline-block;" >
+	
+        <h:panelGrid style="width: auto;" id = "gridFushat" columns="2" 
+            	cellpadding = "10" cellspacing="1">
+            	
+            	
+            	<h:outputLabel class="fontiOSB textColor" value="Emri" />
+            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey" id="fushaEmriR" value="#{perdoruesiRi.emri}"
+            					required="true"
+            					requiredMessage="Emri nuk mund te jete bosh">          			
+            	</p:inputText>
+            	
+				
+            	
+            	
+            	<h:outputLabel class="fontiOSB textColor" value="Mbiemri"  />
+            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey" id="fushaMbiemriR" value="#{perdoruesiRi.mbiemri}"
+            					required="true"
+            					requiredMessage="Mbiemri nuk mund te jete bosh">          			
+            	</p:inputText>
+            	
+            	
+            	<h:outputLabel class="fontiOSB textColor" value="E-mail"  />
+            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey" id="fushaEmailR" value="#{perdoruesiRi.email}" 
+            					required="true"
+            					requiredMessage="E-mail nuk mund te jete bosh">          			
+            	</p:inputText>
+            	     	 
+            	
+            	<h:outputLabel class="fontiOSB textColor" value="Id"  />
+            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey" id="fushaIdR" value="#{perdoruesiRi.username}"
+            			required="true"
+            			requiredMessage="Id nuk mund te jete bosh"
+            			validatorMessage="Id-ja duhet te permbaje te pakten 6 karaktere"
+            			>
+            		<f:validateLength min="6" />
+            	</p:inputText>
+            	
+
+
+            	<h:outputLabel class="fontiOSB textColor" value="Kategoria"  />
+            	<p:selectOneMenu id="menuR" style="width:100%" styleClass="inputFushat" value="#{perdoruesiRi.kategoria}"
+            					 required="true"
+                               	 requiredMessage="Zgjidhni te pakten nje kategori"> 
+   					<f:selectItem itemValue="#{null}" itemLabel="--Zgjidh--" />
+   					<f:selectItem itemValue="autor" itemLabel="Autor" /> 
+   					<f:selectItem itemValue="shqyrtues" itemLabel="Shqyrtues" /> 
+				</p:selectOneMenu>
+				
+
+            	<h:outputLabel class="fontiOSB textColor" value="Numer kontakti"  />
+            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey" id="fushaNrR" value="#{perdoruesiRi.nrCel}" 
+            					required="true"
+            					requiredMessage="Numri nuk mund te jete bosh">          			
+            	</p:inputText>
+            	        	
+            	
+            	
+            	
+            	<h:outputLabel class="fontiOSB textColor" value="Fjalekalimi"  />
+            	<p:password placeholder="Fjalekalimi" style="background-color:white; color:grey" id="fushaPswR" styleClass="inputFushat"
+			            	required="true"
+			            	requiredMessage="Fjalekalimi nuk mund te jete bosh"
+			            	validatorMessage="Fjalekalimet nuk perputhen"
+			            	value="#{perdoruesiRi.fjalekalimi1}" match="fushaPswRe" />
+            	
+            	
+            	
+            	
+            	<h:outputLabel class="fontiOSB textColor" value="Perserisni fjalekalimin"  />
+            	<p:password styleClass="inputFushat" style="background-color:white; color:grey" id="fushaPswRe" value="#{perdoruesiRi.fjalekalimi2}"/>
+
+            	<f:facet name="footer">
+               		<h:panelGroup style="display:block; text-align:center">
+                  		<h:commandButton class="fontiOL btn btn-primary" value="Regjistrohu"
+                  			 action="#faqja1">
+                  			 <f:ajax execute="@form" render="@form"/>
+                  			 </h:commandButton>
+               		</h:panelGroup>
+            	</f:facet>
+
+         </h:panelGrid>
+         
+         		<p:messages showIcon="false" id="messages" showDetail="false" closable="true"  >
+        		</p:messages>
+</h:form>
+</div>
+</div>
+
+
+
+    </ui:define>
+
+</ui:composition>

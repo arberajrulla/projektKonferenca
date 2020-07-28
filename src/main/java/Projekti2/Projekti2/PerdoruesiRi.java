@@ -5,15 +5,32 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 
-@ManagedBean (name = "regjistrim")
+@ManagedBean (name = "perdoruesiRi")
 @SessionScoped
 @RequestScoped
 
-public class Regjistrim {
+public class PerdoruesiRi {
 	
-	private String emri, mbiemri, email, nrCel, fjalekalimi1, fjalekalimi2;
-
 	
+	private Perdorues perdorues;
+	private String msg;
+	
+	private String emri, mbiemri, email, username, nrCel, fjalekalimi1, fjalekalimi2;
+	private String kategoria = "";
+	
+	public String getKategoria() {
+		return kategoria;
+	}
+	public void setKategoria(String kategoria) {
+		this.kategoria = kategoria;
+		System.out.println(this.kategoria);
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
 	public String getEmri() {
 		return emri;
 	}
@@ -51,15 +68,13 @@ public class Regjistrim {
 		this.fjalekalimi2 = fjalekalimi2;
 	}
 
-	private Perdorues perdorues;
-	private String msg;
-	
-	
+
 	public String regjistrohu() {
-		
-		
-		return (null);
+		boolean sukses = PerdoruesDBinfo.shtoPerdorues(this);
+		if(sukses) {
+			return ("regjistrimSukses");
+		}else {
+			return ("error");
+		}
 	}
-	
-	
 }

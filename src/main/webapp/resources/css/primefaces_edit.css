@@ -1,0 +1,274 @@
+/* .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+background-color: #002f77;;
+background: #002f77 !important;
+font-family: oswaldEL !important;
+font-weight: 0 !important;
+box-shadow:none;
+border-radius:0;
+border:none;
+color: #ffeacc;
+text-shadow: 2px 2px 12px #965a00;
+} */
+
+/* butoniMenu Profili- 4 blloqet ne vijim*/
+.ui-menu, .ui-menu-list, .ui-menuitem, .ui-menuitem-link, .ui-menuitem-text{
+font-size: 1vw;
+background-color: #002f77;
+background: #002f77 !important;
+font-family: oswaldEL !important;
+box-shadow:none;
+border-radius:0;
+border:none;
+color: #ffeacc;
+text-shadow: 2px 2px 12px #965a00;
+outline: none;
+}
+
+.ui-button{
+	outline: none !important;
+	background-color: #002f77 !important;
+	background: #002f77 !important;
+	border:none !important;
+}
+
+.ui-button .ui-button-text{
+	font-size: 1vw;
+	font-family: oswaldEL !important;
+	border:none;
+	color: #ffeacc;
+	text-shadow: 2px 2px 12px #965a00;
+}
+
+
+.ui-button:hover{
+	transition-duration: 0.4s;
+	background-color: #0093fd ; /* #ff9c0d */
+	background: #0093fd !important;
+	box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.15), 0 3px 30px 0
+		rgba(0, 0, 0, 0.12);
+	text-shadow: 2px 2px 12px white;
+}
+
+
+/* DataTable nga primefaces */
+
+.ui-datatable-header, .ui-datatable-data, .ui-widget-header, .ui-state-default  {
+	text-align: center;
+font-size: 1vw;
+height: 100%; /* kjo duhet dhe tek admin */
+vertical-align: center;
+background: rgba(0, 0, 0, 0); /* #002f77; */
+font-family: oswaldEL !important;
+border-radius:0;
+border:none;
+color: #ffeacc;
+text-shadow: 2px 2px 12px #965a00;
+}
+
+
+/* Borderat e tabeles */
+.ui-datatable-odd, .ui-datatable-even, .ui-selection-column, .ui-filter-column, .editoBorderTabela{
+ 		background: rgba(0, 47, 119, 0.9);
+		border: 1px solid rgba(21, 221, 232, 0.3) !important;
+}
+
+
+.ui-datatable{
+	background: rgba(0, 47, 119, 0.5);
+		box-shadow: 0px 0px 30px #15dde8;
+		border-radius:20px;
+		border: 1px solid #15dde8;
+
+}
+
+
+.ui-datatable-selectable{
+		text-align: center;
+font-size: 1vw;
+height: 100%; /* kjo duhet dhe tek admin */
+vertical-align: center;
+background: rgba(0, 0, 0, 0);
+font-family: oswaldEL !important;
+border-radius:0;
+border:none;
+color: #ffeacc;
+text-shadow: 2px 2px 12px #965a00;
+	
+}
+
+
+/* selektimi i fushave ne datatable */
+.ui-datatable-selectable:hover, .ui-state-highlight{
+	transition-duration: 0.3s;
+	background: rgba(107, 247, 255, 0.3) !important;
+	color: #15dde8 !important;
+	text-shadow: 0px 0px 15px #00494d, 0px 0px 20px #00494d;
+}
+
+.ui-state-highlight{
+	transition-duration: 0.3s;
+	background: rgba(107, 247, 255, 0.4) !important;
+	color: #15dde8 !important;
+	text-shadow: 0px 0px 5px #00494d, 0px 0px 5px #00494d;
+}
+
+.ui-datatable-selectable:active{
+	transition-duration: 0.1s;
+	color: #15dde8 !important;
+	text-shadow: 0px 0px 5px #ffffff, 0px 0px 5px #ffffff;
+}
+
+
+
+
+
+
+
+
+
+
+/* dialogu i konfirmimit */
+.ui-dialog, .ui-confirm-dialog { 	
+	background: rgba(0, 32, 70, 0.9);
+	box-shadow: 0px 0px 30px #6bf7ff !important;
+	border-radius:10px;
+	border: none;
+	}
+	
+.ui-icon-alert{
+    zoom:2;
+	}
+
+.ui-dialog-content {
+	background: rgba(0, 32, 70, 0.9);
+	color: #ffeacc;
+	text-shadow: 2px 2px 12px #965a00;
+	font-family: oswaldL;
+	font-size:20px;
+}
+
+
+.ui-dialog .ui-dialog-footer { 	
+	background: rgba(0, 32, 70, 0.9);
+	margin: 0 auto !important;
+	}
+	
+
+.ui-dialog-title{
+	color: #15dde8;
+	margin:auto; display: flex;
+	
+}
+
+
+.ui-dialog .ui-dialog-buttonpane{
+	display: flex;
+  	align-items: center;
+  	justify-content: center;
+}
+
+.ui-confirm-dialog-message{
+	margin-top: -20px !important;
+}
+
+
+
+
+/* Editimi i Paginator Datatable */
+
+.ui-paginator .ui-paginator-pages .ui-paginator-page {
+	border: none;
+	background: rgba(0, 0, 0, 0);
+  	width: 1.5rem;
+  	color: white;
+}
+
+.ui-paginator .ui-paginator-pages .ui-paginator-page:hover{
+	transition-duration: 0.4s;
+	color: grey;
+}
+
+.ui-paginator .ui-paginator-pages .ui-paginator-page:focus{
+	color: grey;
+	font-size:13px;
+	
+}
+
+
+.ui-paginator .ui-paginator-next{
+	border: none;
+	background: rgba(0, 0, 0, 0);
+  	width: 2rem;
+}
+.ui-paginator .ui-paginator-next .ui-icon{
+    background: url("../resources/images/icons/forward.png") no-repeat center center;
+    width: 100%;
+    height: 100%;
+    filter: invert(100%);
+}
+.ui-paginator .ui-paginator-next .ui-icon:hover{
+    filter: invert(60%);
+}
+
+
+.ui-paginator .ui-paginator-prev{
+	border: none;
+	background: rgba(0, 0, 0, 0);
+  	width: 2rem;
+}
+.ui-paginator .ui-paginator-prev .ui-icon{
+    background: url("../resources/images/icons/back.png") no-repeat center center;
+    width: 100%;
+    height: 100%;
+    filter: invert(100%);
+}
+.ui-paginator .ui-paginator-prev .ui-icon:hover{
+    filter: invert(60%);
+}
+
+.ui-paginator .ui-paginator-first{
+	border: none;
+	background: rgba(0, 0, 0, 0);
+  	width: 2rem;
+}
+.ui-paginator .ui-paginator-first .ui-icon{
+    background: url("../resources/images/icons/dback.png") no-repeat center center;
+    width: 100%;
+    height: 100%;
+    filter: invert(100%);
+}
+.ui-paginator .ui-paginator-first .ui-icon:hover{
+    filter: invert(60%);
+}
+
+
+
+.ui-paginator .ui-paginator-last{
+	border: none;
+	background: rgba(0, 0, 0, 0);
+  	width: 2rem;
+}
+.ui-paginator .ui-paginator-last .ui-icon {
+    background: url("../resources/images/icons/dforward.png") no-repeat center center;
+    width: 100%;
+    height: 100%;
+    filter: invert(100%);
+}
+.ui-paginator .ui-paginator-last .ui-icon:hover{
+    filter: invert(60%);
+}
+
+
+
+
+.ui-paginator .ui-paginator-rpp-options{
+	border: none;
+	background: #002f77;
+	color: #ffeacc;
+	outline: none;
+}
+
+
+.ui-datatable .ui-datatable-header {
+    text-align: right !important;
+}
