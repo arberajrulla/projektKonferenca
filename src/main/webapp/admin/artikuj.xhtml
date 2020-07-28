@@ -1,0 +1,216 @@
+<!DOCTYPE HTML>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="kryesore.xhtml"
+     			xmlns:h="http://java.sun.com/jsf/html"
+      			xmlns:f="http://java.sun.com/jsf/core"
+      			xmlns:p="http://primefaces.org/ui"
+                xmlns:utils="http://xmlns.jcp.org/jsf/composite/utils">
+                
+	<ui:define name="title">Artikujt</ui:define>
+	 
+    <ui:define name="content">
+<h:form>
+<div style="padding: 60px 100px 0px 100px;">
+
+<p:dataTable id="tabelaArtikuj"
+		styleClass="table table-dark"
+		var="artikulli"
+		widgetVar="tabelaAllArtikuj"
+		selection="#{artikull.artikujtEPerzgjedhur}"
+		rowKey="#{artikulli.artikull_id}"
+		value="#{artikull.artikujAll}" 
+		editable="true" reflow="true" rows="5"
+		editMode="row"
+		sortMode="multiple"
+		paginator="true"
+		paginatorPosition="bottom"
+		paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		rowsPerPageTemplate="5,10,15,20,50,100"
+		filteredValue="#{artikull.artikujtFiltruar}">
+        
+       
+        
+        <f:facet name="header">
+            <p:outputPanel>
+            	<div style="text-align:center; padding-top:10px;">
+	            	<h:outputText class="textColor fontiOEL madhesiaHeader" style="align:center" value="Lista e Artikujve" />
+	            </div>	
+	            <p:separator style="background: rgba(107, 247, 255, 0.2); border-color: rgba(107, 247, 255, 0.2);height:0.2px "/>
+	            <div style="padding-bottom:5px; margin-top:-7px;">
+		            <p:commandButton style="float: left; left: 10px;" process="tabelaArtikuj" 
+		            			actionListener="#{artikull.fshirjeArtikulli()}"
+	          	 				value="Fshi" update="tabelaArtikuj">
+							<p:confirm header="Konfirmo" message="Kujdes, fushat e perzgjedhura do te fshihen!"/>
+	          		</p:commandButton>	        
+		                <h:outputText class="textColor fontiOEL" style="padding-right:10px; align: right; " value="Kerko:" />
+		                <p:inputText id="globalFilter" onkeyup="PF('tabelaAllArtikuj').filter()" 
+		                	style="padding-right:10px; " styleClass="inputFushaFilterKerko"
+	                 		placeholder="Vendos keyword"/>
+	            </div>
+            </p:outputPanel>
+        </f:facet>
+        
+        
+        
+         
+        <p:ajax event="rowEdit"/>
+        <p:ajax event="rowEditCancel"/>
+        
+         
+	<p:column selectionMode="multiple" style="width:35px;text-align:center; margin:auto;"/>
+    <p:column styleClass="hiqOutline" headerText="Titulli" 
+    			filterMatchMode="exact" sortBy="#{artikulli.titulli}"
+    			filterStyle="display:none" filterBy="#{artikulli.titulli}">
+          <p:cellEditor>
+              <f:facet name="output"><h:outputText style="display: block;" value="#{artikulli.titulli}" /></f:facet>
+              <f:facet name="input">
+              		<p:inputText id="modelInput" value="#{artikulli.titulli}" style="width:100%" required="true">
+              		</p:inputText>
+              </f:facet>
+          </p:cellEditor>
+    </p:column>
+ 
+    <p:column styleClass="hiqOutline" headerText="Abstrakti" sortBy="#{artikulli.abstrakti}" filterStyle="display:none" filterBy="#{artikulli.abstrakti}">
+          <p:cellEditor>
+              <f:facet name="output"><h:outputText style="display:block;" value="#{artikulli.abstrakti}" /></f:facet>
+              <f:facet name="input"><p:inputText value="#{artikulli.abstrakti}" style="width:100%"/></f:facet>
+          </p:cellEditor>        
+    </p:column>
+ 
+    <p:column styleClass="hiqOutline" headerText="Dokumenti Elektronik" sortBy="#{artikulli.dokumenti_elektronik}" filterStyle="display:none" filterBy="#{artikulli.dokumenti_elektronik}">
+          <p:cellEditor>
+              <f:facet name="output"><h:outputText style="display: block;" value="#{artikulli.dokumenti_elektronik}" /></f:facet>
+              <f:facet name="input"><p:inputText value="#{artikulli.dokumenti_elektronik}" style="width:100%"/></f:facet>
+          </p:cellEditor>        
+    </p:column>
+    
+    <p:column styleClass="hiqOutline" headerText="Kontakt" sortBy="#{artikulli.kontakt}" filterStyle="display:none" filterBy="#{artikulli.kontakt}">
+          <p:cellEditor>
+              <f:facet name="output"><h:outputText style="display: block;" value="#{artikulli.kontakt}" /></f:facet>
+              <f:facet name="input"><p:inputText value="#{artikulli.kontakt}" style="width:100%"/></f:facet>
+          </p:cellEditor>        
+    </p:column>
+    
+    
+    <p:column style="width:80px" headerText="Modifiko" styleClass="editoBorderTabela">							     	
+          	<p:rowEditor/>
+    </p:column>
+	<!--     <p:column style="margin:auto;" >
+         <p:commandButton value="Fshi Rekordin" style="margin:auto; display: flex"/>
+    </p:column>
+     -->
+    <f:facet name="footer">
+
+          	
+          	<p:commandButton process="@this"
+          	 value="Shto Artikull"  
+          	 oncomplete="PF('dialogArtikullIRI').show()" update="tabelaArtikuj">
+          	</p:commandButton>
+
+    </f:facet>
+</p:dataTable>
+
+
+<p:confirmDialog  id="konfirmoDialog" global="true" showEffect="fade" hideEffect="fade" >
+        <p:commandButton style="align:center;" value="Konfirmo" type="button" styleClass="ui-confirmdialog-yes" />
+        <p:commandButton style="align:center;" value="Kthehu" type="button" styleClass="ui-confirmdialog-no" />
+</p:confirmDialog>
+
+
+
+
+<p:contextMenu for="tabelaArtikuj" widgetVar="menujacntx" >
+        <p:menuitem process="@form" actionListener="#{artikull.fshirjeArtikulli()}"
+        			value="Fshi" update="tabelaArtikuj">
+        			<p:confirm header="Konfirmim" message="Deshironi ta fshini kete artikull?!"/>	
+        </p:menuitem>
+         <p:separator />
+         <p:menuitem value="Mbyll" onclick="PF('menujacntx').hide()"/>
+</p:contextMenu>
+
+
+
+
+
+</div>
+
+
+
+
+	
+		<div class="row" align="center">
+			<div class="col-md-12" >
+				
+				
+				
+				
+			</div>
+		</div>
+
+		</h:form>
+		
+		
+		
+		
+<h:form>
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogNewArtikull" header="Artikull i ri" widgetVar="dialogArtikullIRI" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+        
+         <h:outputText value="Ju lutemi kontrolloni fushat e meposhtme!" 
+            	style="color:red; font-family:oswaldB; font-size:15px;"
+            	rendered="#{facesContext.validationFailed}" />
+            	
+            	
+        <h:panelGrid style="width: auto; font-size:15px" columns="2" styleClass="textColorGold fontiOL"
+            	cellpadding ="10" cellspacing="1">
+
+            	<h:outputLabel value="Titulli" />
+            	<p:inputText styleClass="inputFushat" id="fushaTitulliArtR" value="#{artikull.titulli}"
+            					required="true">          			
+            	</p:inputText>
+            	
+            
+            	<h:outputLabel value="Abstrakti"  />
+            	<p:inputText styleClass="inputFushat" id="fushaAbstraktArtR" value="#{artikull.abstrakti}"
+            					required="true">          			
+            	</p:inputText>
+            	
+            	
+            	<h:outputLabel value="Dokumenti Elektronik"  />
+            	<p:inputText styleClass="inputFushat" id="fushaDokElektronikArtR" value="#{artikull.dokumenti_elektronik}" 
+            					required="true">          			
+            	</p:inputText>
+            	     	 
+            	<h:outputLabel value="Kontakt"  />
+            	<p:inputText styleClass="inputFushat" id="fushaKontaktArtR" value="#{artikull.kontakt}" 
+            					required="true">          			
+            	</p:inputText>
+            	
+
+            	<f:facet name="footer">
+               		<h:panelGroup style="display:block; text-align:center">
+                  		<h:commandButton class="fontiOL btn btn-primary" value="Ruaj" process="@this"
+                  			 actionListener="#{artikull.shtimArtikulli()}"
+                  			 >
+                  			 <f:ajax execute="@form" render="@form"></f:ajax>
+                  			 <f:ajax execute="@this" render="@this"></f:ajax>
+                  			 </h:commandButton>
+              			 
+               		</h:panelGroup>
+            	</f:facet> 
+
+        </h:panelGrid>
+        </p:outputPanel>
+</p:dialog>  
+
+
+</h:form>
+		
+
+
+
+    </ui:define>
+
+</ui:composition>

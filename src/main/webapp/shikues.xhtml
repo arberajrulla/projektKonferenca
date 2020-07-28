@@ -2,24 +2,29 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
-      >
+      xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-  <title>Regjistrohu - Konferenca X 2020</title>
+  <title>Konferenca X 2020</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
   <h:outputStylesheet library="css" name="styles.css"></h:outputStylesheet>
-  <h:outputScript library = "js" name="script.js"></h:outputScript>
+  <h:outputStylesheet library="css" name="fonts.css"></h:outputStylesheet>
 </h:head>
 
 
 <h:body>
+	<div class="paneliKryesor fallingStar" style=" position: absolute; padding-top:10px;">
 
-	<div>
-	<h:panelGrid id = "panel" columns = "1" border = "0"
-      cellpadding = "10" cellspacing = "1">
-		<h2 class= "knf">KONFERENCA&nbsp; X&nbsp; 2020</h2>
-	</h:panelGrid>
-	
+				<div class="row " style="">
+					<h:panelGrid id="panel" columns="1" border="0"
+							     	cellpadding = "10" cellspacing="1">
+						<div class="fontiR mireseerdhet" style=" font-size: 35px;">KONFERENCA X 
+						<p class="fontiOEL" style="color:white; font-size: 20px;">2020</p>
+						</div>
+					</h:panelGrid>
+				</div>
+
 	<div align="center" >
 			<h:panelGroup style = "display:block; text-align:center">
          		<h:commandButton value = "Autoret" class="butonMenu" />
@@ -29,35 +34,16 @@
      			<h:commandButton value = "Vleresimet" class="butonMenu" />
         	</h:panelGroup>	
 	</div>
-	
-<!--  
-	<div align="center" >
-		
- <h:form>
-        <p:tabMenu style="display: inline-block; class:fontiBo" activeIndex="#{param.i}">
-    <p:menuitem style="class:fontiBo" value="Autoret" outcome="/autor?faces-redirect=true" icon="">
-        <f:param name="i" value="0" />
-    </p:menuitem>
-    <p:menuitem value="Artikujt"  icon="">
-        <f:param name="i" value="1" />
-    </p:menuitem>
-    <p:menuitem value="Shqyrtuesit"  icon="">
-        <f:param name="i" value="2" />
-    </p:menuitem>
-    <p:menuitem value="Autor/Artikull"  icon="">
-        <f:param name="i" value="3" />
-    </p:menuitem>
-    <p:menuitem value="Vleresimet"  icon="">
-        <f:param name="i" value="4" />
-    </p:menuitem>
-</p:tabMenu>
-       
- </h:form>      
-
-		</div>	
-	-->	
-	
 	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 </h:body>
 </html>

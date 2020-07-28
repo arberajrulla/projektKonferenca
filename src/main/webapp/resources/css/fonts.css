@@ -1,0 +1,106 @@
+@font-face {
+	src: url(fonts/Questrial-Regular.ttf);
+	font-family: questrial;
+}
+
+.fontiqu {
+	text-align: center;
+	font-family: questrial;
+}
+
+@font-face {
+	src: url(fonts/Cinzel-Regular.ttf);
+	font-family: cinzelR;
+}
+
+.fontiR {
+	text-align: center;
+	font-family: cinzelR;
+}
+
+@font-face {
+	src: url(fonts/Cinzel-Black.ttf);
+	font-family: cinzelBl;
+}
+
+.fontiBl {
+	text-align: center;
+	font-family: cinzelBl;
+}
+
+@font-face {
+	src: url(fonts/Cinzel-Bold.ttf);
+	font-family: cinzelBo;
+}
+
+.fontiBo {
+	text-align: center;
+	font-family: cinzelBo;
+}
+
+
+
+
+
+@font-face {
+	src: url(fonts/Oswald-Bold.ttf);
+	font-family: oswaldB;
+}
+
+.fontiOB{
+		text-align: center;
+	font-family: oswaldB;
+}
+
+@font-face {
+	src: url(fonts/Oswald-Light.ttf);
+	font-family: oswaldL;
+}
+
+.fontiOL{
+		text-align: center;
+	font-family: oswaldL;
+}
+
+@font-face {
+	src: url(fonts/Oswald-ExtraLight.ttf);
+	font-family: oswaldEL;
+}
+
+.fontiOEL{
+	text-align: center;
+	font-family: oswaldEL;
+}
+
+
+@font-face {
+	src: url(fonts/Oswald-Medium.ttf);
+	font-family: oswaldM;
+}
+
+.fontiOM{
+	text-align: center;
+	font-family: oswaldM;
+}
+
+
+@font-face {
+	src: url(fonts/Oswald-Regular.ttf);
+	font-family: oswaldR;
+}
+
+.fontiOR{
+	text-align: center;
+	font-family: oswaldR;
+}
+
+
+@font-face {
+	src: url(fonts/Oswald-SemiBold.ttf);
+	font-family: oswaldSB;
+}
+
+.fontiOSB{
+	text-align: center;
+	font-family: oswaldSB;
+}

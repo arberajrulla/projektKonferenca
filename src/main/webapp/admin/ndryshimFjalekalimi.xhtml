@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="kryesore.xhtml"
+     			xmlns:h="http://java.sun.com/jsf/html"
+      			xmlns:f="http://java.sun.com/jsf/core"
+      			xmlns:p="http://primefaces.org/ui"
+                xmlns:utils="http://xmlns.jcp.org/jsf/composite/utils">
+                
+	<ui:define name="title">Ndryshim Fjalekalimi</ui:define>
+	 
+    <ui:define name="content">
+<div class="col-md-12"  style=" padding: 70px 50px 50px 50px;">
+<div align="center" class="loginWhite" style="min-width:400px;" >
+		<h:form id="forma3" class="row" style=" display: inline-block;">
+         	<h:panelGroup style = "display:block; text-align:center">
+				<p class= "fontiOM textColor" style="padding: 40px 0px 10px 0px; font-size:20px;">
+					NDRYSHO FJALEKALIMIN</p>
+			</h:panelGroup>
+
+
+        	<h:panelGrid id="gridFushat" columns="3" 
+            	cellpadding="13" cellspacing="1">
+            	
+         	
+            	<h:outputLabel class="fontiOSB textColor" value="Fjalekalimi i Vjeter" />
+            	<h:inputSecret class="form-control" 
+            				id="fushaIdRes1" value="#{autentikim.username}" 
+            				required="true"
+            				requiredMessage="Ju lutem plotesoni id"/>
+            				
+            	<h:message style="color:red;margin:8px;" for="fushaIdRes" ></h:message>
+           
+				<h:outputLabel class="fontiOSB textColor" value="Fjalekalimi i Ri" />
+            	<h:inputSecret class="form-control" 
+            				id="fushaIdRes2" value="#{autentikim.username}" 
+            				required="true"
+            				requiredMessage="Ju lutem plotesoni id"/>
+            				
+            	<h:message style="color:red;margin:8px;" for="fushaIdRes" ></h:message>
+            	
+            	<h:outputLabel class="fontiOSB textColor" value="Perserisni Fjalekalimin e ri" />
+            	<h:inputSecret class="form-control" 
+            				id="fushaIdRes3" value="#{autentikim.username}" 
+            				required="true"
+            				requiredMessage="Ju lutem plotesoni id"/>
+            				
+            	<h:message style="color:red;margin:8px;" for="fushaIdRes" ></h:message>            	
+            	
+            	
+
+            	
+            	<f:facet name="footer">
+               		<h:panelGroup style="display:block; text-align:center">
+                  		<h:commandButton id="vazhdobtnPs" class="fontiOL btn btn-primary" value="RUAJ"
+                  		 action="admin/faqja1.xhtml" >
+                  		 <f:ajax execute="@form" render="@form" />
+                  		 </h:commandButton>
+               		</h:panelGroup>
+            	</f:facet>
+         </h:panelGrid>
+	</h:form>
+	</div>
+	</div>
+    </ui:define>
+
+</ui:composition>

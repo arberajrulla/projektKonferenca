@@ -1,0 +1,215 @@
+<!DOCTYPE HTML>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="kryesore.xhtml"
+     			xmlns:h="http://java.sun.com/jsf/html"
+      			xmlns:f="http://java.sun.com/jsf/core"
+      			xmlns:p="http://primefaces.org/ui"
+                xmlns:utils="http://xmlns.jcp.org/jsf/composite/utils">
+                
+	<ui:define name="title">Shqyrtuesit</ui:define>
+	 
+    <ui:define name="content">
+<h:form>
+<div style="padding: 60px 100px 0px 100px;">
+
+<p:dataTable id="tabelaShqyrtues"
+		styleClass="table table-dark"
+		var="shqyrtuesi"
+		widgetVar="tabelaAllShqyrtues"
+		selection="#{shqyrtues.shqyrtuesitEPerzgjedhur}"
+		rowKey="#{shqyrtuesi.id_email}"
+		value="#{shqyrtues.listaShqyrtues}" 
+		editable="true" reflow="true" rows="5"
+		editMode="row"
+		sortMode="multiple"
+		paginator="true"
+		paginatorPosition="bottom"
+		paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		rowsPerPageTemplate="5,10,15,20,50,100"
+		filteredValue="#{shqyrtues.shqyrtuesitEFiltruar}">
+        
+       
+        
+        <f:facet name="header">
+            <p:outputPanel>
+            	<div style="text-align:center; padding-top:10px;">
+	            	<h:outputText class="textColor fontiOEL madhesiaHeader" style="align:center" value="Lista e Shqyrtuesve" />
+	            </div>	
+	            <p:separator style="background: rgba(107, 247, 255, 0.2); border-color: rgba(107, 247, 255, 0.2);height:0.2px "/>
+	            <div style="padding-bottom:5px; margin-top:-7px;">
+		            <p:commandButton style="float: left; left: 10px;" process="tabelaShqyrtues" 
+		            			actionListener="#{shqyrtues.fshirjeShqyrtuesi()}"
+	          	 				value="Fshi" update="tabelaShqyrtues">
+							<p:confirm header="Konfirmo" message="Kujdes, fushat e perzgjedhura do te fshihen!"/>
+	          		</p:commandButton>	        
+		                <h:outputText class="textColor fontiOEL" style="padding-right:10px; align: right; " value="Kerko:" />
+		                <p:inputText id="globalFilter" onkeyup="PF('tabelaAllShqyrtues').filter()" 
+		                	style="padding-right:10px; " styleClass="inputFushaFilterKerko"
+	                 		placeholder="Vendos keyword"/>
+	            </div>
+            </p:outputPanel>
+        </f:facet>
+        
+        
+        
+         
+        <p:ajax event="rowEdit"/>
+        <p:ajax event="rowEditCancel"/>
+        
+         
+	<p:column selectionMode="multiple" style="width:35px;text-align:center; margin:auto;"/>
+    <p:column styleClass="hiqOutline" headerText="Emri" 
+    			filterMatchMode="exact" sortBy="#{shqyrtuesi.emri}"
+    			filterStyle="display:none" filterBy="#{shqyrtuesi.emri}">
+          <p:cellEditor>
+              <f:facet name="output"><h:outputText style="display: block;" value="#{shqyrtuesi.emri}" /></f:facet>
+              <f:facet name="input">
+              		<p:inputText id="modelInput" value="#{shqyrtuesi.emri}" style="width:100%" required="true">
+              		</p:inputText>
+              </f:facet>
+          </p:cellEditor>
+    </p:column>
+ 
+    <p:column styleClass="hiqOutline" headerText="Mbiemri" sortBy="#{shqyrtuesi.mbiemri}" filterStyle="display:none" filterBy="#{shqyrtuesi.mbiemri}">
+          <p:cellEditor>
+              <f:facet name="output"><h:outputText style="display: block;" value="#{shqyrtuesi.mbiemri}" /></f:facet>
+              <f:facet name="input"><p:inputText value="#{shqyrtuesi.mbiemri}" style="width:100%"/></f:facet>
+          </p:cellEditor>        
+    </p:column>
+    
+    <p:column styleClass="hiqOutline" headerText="E-mail" sortBy="#{shqyrtuesi.id_email}" filterStyle="display:none" filterBy="#{shqyrtuesi.id_email}">
+          <p:cellEditor>
+              <f:facet name="output"><h:outputText style="display: block;" value="#{shqyrtuesi.id_email}" /></f:facet>
+              <f:facet name="input"><p:inputText value="#{shqyrtuesi.id_email}" style="width:100%"/></f:facet>
+          </p:cellEditor>        
+    </p:column>
+    
+    <p:column styleClass="hiqOutline" headerText="Institucioni" sortBy="#{shqyrtuesi.institucioni}" filterStyle="display:none" filterBy="#{shqyrtuesi.institucioni}">
+          <p:cellEditor>
+              <f:facet name="output"><h:outputText style="display:block;" value="#{shqyrtuesi.institucioni}" /></f:facet>
+              <f:facet name="input"><p:inputText value="#{shqyrtuesi.institucioni}" style="width:100%"/></f:facet>
+          </p:cellEditor>        
+    </p:column>
+    
+    <p:column style="width:80px" headerText="Modifiko" styleClass="editoBorderTabela">							     	
+          	<p:rowEditor/>
+    </p:column>
+	<!--     <p:column style="margin:auto;" >
+         <p:commandButton value="Fshi Rekordin" style="margin:auto; display: flex"/>
+    </p:column>
+     -->
+    <f:facet name="footer">
+
+          	
+          	<p:commandButton process="@this"
+          	 value="Shto Shqyrtues"  
+          	 oncomplete="PF('dialogShqyrtuesIRI').show()" update="tabelaShqyrtues">
+          	</p:commandButton>
+
+    </f:facet>
+</p:dataTable>
+
+
+<p:confirmDialog  id="konfirmoDialog" global="true" showEffect="fade" hideEffect="fade" >
+        <p:commandButton style="align:center;" value="Konfirmo" type="button" styleClass="ui-confirmdialog-yes" />
+        <p:commandButton style="align:center;" value="Kthehu" type="button" styleClass="ui-confirmdialog-no" />
+</p:confirmDialog>
+
+
+
+
+<p:contextMenu for="tabelaShqyrtues" widgetVar="menujacntx" >
+        <p:menuitem process="@form" actionListener="#{shqyrtues.fshirjeShqyrtuesi()}"
+        			value="Fshi" update="tabelaShqyrtues">
+        			<p:confirm header="Konfirmim" message="Deshironi ta fshini kete shqyrtues?!"/>	
+        </p:menuitem>
+         <p:separator />
+         <p:menuitem value="Mbyll" onclick="PF('menujacntx').hide()"/>
+</p:contextMenu>
+
+
+
+
+
+</div>
+
+
+
+
+	
+		<div class="row" align="center">
+			<div class="col-md-12" >
+				
+				
+				
+				
+			</div>
+		</div>
+
+		</h:form>
+		
+		
+		
+		
+<h:form>
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogNewShqyrtues" header="Shqyrtues i ri" widgetVar="dialogShqyrtuesIRI" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+        
+         <h:outputText value="Ju lutemi kontrolloni fushat e meposhtme!" 
+            	style="color:red; font-family:oswaldB; font-size:15px;"
+            	rendered="#{facesContext.validationFailed}" />
+            	
+            	
+        <h:panelGrid style="width: auto; font-size:15px" columns="2" styleClass="textColorGold fontiOL"
+            	cellpadding ="10" cellspacing="1">
+
+            	<h:outputLabel value="Emri" />
+            	<p:inputText styleClass="inputFushat" id="fushaEmriShR" value="#{shqyrtues.emri}"
+            					required="true">          			
+            	</p:inputText>
+            	
+            
+            	<h:outputLabel value="Mbiemri"  />
+            	<p:inputText styleClass="inputFushat" id="fushaMbiemriShR" value="#{shqyrtues.mbiemri}"
+            					required="true">          			
+            	</p:inputText>
+            	
+            	
+            	<h:outputLabel value="E-mail"  />
+            	<p:inputText styleClass="inputFushat" id="fushaemailShR" value="#{shqyrtues.id_email}" 
+            					required="true">          			
+            	</p:inputText>
+            	     	 
+            	<h:outputLabel value="Institucioni"  />
+            	<p:inputText styleClass="inputFushat" id="fushaInstitucioniShR" value="#{shqyrtues.institucioni}" 
+            					required="true">          			
+            	</p:inputText>
+            	
+
+            	<f:facet name="footer">
+               		<h:panelGroup style="display:block; text-align:center">
+                  		<h:commandButton class="fontiOL btn btn-primary" value="Ruaj" process="@this"
+                  			 actionListener="#{shqyrtues.shtimShqyrtuesi()}"
+                  			 >
+                  			 <f:ajax execute="@form" render="@form"></f:ajax>
+                  			 <f:ajax execute="@this" render="@this"></f:ajax>
+                  			 </h:commandButton>
+              			 
+               		</h:panelGroup>
+            	</f:facet> 
+
+        </h:panelGrid>
+        </p:outputPanel>
+</p:dialog>  
+
+
+</h:form>
+		
+
+
+
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,172 @@
+<!DOCTYPE HTML>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="kryesore.xhtml"
+     			xmlns:h="http://java.sun.com/jsf/html"
+      			xmlns:f="http://java.sun.com/jsf/core"
+      			xmlns:p="http://primefaces.org/ui"
+                xmlns:utils="http://xmlns.jcp.org/jsf/composite/utils">
+                
+	<ui:define name="title">Vleresimet</ui:define>
+	 
+    <ui:define name="content">
+<h:form>
+<div style="padding: 60px 100px 0px 100px;">
+
+<p:dataTable id="tabelaVleresim"
+		styleClass="table table-dark"
+		var="vleresimi"
+		widgetVar="tabelaAllVleresime"
+		selection="#{vleresim.vleresimetEPerzgjedhura}"
+		rowKey="#{vleresimi.shqyrtues_id}"
+		value="#{vleresim.listaVleresime}" 
+		editable="true" reflow="true" rows="5"
+		editMode="row"
+		sortMode="multiple"
+		paginator="true"
+		paginatorPosition="bottom"
+		paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		rowsPerPageTemplate="5,10,15,20,50,100"
+		filteredValue="#{vleresim.vleresimetEFiltruara}">
+        
+       
+        
+        <f:facet name="header">
+            <p:outputPanel>
+            	<div style="text-align:center; padding-top:10px;">
+	            	<h:outputText class="textColor fontiOEL madhesiaHeader" style="align:center" value="Lista e vleresimeve per cdo artikull" />
+	            </div>	
+	            <p:separator style="background: rgba(107, 247, 255, 0.2); border-color: rgba(107, 247, 255, 0.2);height:0.2px "/>
+	            <div style="padding-bottom:5px; margin-top:-7px;">
+		            <p:commandButton style="float: left; left: 10px;" process="tabelaVleresim" 
+		            			actionListener="#{vleresim.fshirjeVleresimi()}"
+	          	 				value="Fshi" update="tabelaVleresim">
+							<p:confirm header="Konfirmo" message="Kujdes, fushat e perzgjedhura do te fshihen!"/>
+	          		</p:commandButton>	        
+		                <h:outputText class="textColor fontiOEL" style="padding-right:10px; align: right; " value="Kerko:" />
+		                <p:inputText id="globalFilter" onkeyup="PF('tabelaAllVleresime').filter()" 
+		                	style="padding-right:10px; " styleClass="inputFushaFilterKerko"
+	                 		placeholder="Vendos keyword"/>
+	            </div>
+            </p:outputPanel>
+        </f:facet>
+         
+        <p:ajax event="rowEdit"/>
+        <p:ajax event="rowEditCancel"/>
+        
+         
+	<p:column selectionMode="multiple" style="width:35px;text-align:center; margin:auto;"/>
+    <p:column styleClass="hiqOutline" headerText="Emri i Shqyrtuesit" 
+    			filterMatchMode="exact" sortBy="#{vleresimi.emriFull}"
+    			filterStyle="display:none" filterBy="#{vleresimi.emriFull}">
+          <p:cellEditor>
+              <f:facet name="output"><h:outputText style="display: block;" value="#{vleresimi.emriFull}" /></f:facet>
+              <f:facet name="input">
+              		<p:inputText id="modelInput" value="#{vleresimi.emriFull}" style="width:100%" required="true">
+              		</p:inputText>
+              </f:facet>
+          </p:cellEditor>
+    </p:column>
+ 
+    <p:column styleClass="hiqOutline" headerText="E-mail" sortBy="#{vleresimi.shqyrtues_id}" filterStyle="display:none" filterBy="#{vleresimi.shqyrtues_id}">
+          <p:cellEditor>
+              <f:facet name="output"><h:outputText style="display: block;" value="#{vleresimi.shqyrtues_id}" /></f:facet>
+              <f:facet name="input"><p:inputText value="#{vleresimi.shqyrtues_id}" style="width:100%"/></f:facet>
+          </p:cellEditor>        
+    </p:column>
+    
+    <p:column styleClass="hiqOutline" headerText="Artikulli" sortBy="#{vleresimi.artikulli}" filterStyle="display:none" filterBy="#{vleresimi.artikulli}">
+          <p:cellEditor>
+              <f:facet name="output"><h:outputText style="display: block;" value="#{vleresimi.artikulli}" /></f:facet>
+              <f:facet name="input"><p:inputText value="#{vleresimi.artikulli}" style="width:100%"/></f:facet>
+          </p:cellEditor>        
+    </p:column>
+    
+    <p:column styleClass="hiqOutline" headerText="Merita Teknike" sortBy="#{vleresimi.meritaTeknike}" 
+    			filterStyle="display:none" filterBy="#{vleresimi.meritaTeknike}">
+          <p:cellEditor>
+              <f:facet name="output"><h:outputText style="display:block;" value="#{vleresimi.meritaTeknike}" /></f:facet>
+              <f:facet name="input"><p:inputText value="#{vleresimi.meritaTeknike}" style="width:100%"/></f:facet>
+          </p:cellEditor>
+    </p:column>
+    
+    <p:column styleClass="hiqOutline" headerText="Kuptueshmeria" sortBy="#{vleresimi.kuptueshmeria}" 
+    			filterStyle="display:none" filterBy="#{vleresimi.kuptueshmeria}">
+          <p:cellEditor>
+              <f:facet name="output"><h:outputText style="display:block;" value="#{vleresimi.kuptueshmeria}" /></f:facet>
+              <f:facet name="input"><p:inputText value="#{vleresimi.kuptueshmeria}" style="width:100%"/></f:facet>
+          </p:cellEditor>
+    </p:column>
+    
+    <p:column styleClass="hiqOutline" headerText="Origjinaliteti" sortBy="#{vleresimi.origjinaliteti}" 
+    			filterStyle="display:none" filterBy="#{vleresimi.origjinaliteti}">
+          <p:cellEditor>
+              <f:facet name="output"><h:outputText style="display:block;" value="#{vleresimi.origjinaliteti}" /></f:facet>
+              <f:facet name="input"><p:inputText value="#{vleresimi.origjinaliteti}" style="width:100%"/></f:facet>
+          </p:cellEditor>
+    </p:column>
+    
+    <p:column styleClass="hiqOutline" headerText="Perkatesi Konference" sortBy="#{vleresimi.perkatesiKonference}" 
+    			filterStyle="display:none" filterBy="#{vleresimi.perkatesiKonference}">
+          <p:cellEditor>
+              <f:facet name="output"><h:outputText style="display:block;" value="#{vleresimi.perkatesiKonference}" /></f:facet>
+              <f:facet name="input"><p:inputText value="#{vleresimi.perkatesiKonference}" style="width:100%"/></f:facet>
+          </p:cellEditor>
+    </p:column>
+    
+    <p:column styleClass="hiqOutline" headerText="Rekomandim" sortBy="#{vleresimi.rekomandim}" 
+    			filterStyle="display:none" filterBy="#{vleresimi.rekomandim}">
+          <p:cellEditor>
+              <f:facet name="output"><h:outputText style="display:block;" value="#{vleresimi.rekomandim}" /></f:facet>
+              <f:facet name="input"><p:inputText value="#{vleresimi.rekomandim}" style="width:100%"/></f:facet>
+          </p:cellEditor>
+    </p:column>    
+    
+    <p:column style="width:80px" headerText="Modifiko" styleClass="editoBorderTabela">							     	
+          	<p:rowEditor/>
+    </p:column>
+	<!--     <p:column style="margin:auto;" >
+         <p:commandButton value="Fshi Rekordin" style="margin:auto; display: flex"/>
+    </p:column>
+     -->
+    <f:facet name="footer">
+
+          	
+          	<p:commandButton process="@this"
+          	 value="Shto Vleresim"
+          	 oncomplete="#" update="tabelaVleresim">
+          	</p:commandButton>
+
+    </f:facet>
+</p:dataTable>
+
+
+<p:confirmDialog  id="konfirmoDialog" global="true" showEffect="fade" hideEffect="fade" >
+        <p:commandButton style="align:center;" value="Konfirmo" type="button" styleClass="ui-confirmdialog-yes" />
+        <p:commandButton style="align:center;" value="Kthehu" type="button" styleClass="ui-confirmdialog-no" />
+</p:confirmDialog>
+
+
+
+
+<p:contextMenu for="tabelaVleresim" widgetVar="menujacntx" >
+        <p:menuitem process="@form" actionListener="#{vleresim.fshirjeShqyrtuesi()}"
+        			value="Fshi" update="tabelaVleresim">
+        			<p:confirm header="Konfirmim" message="Deshironi ta fshini kete vleresim?!"/>	
+        </p:menuitem>
+         <p:separator />
+         <p:menuitem value="Mbyll" onclick="PF('menujacntx').hide()"/>
+</p:contextMenu>
+
+</div>
+</h:form>
+		
+		
+	
+		
+	
+
+
+    </ui:define>
+
+</ui:composition>
