@@ -1,4 +1,4 @@
-package Projekti2.Projekti2;
+package com.ikubinfo.konferenca;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

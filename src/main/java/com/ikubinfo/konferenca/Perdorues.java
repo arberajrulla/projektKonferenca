@@ -1,4 +1,4 @@
-package Projekti2.Projekti2;
+package com.ikubinfo.konferenca;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;

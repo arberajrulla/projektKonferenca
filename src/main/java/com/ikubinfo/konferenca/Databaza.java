@@ -1,4 +1,4 @@
-package Projekti2.Projekti2;
+package com.ikubinfo.konferenca;
 
 import java.awt.HeadlessException;
 import java.sql.Connection;
