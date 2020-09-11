@@ -6,7 +6,6 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 
 @ManagedBean (name = "perdoruesiRi")
-@SessionScoped
 @RequestScoped
 
 public class PerdoruesiRi {

@@ -9,7 +9,6 @@ import javax.validation.constraints.NotNull;
 
 @ManagedBean(name="autentikim")
 @RequestScoped
-@ViewScoped
 public class Autentikim implements Serializable {
 
 	private static final long serialVersionUID = 1L;

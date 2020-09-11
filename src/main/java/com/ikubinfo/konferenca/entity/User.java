@@ -1,5 +1,7 @@
 package com.ikubinfo.konferenca.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,10 +11,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="login")
-public class User {
-	
+public class User implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "username")
 	private String username;
 	
@@ -22,7 +26,6 @@ public class User {
 	@Column(name = "mbiemri")
 	private String mbiemri;
 	
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "email")
 	private String email;
 	
@@ -32,7 +35,6 @@ public class User {
 	@Column(name = "kategoria")
 	private String kategoria;
 	
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "nrcel")
 	private String nrcel;
 	
