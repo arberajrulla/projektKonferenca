@@ -18,10 +18,9 @@ public class AuthentikimBean {
 	@ManagedProperty(value = "#{userService}")
 	UserService uService;
 
-	@ManagedProperty(value = "#{userBean}")
-	UserBean userBean;
+	@ManagedProperty(value = "#{loggedUserBean}")
+	LoggedUserBean loggedUserBean;
 
-	
 	private static Logger log = Logger.getLogger(AuthentikimBean.class);
 	private String username;
 	private String password;
@@ -44,11 +43,11 @@ public class AuthentikimBean {
 	public void setuService(UserService uService) {
 		this.uService = uService;
 	}
-	public UserBean getUserBean() {
-		return userBean;
+	public LoggedUserBean getLoggedUserBean() {
+		return loggedUserBean;
 	}
-	public void setUserBean(UserBean userBean) {
-		this.userBean = userBean;
+	public void setLoggedUserBean(LoggedUserBean loggedUserBean) {
+		this.loggedUserBean = loggedUserBean;
 	}
 	
 	public String authentikim() {
@@ -59,8 +58,8 @@ public class AuthentikimBean {
 		if(userDto!=null) {
 			
 			System.out.println("Autentikimi password: " + userDto.getPassword());
-			if(this.password.equals(userDto.getPassword())) {	
-				userBean.setUserDto(userDto);
+			if(this.password.equals(userDto.getPassword())) {
+				loggedUserBean.setLoggedUser(userDto);
 				System.out.println("Login successful");
 				log.info("Login successful from log");
 				return ("admin/kryesore.xhtml?faces-redirect=true");
@@ -74,10 +73,8 @@ public class AuthentikimBean {
 	}
 	
 	public String dil() {
-		userBean.logOut();
-		return("login.xhtml");
+		loggedUserBean.logout();
+		return("/login.xhtml?faces-redirect=true");
 	}
-	
-			
 }
 

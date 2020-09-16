@@ -41,16 +41,16 @@
      			<h:commandButton value="Vleresimet" class="butonMenu" action="#{vleresim.tabelaVleresimetAdmin}" />
         	</h:panelGroup>	
 	</div>
-<h:form>
+
 	<div style="margin-left: auto; display: block;" >
-	<p:menuButton styleClass="butonDropdownMenu" iconPos="right" value="Profili" style="height:100%;" >
+	<p:menuButton styleClass="butonDropdownMenu" iconPos="right" value="Profili" style="height:100%;" immediate="true">
 		        <p:menuitem value="Modifiko Profilin" action="#{admin.modifikoProfilinAdmin}" />
 		        <p:menuitem value="Ndrysho fjalekalimin" action="#{admin.ndryshoPasswordAdmin}" />
 		        <p:separator />
-		        <p:menuitem value="Dil" action="#{authentikimBean.dil()}" immediate="true" url="../login.xhtml?faces-redirect=true"/>
+		        <p:menuitem value="Dil" action="#{authentikimBean.dil()}" />
 		    </p:menuButton> 
 	</div>
-</h:form>	
+`
 </div>
 
 		<ui:insert name="content"></ui:insert>

@@ -23,9 +23,8 @@
 	<listener-class>
 		org.springframework.web.context.request.RequestContextListener
 	</listener-class>
-	 </listener>	   
-	   
-	    
+	 </listener>	      
+	
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>

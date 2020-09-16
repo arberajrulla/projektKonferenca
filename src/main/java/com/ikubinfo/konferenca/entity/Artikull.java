@@ -12,7 +12,7 @@ import javax.persistence.Table;
 public class Artikull {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "artikull_id")
 	private int artikullId;
 
@@ -29,12 +29,12 @@ public class Artikull {
 	private String kontakt;
 	
 	
-	public int getArtikull_id() {
+	public int getArtikullId() {
 		return artikullId;
 	}
 
-	public void setArtikull_id(int artikull_id) {
-		this.artikullId = artikull_id;
+	public void setArtikullId(int artikullId) {
+		this.artikullId = artikullId;
 	}
 
 	public String getTitulli() {
@@ -53,12 +53,12 @@ public class Artikull {
 		this.abstrakti = abstrakti;
 	}
 
-	public String getDokumenti_elektronik() {
+	public String getDokumentiElektronik() {
 		return dokumentiElektronik;
 	}
 
-	public void setDokumenti_elektronik(String dokumenti_elektronik) {
-		this.dokumentiElektronik = dokumenti_elektronik;
+	public void setDokumentiElektronik(String dokumentiElektronik) {
+		this.dokumentiElektronik = dokumentiElektronik;
 	}
 
 	public String getKontakt() {

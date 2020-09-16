@@ -17,9 +17,9 @@
 		styleClass="table table-dark"
 		var="artikulli"
 		widgetVar="tabelaAllArtikuj"
-		selection="#{artikull.artikujtEPerzgjedhur}"
-		rowKey="#{artikulli.artikull_id}"
-		value="#{artikull.artikujAll}" 
+		selection="#{artikullBean.selectedArtikull}"
+		rowKey="#{artikulli.artikullId}"
+		value="#{artikullBean.getListaArtikuj()}" 
 		editable="true" reflow="true" rows="5"
 		editMode="row"
 		sortMode="multiple"
@@ -78,10 +78,10 @@
           </p:cellEditor>        
     </p:column>
  
-    <p:column styleClass="hiqOutline" headerText="Dokumenti Elektronik" sortBy="#{artikulli.dokumenti_elektronik}" filterStyle="display:none" filterBy="#{artikulli.dokumenti_elektronik}">
+    <p:column styleClass="hiqOutline" headerText="Dokumenti Elektronik" sortBy="#{artikulli.dokumentiElektronik}" filterStyle="display:none" filterBy="#{artikulli.dokumentiElektronik}">
           <p:cellEditor>
-              <f:facet name="output"><h:outputText style="display: block;" value="#{artikulli.dokumenti_elektronik}" /></f:facet>
-              <f:facet name="input"><p:inputText value="#{artikulli.dokumenti_elektronik}" style="width:100%"/></f:facet>
+              <f:facet name="output"><h:outputText style="display: block;" value="#{artikulli.dokumentiElektronik}" /></f:facet>
+              <f:facet name="input"><p:inputText value="#{artikulli.dokumentiElektronik}" style="width:100%"/></f:facet>
           </p:cellEditor>        
     </p:column>
     
