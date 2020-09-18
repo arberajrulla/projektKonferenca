@@ -1,10 +1,15 @@
 package com.ikubinfo.konferenca.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -13,10 +18,10 @@ public class Shqyrtues {
 
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_email")
-	private String id_email;
-	
+	private String idEmail;
+
 	@Column(name = "emri")
 	private String emri;
 	
@@ -26,13 +31,16 @@ public class Shqyrtues {
 	@Column(name = "institucioni")
 	private String institucioni;
 	
+	@OneToMany(mappedBy = "shqyrtues", cascade=CascadeType.ALL)
+	private List<Artikull> artikujt = new ArrayList<Artikull>();
 	
-	public String getId_email() {
-		return id_email;
+
+	public String getIdEmail() {
+		return idEmail;
 	}
 
-	public void setId_email(String id_email) {
-		this.id_email = id_email;
+	public void setIdEmail(String idEmail) {
+		this.idEmail = idEmail;
 	}
 
 	public String getEmri() {
@@ -57,5 +65,13 @@ public class Shqyrtues {
 
 	public void setInstitucioni(String institucioni) {
 		this.institucioni = institucioni;
+	}
+	
+	public List<Artikull> getArtikujt() {
+		return artikujt;
+	}
+
+	public void setArtikujt(List<Artikull> artikujt) {
+		this.artikujt = artikujt;
 	}
 }

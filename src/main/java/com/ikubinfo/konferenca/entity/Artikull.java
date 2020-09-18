@@ -1,10 +1,17 @@
 package com.ikubinfo.konferenca.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -28,7 +35,13 @@ public class Artikull {
 	@Column(name = "kontakt")	
 	private String kontakt;
 	
+	@OneToMany(mappedBy = "artikuj", cascade=CascadeType.ALL)
+	private List<Autor> autoret = new ArrayList<>();
 	
+	@ManyToOne
+	@JoinColumn(name = "id_email")
+	private Shqyrtues shqyrtues;
+
 	public int getArtikullId() {
 		return artikullId;
 	}
@@ -67,5 +80,12 @@ public class Artikull {
 
 	public void setKontakt(String kontakt) {
 		this.kontakt = kontakt;
+	}
+	public ArrayList<Autor> getAutoret() {
+		return (ArrayList<Autor>) autoret;
+	}
+
+	public void setAutoret(ArrayList<Autor> autoret) {
+		this.autoret = autoret;
 	}
 }

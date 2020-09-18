@@ -1,11 +1,14 @@
 package com.ikubinfo.konferenca.convert;
 
+import org.springframework.stereotype.Component;
+
 import com.ikubinfo.konferenca.dto.ArtikullDto;
 import com.ikubinfo.konferenca.entity.Artikull;
 
+@Component
 public class ArtikullConverter {
 
-	public static ArtikullDto toArtikullDto(Artikull artikull) {
+	public ArtikullDto toArtikullDto(Artikull artikull) {
 		ArtikullDto artikullDto = new ArtikullDto();
 		artikullDto.setArtikullId(artikull.getArtikullId());
 		artikullDto.setTitulli(artikull.getTitulli());

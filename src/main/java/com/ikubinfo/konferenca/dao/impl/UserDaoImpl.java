@@ -17,7 +17,7 @@ import com.ikubinfo.konferenca.entity.User;
 import com.ikubinfo.konferenca.utils.SessionFactoryUtil;
 
 @Repository(value = "UserDao")
-@Component
+
 public class UserDaoImpl implements UserDao {
 	private static Logger log = Logger.getLogger(UserDaoImpl.class);
 	
@@ -30,8 +30,6 @@ public class UserDaoImpl implements UserDao {
 	public void setSession(Session session) {
 		this.session = session;
 	}
-	
-	
 
 
 	@SuppressWarnings({ "unchecked", "deprecation" })
@@ -76,7 +74,6 @@ public class UserDaoImpl implements UserDao {
 			session.beginTransaction();
 			
 			user = (User) session.get(User.class, username);
-			//session.getEntityManagerFactory().createEntityManager().createNamedQuery();
 			
 			System.out.println("Objekti u be fetch: " + user.getEmri());
 			
@@ -96,19 +93,16 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public boolean addUser(User u) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean deleteUser(String username) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean updateUser(User u) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }

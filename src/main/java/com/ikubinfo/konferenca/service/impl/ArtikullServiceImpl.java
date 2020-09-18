@@ -18,13 +18,16 @@ public class ArtikullServiceImpl implements ArtikullService {
 	@Autowired
 	ArtikullDao artikullDao;
 	
+	@Autowired
+	ArtikullConverter artikullConverter;
+	
 	@SuppressWarnings("unused")
 	@Override
 	public ArrayList<ArtikullDto> getArtikujLista() {
 		ArrayList<ArtikullDto> artikujDtoLista = new ArrayList<ArtikullDto>();
 		log.info("Service - Converting Artikull objects retrieved from DB to ArtikullDto");
 		for(Artikull artikull : artikullDao.getAllArtikuj()) {
-			artikujDtoLista.add(ArtikullConverter.toArtikullDto(artikull));
+			artikujDtoLista.add(artikullConverter.toArtikullDto(artikull));
 		}
 		
 		if(artikujDtoLista==null) {

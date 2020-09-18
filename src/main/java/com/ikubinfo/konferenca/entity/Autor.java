@@ -1,14 +1,12 @@
 package com.ikubinfo.konferenca.entity;
 
-import java.util.ArrayList;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -27,22 +25,21 @@ public class Autor {
 	private String mbiemri;
 	
 	@Column(name = "artikull_id")
-	private int artikullId;	
+	private String artikullId;
 
-	/*
-	 * @OneToMany(mappedBy="artikullId",cascade=CascadeType.ALL) public
-	 * ArrayList<Artikull> artikuj;
-	 */
-	
 	@Column(name = "id")
-	private int id; 
+	private int id;
+	
+	@ManyToOne
+	private Artikull artikuj;
+	
 	
 	public String getEmailId() {
 		return emailId;
 	}
 
-	public void setEmailId(String email_id) {
-		this.emailId = email_id;
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
 	}
 
 	public String getEmri() {
@@ -61,19 +58,25 @@ public class Autor {
 		this.mbiemri = mbiemri;
 	}
 
-	public int getArtikullId() {
-		return artikullId;
-	}
-
-	public void setArtikullId(int artikull_id) {
-		this.artikullId = artikull_id;
-	}
-
 	public int getId() {
 		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
-	}	
+	}
+	public Artikull getArtikuj() {
+		return artikuj;
+	}
+
+	public void setArtikuj(Artikull artikuj) {
+		this.artikuj = artikuj;
+	}
+	public String getArtikullId() {
+		return artikullId;
+	}
+
+	public void setArtikullId(String artikullId) {
+		this.artikullId = artikullId;
+	}
 }

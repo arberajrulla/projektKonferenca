@@ -13,7 +13,7 @@ import com.ikubinfo.konferenca.service.ArtikullService;
 public class ArtikullBean {
 	
 	@ManagedProperty(value = "#{artikullService}")
-	ArtikullService aService;
+	ArtikullService artikullService;
 	
 	private ArtikullDto selectedArtikull;
 	private ArrayList<ArtikullDto> selectedArtikuj = new ArrayList<ArtikullDto>();
@@ -21,16 +21,16 @@ public class ArtikullBean {
 	private ArrayList<ArtikullDto> listaArtikuj;
 	
 	public ArrayList<ArtikullDto> getListaArtikuj() {
-		return aService.getArtikujLista();
+		return artikullService.getArtikujLista();
 	}
 	public void setListaArtikuj(ArrayList<ArtikullDto> listaArtikuj) {
 		this.listaArtikuj = listaArtikuj;
 	}
-	public ArtikullService getaService() {
-		return aService;
+	public ArtikullService getArtikullService() {
+		return artikullService;
 	}
-	public void setaService(ArtikullService aService) {
-		this.aService = aService;
+	public void setArtikullService(ArtikullService aService) {
+		this.artikullService = aService;
 	}
 	public ArtikullDto getSelectedArtikull() {
 		return selectedArtikull;
