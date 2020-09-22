@@ -17,9 +17,9 @@
 		styleClass="table table-dark"
 		var="vleresimi"
 		widgetVar="tabelaAllVleresime"
-		selection="#{vleresim.vleresimetEPerzgjedhura}"
-		rowKey="#{vleresimi.shqyrtues_id}"
-		value="#{vleresim.listaVleresime}" 
+		selection="#{vleresimeBean.selectedVleresime}"
+		rowKey="#{vleresimi.shqrtid}"
+		value="#{vleresimeBean.allVleresimeList}" 
 		editable="true" reflow="true" rows="5"
 		editMode="row"
 		sortMode="multiple"
@@ -27,7 +27,7 @@
 		paginatorPosition="bottom"
 		paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 		rowsPerPageTemplate="5,10,15,20,50,100"
-		filteredValue="#{vleresim.vleresimetEFiltruara}">
+		filteredValue="#{vleresimeBean.filteredVleresime}">
         
        
         
@@ -39,7 +39,7 @@
 	            <p:separator style="background: rgba(107, 247, 255, 0.2); border-color: rgba(107, 247, 255, 0.2);height:0.2px "/>
 	            <div style="padding-bottom:5px; margin-top:-7px;">
 		            <p:commandButton style="float: left; left: 10px;" process="tabelaVleresim" 
-		            			actionListener="#{vleresim.fshirjeVleresimi()}"
+		            			actionListener="#{vleresimeBean.deleteVleresim()}"
 	          	 				value="Fshi" update="tabelaVleresim">
 							<p:confirm header="Konfirmo" message="Kujdes, fushat e perzgjedhura do te fshihen!"/>
 	          		</p:commandButton>	        
@@ -68,17 +68,17 @@
           </p:cellEditor>
     </p:column>
  
-    <p:column styleClass="hiqOutline" headerText="E-mail" sortBy="#{vleresimi.shqyrtues_id}" filterStyle="display:none" filterBy="#{vleresimi.shqyrtues_id}">
+    <p:column styleClass="hiqOutline" headerText="E-mail" sortBy="#{vleresimi.shqrtid}" filterStyle="display:none" filterBy="#{vleresimi.shqrtid}">
           <p:cellEditor>
-              <f:facet name="output"><h:outputText style="display: block;" value="#{vleresimi.shqyrtues_id}" /></f:facet>
-              <f:facet name="input"><p:inputText value="#{vleresimi.shqyrtues_id}" style="width:100%"/></f:facet>
+              <f:facet name="output"><h:outputText style="display: block;" value="#{vleresimi.shqrtid}" /></f:facet>
+              <f:facet name="input"><p:inputText value="#{vleresimi.shqrtid}" style="width:100%"/></f:facet>
           </p:cellEditor>        
     </p:column>
     
-    <p:column styleClass="hiqOutline" headerText="Artikulli" sortBy="#{vleresimi.artikulli}" filterStyle="display:none" filterBy="#{vleresimi.artikulli}">
+    <p:column styleClass="hiqOutline" headerText="Artikulli" sortBy="#{vleresimi.artikull}" filterStyle="display:none" filterBy="#{vleresimi.artikull}">
           <p:cellEditor>
-              <f:facet name="output"><h:outputText style="display: block;" value="#{vleresimi.artikulli}" /></f:facet>
-              <f:facet name="input"><p:inputText value="#{vleresimi.artikulli}" style="width:100%"/></f:facet>
+              <f:facet name="output"><h:outputText style="display: block;" value="#{vleresimi.artikull}" /></f:facet>
+              <f:facet name="input"><p:inputText value="#{vleresimi.artikull}" style="width:100%"/></f:facet>
           </p:cellEditor>        
     </p:column>
     
@@ -150,7 +150,7 @@
 
 
 <p:contextMenu for="tabelaVleresim" widgetVar="menujacntx" >
-        <p:menuitem process="@form" actionListener="#{vleresim.fshirjeShqyrtuesi()}"
+        <p:menuitem process="@form" actionListener="#{vleresimeBean.deleteVleresim()}"
         			value="Fshi" update="tabelaVleresim">
         			<p:confirm header="Konfirmim" message="Deshironi ta fshini kete vleresim?!"/>	
         </p:menuitem>

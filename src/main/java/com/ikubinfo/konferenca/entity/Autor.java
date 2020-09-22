@@ -2,6 +2,7 @@ package com.ikubinfo.konferenca.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,7 +15,6 @@ import javax.persistence.Table;
 public class Autor {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "email_id")
 	private String emailId;
 
@@ -23,14 +23,12 @@ public class Autor {
 	
 	@Column(name = "mbiemri")
 	private String mbiemri;
-	
-	@Column(name = "artikull_id")
-	private String artikullId;
 
 	@Column(name = "id")
 	private int id;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "artikull_id")
 	private Artikull artikuj;
 	
 	
@@ -72,11 +70,5 @@ public class Autor {
 	public void setArtikuj(Artikull artikuj) {
 		this.artikuj = artikuj;
 	}
-	public String getArtikullId() {
-		return artikullId;
-	}
 
-	public void setArtikullId(String artikullId) {
-		this.artikullId = artikullId;
-	}
 }

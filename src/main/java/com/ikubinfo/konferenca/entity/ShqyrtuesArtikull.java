@@ -19,14 +19,13 @@ public class ShqyrtuesArtikull {
 
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "shqrtid")
 	private String shqrtid;
 
 	@Column(name = "arid")
 	private int arid;
 
-	@Column(name = "meritaTeknike")
+	@Column(name = "merita_Teknike")
 	private int meritaTeknike; 
 	
 	@Column(name = "kuptueshmeria")
@@ -35,19 +34,16 @@ public class ShqyrtuesArtikull {
 	@Column(name = "origjinaliteti")
 	private int origjinaliteti; 
 	
-	@Column(name = "perkatesiKonference")
+	@Column(name = "perkatesi_Konference")
 	private int perkatesiKonference; 
 	
 	/*
-	 * @OneToMany(mappedBy = "id_email", cascade=CascadeType.ALL) private
+	 * @OneToMany(mappedBy = "shqyrtuesArtikullsh", cascade=CascadeType.ALL) private
 	 * List<Shqyrtues> shqyrtuesit = new ArrayList<>();
 	 * 
-	 * @ManyToOne
-	 * 
-	 * @JoinColumn(name = "arid") private Artikull artikull;
-	 * 
+	 * @OneToMany(mappedBy = "shqyrtuesArtikullA", cascade=CascadeType.ALL) private
+	 * List<Artikull> artikujt = new ArrayList<>();
 	 */
-	
 	
 	public String getShqrtid() {
 		return shqrtid;

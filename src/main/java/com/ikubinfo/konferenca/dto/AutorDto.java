@@ -1,13 +1,21 @@
 package com.ikubinfo.konferenca.dto;
 
 public class AutorDto {
+	
 	private String emailId;
 	private String emri;
 	private String mbiemri;
-	private String artikullId;
+	private int artikullId;
 	private int id;
+	private String artikullName;
 	
 	
+	public String getArtikullName() {
+		return artikullName;
+	}
+	public void setArtikullName(String artikullName) {
+		this.artikullName = artikullName;
+	}
 	public String getEmailId() {
 		return emailId;
 	}
@@ -26,11 +34,11 @@ public class AutorDto {
 	public void setMbiemri(String mbiemri) {
 		this.mbiemri = mbiemri;
 	}
-	public String getArtikullId() {
+	public int getArtikullId() {
 		return artikullId;
 	}
-	public void setArtikullId(String artikullId) {
-		this.artikullId = artikullId;
+	public void setArtikullId(int i) {
+		this.artikullId = i;
 	}
 	public int getId() {
 		return id;

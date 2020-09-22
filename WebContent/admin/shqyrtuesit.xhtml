@@ -17,9 +17,9 @@
 		styleClass="table table-dark"
 		var="shqyrtuesi"
 		widgetVar="tabelaAllShqyrtues"
-		selection="#{shqyrtues.shqyrtuesitEPerzgjedhur}"
-		rowKey="#{shqyrtuesi.id_email}"
-		value="#{shqyrtues.listaShqyrtues}" 
+		selection="#{shqyrtuesBean.selectedShqyrtuesa}"
+		rowKey="#{shqyrtuesi.idEmail}"
+		value="#{shqyrtuesBean.listaShqyrtues}" 
 		editable="true" reflow="true" rows="5"
 		editMode="row"
 		sortMode="multiple"
@@ -27,7 +27,7 @@
 		paginatorPosition="bottom"
 		paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 		rowsPerPageTemplate="5,10,15,20,50,100"
-		filteredValue="#{shqyrtues.shqyrtuesitEFiltruar}">
+		filteredValue="#{shqyrtuesBean.shqyrtuesitFiltruar}">
         
        
         
@@ -39,7 +39,7 @@
 	            <p:separator style="background: rgba(107, 247, 255, 0.2); border-color: rgba(107, 247, 255, 0.2);height:0.2px "/>
 	            <div style="padding-bottom:5px; margin-top:-7px;">
 		            <p:commandButton style="float: left; left: 10px;" process="tabelaShqyrtues" 
-		            			actionListener="#{shqyrtues.fshirjeShqyrtuesi()}"
+		            			actionListener="#{shqyrtuesBean.deleteShqyrtues()}"
 	          	 				value="Fshi" update="tabelaShqyrtues">
 							<p:confirm header="Konfirmo" message="Kujdes, fushat e perzgjedhura do te fshihen!"/>
 	          		</p:commandButton>	        
@@ -78,10 +78,10 @@
           </p:cellEditor>        
     </p:column>
     
-    <p:column styleClass="hiqOutline" headerText="E-mail" sortBy="#{shqyrtuesi.id_email}" filterStyle="display:none" filterBy="#{shqyrtuesi.id_email}">
+    <p:column styleClass="hiqOutline" headerText="E-mail" sortBy="#{shqyrtuesi.idEmail}" filterStyle="display:none" filterBy="#{shqyrtuesi.idEmail}">
           <p:cellEditor>
-              <f:facet name="output"><h:outputText style="display: block;" value="#{shqyrtuesi.id_email}" /></f:facet>
-              <f:facet name="input"><p:inputText value="#{shqyrtuesi.id_email}" style="width:100%"/></f:facet>
+              <f:facet name="output"><h:outputText style="display: block;" value="#{shqyrtuesi.idEmail}" /></f:facet>
+              <f:facet name="input"><p:inputText value="#{shqyrtuesi.idEmail}" style="width:100%"/></f:facet>
           </p:cellEditor>        
     </p:column>
     
@@ -120,7 +120,7 @@
 
 
 <p:contextMenu for="tabelaShqyrtues" widgetVar="menujacntx" >
-        <p:menuitem process="@form" actionListener="#{shqyrtues.fshirjeShqyrtuesi()}"
+        <p:menuitem process="@form" actionListener="#{shqyrtuesBean.deleteShqyrtues()}"
         			value="Fshi" update="tabelaShqyrtues">
         			<p:confirm header="Konfirmim" message="Deshironi ta fshini kete shqyrtues?!"/>	
         </p:menuitem>
@@ -166,24 +166,24 @@
             	cellpadding ="10" cellspacing="1">
 
             	<h:outputLabel value="Emri" />
-            	<p:inputText styleClass="inputFushat" id="fushaEmriShR" value="#{shqyrtues.emri}"
+            	<p:inputText styleClass="inputFushat" id="fushaEmriShR" value="#{shqyrtuesBean.shqyrtuesIRi.emri}"
             					required="true">          			
             	</p:inputText>
             	
             
             	<h:outputLabel value="Mbiemri"  />
-            	<p:inputText styleClass="inputFushat" id="fushaMbiemriShR" value="#{shqyrtues.mbiemri}"
+            	<p:inputText styleClass="inputFushat" id="fushaMbiemriShR" value="#{shqyrtuesBean.shqyrtuesIRi.mbiemri}"
             					required="true">          			
             	</p:inputText>
             	
             	
             	<h:outputLabel value="E-mail"  />
-            	<p:inputText styleClass="inputFushat" id="fushaemailShR" value="#{shqyrtues.id_email}" 
+            	<p:inputText styleClass="inputFushat" id="fushaemailShR" value="#{shqyrtuesBean.shqyrtuesIRi.idEmail}" 
             					required="true">          			
             	</p:inputText>
             	     	 
             	<h:outputLabel value="Institucioni"  />
-            	<p:inputText styleClass="inputFushat" id="fushaInstitucioniShR" value="#{shqyrtues.institucioni}" 
+            	<p:inputText styleClass="inputFushat" id="fushaInstitucioniShR" value="#{shqyrtuesBean.shqyrtuesIRi.institucioni}" 
             					required="true">          			
             	</p:inputText>
             	
@@ -191,7 +191,7 @@
             	<f:facet name="footer">
                		<h:panelGroup style="display:block; text-align:center">
                   		<h:commandButton class="fontiOL btn btn-primary" value="Ruaj" process="@this"
-                  			 actionListener="#{shqyrtues.shtimShqyrtuesi()}"
+                  			 actionListener="#{shqyrtuesBean.addShqyrtues()}"
                   			 >
                   			 <f:ajax execute="@form" render="@form"></f:ajax>
                   			 <f:ajax execute="@this" render="@this"></f:ajax>

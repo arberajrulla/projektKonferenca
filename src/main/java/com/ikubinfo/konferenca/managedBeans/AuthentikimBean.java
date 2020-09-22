@@ -10,6 +10,7 @@ import org.jasypt.util.password.StrongPasswordEncryptor;
 import com.ikubinfo.konferenca.dao.impl.UserDaoImpl;
 import com.ikubinfo.konferenca.dto.UserDto;
 import com.ikubinfo.konferenca.service.UserService;
+import com.ikubinfo.konferenca.utils.HashSaltedPassword;
 
 @ManagedBean(name = "authentikimBean")
 @RequestScoped
@@ -56,9 +57,9 @@ public class AuthentikimBean {
 		userDto = uService.getUserForLoggin(username);
 		System.out.println(username);
 		if(userDto!=null) {
-			
-			System.out.println("Autentikimi password: " + userDto.getPassword());
-			if(this.password.equals(userDto.getPassword())) {
+			HashSaltedPassword hashCheck = new HashSaltedPassword();
+			if(userDto.getPassword()
+					.equals(hashCheck.hashGenerate(password, userDto.getSalt()))) {
 				loggedUserBean.setLoggedUser(userDto);
 				System.out.println("Login successful");
 				log.info("Login successful from log");
@@ -71,6 +72,12 @@ public class AuthentikimBean {
 		}
 		return null;
 	}
+	
+	
+	public String regjistrim() {
+		return("regjistrim.xhtml?faces-redirect=true");
+	}
+	
 	
 	public String dil() {
 		loggedUserBean.logout();

@@ -30,32 +30,36 @@
 <div class="row" style="margin-left:40px; margin-right:40px; background-color:#002f77">
 	<div style="margin:0px; ">
 			<h:panelGroup style="text-align:center;">
-         		<h:commandButton value="Faqja Kryesore" class="butonMenu" action="#{admin.kryesoreLinkAdmin}">
+         		<h:commandButton value="Faqja Kryesore" class="butonMenu" action="#">
          		</h:commandButton>
-         		<h:commandButton value="Perdoruesit" class="butonMenu" action="#{perdorues.tabelaPerdoruesAdmin}" />
+         		<h:commandButton value="Perdoruesit" class="butonMenu" action="perdoruesit.xhtml?faces-redirect=true"  />
          		<h:commandButton value="Autoret" class="butonMenu"  
-         				action="#{autor.tabelaAutoretAdmin}"/>
+         				action="autoret.xhtml?faces-redirect=true"/>
      			<h:commandButton value="Artikujt" class="butonMenu"  
-     					action="#{artikull.tabelaArtikujAdmin}"/>
-     			<h:commandButton value="Shqyrtuesit" class="butonMenu" action="#{shqyrtues.tabelaShqyrtuesitAdmin}" />
-     			<h:commandButton value="Vleresimet" class="butonMenu" action="#{vleresim.tabelaVleresimetAdmin}" />
+     					action="/admin/artikuj.xhtml?faces-redirect=true"/>
+     			<h:commandButton value="Shqyrtuesit" class="butonMenu" action="/admin/shqyrtuesit.xhtml?faces-redirect=true" />
+     			<h:commandButton value="Vleresimet" class="butonMenu" action="/admin/vleresimet.xhtml?faces-redirect=true" />
         	</h:panelGroup>	
 	</div>
 
 	<div style="margin-left: auto; display: block;" >
 	<p:menuButton styleClass="butonDropdownMenu" iconPos="right" value="Profili" style="height:100%;" immediate="true">
-		        <p:menuitem value="Modifiko Profilin" action="#{admin.modifikoProfilinAdmin}" />
-		        <p:menuitem value="Ndrysho fjalekalimin" action="#{admin.ndryshoPasswordAdmin}" />
+		        <p:menuitem value="Modifiko Profilin" outcome="/admin/modifikoProfilin.xhtml?faces-redirect=true" />
+		        <p:menuitem value="Ndrysho fjalekalimin" outcome="/admin/ndryshimFjalekalimi.xhtml?faces-redirect=true" />
 		        <p:separator />
 		        <p:menuitem value="Dil" action="#{authentikimBean.dil()}" />
 		    </p:menuButton> 
 	</div>
-`
+
 </div>
+
+
+</h:form>
+
 
 		<ui:insert name="content"></ui:insert>
 		
-</h:form>
+
 			
 </div>
 

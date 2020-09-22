@@ -38,9 +38,10 @@ public class Artikull {
 	@OneToMany(mappedBy = "artikuj", cascade=CascadeType.ALL)
 	private List<Autor> autoret = new ArrayList<>();
 	
-	@ManyToOne
-	@JoinColumn(name = "id_email")
-	private Shqyrtues shqyrtues;
+	//@ManyToOne
+	//private ShqyrtuesArtikull shqyrtuesArtikullA;
+
+
 
 	public int getArtikullId() {
 		return artikullId;
@@ -88,4 +89,5 @@ public class Artikull {
 	public void setAutoret(ArrayList<Autor> autoret) {
 		this.autoret = autoret;
 	}
+
 }

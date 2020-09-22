@@ -2,6 +2,8 @@ package com.ikubinfo.konferenca.dao.impl;
 
 import java.util.ArrayList;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -10,6 +12,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import com.ikubinfo.konferenca.dao.UserDao;
@@ -22,15 +25,12 @@ public class UserDaoImpl implements UserDao {
 	private static Logger log = Logger.getLogger(UserDaoImpl.class);
 	
 	private Session session;
-	
 	public Session getSession() {
 		return session;
 	}
-
 	public void setSession(Session session) {
 		this.session = session;
 	}
-
 
 	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
@@ -89,20 +89,57 @@ public class UserDaoImpl implements UserDao {
 			session.close();
 		}
 	}
+
 	
+	
+	// Using PersistenceContext for other interactions with DB
+	
+	@PersistenceContext
+	EntityManager entityManager;
+
+		
 
 	@Override
 	public boolean addUser(User u) {
-		return false;
+		try {
+			log.info("Persisting " + u.getPassword() + "  " /*+ u.getSalt()*/);
+			//entityManager.getTransaction().begin();
+			entityManager.merge(u);
+			//entityManager.getTransaction().commit();
+			log.info("User was persisted into DB successfully!");
+			return true;
+		}catch(Exception e) {
+			log.error("Error persisting new user into DB ", e);
+			return false;
+		}
 	}
 
 	@Override
 	public boolean deleteUser(String username) {
-		return false;
+		try {
+			User userToDelete = entityManager.find(User.class, username);
+			entityManager.remove(userToDelete);	
+			log.info("User " + username + " deleted successfully from DB!");
+			return true;
+		}catch(Exception e) {
+			log.error("Couldn't delete User from Database ", e);
+			return false;
+		}
 	}
 
 	@Override
 	public boolean updateUser(User u) {
-		return false;
+		try {
+			log.info("Updating user " + u.getEmri());
+			
+			entityManager.merge(u);
+			
+			log.info("User was updated into DB successfully!");
+			return true;
+		}catch(Exception e) {
+			log.error("Error updating user into DB ", e);
+			return false;
+		}
+		
 	}
 }

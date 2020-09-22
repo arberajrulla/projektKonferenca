@@ -24,9 +24,9 @@
 		styleClass="table table-dark" 
 		var="autori" 
 		widgetVar="tabelaAllAutore"
-		selection="#{autor.autoretEPerzgjedhur}"
-		rowKey="#{autor.artikull_id}"
-		value="#{autor.listaAutore}" 
+		selection="#{autorBean.selectedAutore}"
+		rowKey="#{autori.emailId}"
+		value="#{autorBean.allAutorList}" 
 		editable="true" reflow="true" rows="5"
 		editMode="row" 
 		sortMode="multiple"
@@ -34,7 +34,7 @@
 		paginatorPosition="bottom"
 		paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 		rowsPerPageTemplate="5,10,15,20,50,100"
-		filteredValue="#{autor.autoretEFiltruar}"
+		filteredValue="#{autorBean.filteredAutore}"
 		>
         
        
@@ -47,7 +47,7 @@
 	            <p:separator style="background: rgba(107, 247, 255, 0.2); border-color: rgba(107, 247, 255, 0.2);height:0.2px "/>
 	            <div style="padding-bottom:5px; margin-top:-7px;">
 		            <p:commandButton style="float: left; left: 10px;" process="tabelaAutore" 
-		            			actionListener="#{autor.fshirjeAutori()}"
+		            			actionListener="#{autorBean.deleteAutor()}"
 	          	 				value="Fshi" update="tabelaAutore">
 							<p:confirm header="Konfirmo" message="Kujdes, fushat e perzgjedhura do te fshihen!"/>
 	          		</p:commandButton>	        
@@ -87,24 +87,24 @@
           </p:cellEditor>        
     </p:column>
  
-    <p:column styleClass="hiqOutline" headerText="E-mail" sortBy="#{autori.email_id}" filterStyle="display:none" filterBy="#{autori.email_id}">
+    <p:column styleClass="hiqOutline" headerText="E-mail" sortBy="#{autori.emailId}" filterStyle="display:none" filterBy="#{autori.emailId}">
           <p:cellEditor>
-              <f:facet name="output"><h:outputText style="display: block;" value="#{autori.email_id}" /></f:facet>
-              <f:facet name="input"><p:inputText value="#{autori.email_id}" style="width:100%"/></f:facet>
+              <f:facet name="output"><h:outputText style="display: block;" value="#{autori.emailId}" /></f:facet>
+              <f:facet name="input"><p:inputText value="#{autori.emailId}" style="width:100%"/></f:facet>
           </p:cellEditor>        
     </p:column>
  
-    <p:column styleClass="hiqOutline" headerText="Artikulli" sortBy="#{autori.artikull}" filterStyle="display:none" filterBy="#{autori.artikull}">
+    <p:column styleClass="hiqOutline" headerText="Artikulli" sortBy="#{autori.artikullName}" filterStyle="display:none" filterBy="#{autori.artikullName}">
           <p:cellEditor>
-              <f:facet name="output"><h:outputText style="display: block;" value="#{autori.artikull}" /></f:facet>
-              <f:facet name="input"><p:inputText value="#{autori.artikull}" style="width:100%"/></f:facet>
+              <f:facet name="output"><h:outputText style="display: block;" value="#{autori.artikullName}" /></f:facet>
+              <f:facet name="input"><p:inputText value="#{autori.artikullName}" style="width:100%"/></f:facet>
           </p:cellEditor>        
     </p:column>
     
-        <p:column styleClass="hiqOutline" headerText="Artikull ID" sortBy="#{autori.artikull_id}" filterStyle="display:none" filterBy="#{autori.artikull_id}">
+        <p:column styleClass="hiqOutline" headerText="Artikull ID" sortBy="#{autori.artikullId}" filterStyle="display:none" filterBy="#{autori.artikullId}">
           <p:cellEditor>
-              <f:facet name="output"><h:outputText style="display: block;" value="#{autori.artikull_id}" /></f:facet>
-              <f:facet name="input"><p:inputText value="#{autori.artikull_id}" style="width:100%"/></f:facet>
+              <f:facet name="output"><h:outputText style="display: block;" value="#{autori.artikullId}" /></f:facet>
+              <f:facet name="input"><p:inputText value="#{autori.artikullId}" style="width:100%"/></f:facet>
           </p:cellEditor>        
     </p:column>
     
@@ -120,7 +120,7 @@
 
           	
           	<p:commandButton process="@this"
-          	 value="Shto Autor"  
+          	 value="Shto Autor"  actionListener="#{autorBean.getFullArtikullListForNewAutor()}"
           	 oncomplete="PF('dialogAutorIRI').show()" update="tabelaAutore">
           	</p:commandButton>
 
@@ -137,11 +137,11 @@
 
 
 <p:contextMenu for="tabelaAutore" widgetVar="menujacntx" >
-        <p:menuitem process="@form" actionListener="#{autor.fshirjeAutori()}"
+        <p:menuitem process="@form" actionListener="#{autorBean.deleteAutor()}"
         			value="Fshi" update="tabelaAutore">
         			<p:confirm header="Konfirmim" message="Deshironi ta fshini kete autor?!"/>	
         </p:menuitem>
-        <p:menuitem action="#{autor.tabelaAutoretAdmin()}"
+        <p:menuitem action="#{autorBean.adminMenuListOfAutoret()}"
         			value="Rifresko">	
         </p:menuitem>        
          <p:separator />
@@ -167,40 +167,40 @@
             	cellpadding ="10" cellspacing="1">
 
             	<h:outputLabel value="Emri" />
-            	<p:inputText styleClass="inputFushat" id="fushaEmriAR" value="#{autor.emri}"
+            	<p:inputText styleClass="inputFushat" id="fushaEmriAR" value="#{autorBean.newAutor.emri}"
             					required="true">          			
             	</p:inputText>
             	
             
             	<h:outputLabel value="Mbiemri" />
-            	<p:inputText styleClass="inputFushat" id="fushaMbiemriAR" value="#{autor.mbiemri}"
+            	<p:inputText styleClass="inputFushat" id="fushaMbiemriAR" value="#{autorBean.newAutor.mbiemri}"
             					required="true">          			
             	</p:inputText>
             	
             	
             	<h:outputLabel value="E-mail" />
-            	<p:inputText styleClass="inputFushat" id="fushaEmailAR" value="#{autor.email_id}" 
+            	<p:inputText styleClass="inputFushat" id="fushaEmailAR" value="#{autorBean.newAutor.emailId}" 
             					required="true">          			
             	</p:inputText>
             	     	 
             	<h:outputLabel value="Artikulli" />
-            	<p:selectOneMenu id="menuR" style="width:100%" styleClass="inputFushat" value="#{autor.artikull_id}"
+            	<p:selectOneMenu id="menuR" style="width:100%" styleClass="inputFushat" value="#{autorBean.newAutor.artikullId}"
             					 required="true"> 
 
 					<f:selectItem itemLabel="--Zgjidh--" itemValue="" />
-           			<f:selectItems value="#{artikull.listaDropdownArtikuj}" />   					
+           			<f:selectItems value="#{autorBean.artikullListForNewAutor}" />   					
 				</p:selectOneMenu>
 				
 				<h:outputText/>
 				<h:commandLink style="color: #d4d4d4 !important; text-decoration: none;" 
 							class="fontiOR textColor link2Hov" 
-          	 				actionListener="#{autor.dialogIRi()}"
+          	 				actionListener="#{autorBean.newDialogForNewArtikull()}"
          					value="Regjistro artikull te ri"><f:ajax/></h:commandLink>
 
             	<f:facet name="footer">
                		<h:panelGroup style="display:block; text-align:center">
                   		<h:commandButton class="fontiOL btn btn-primary" value="Ruaj" process="@this"
-                  			 actionListener="#{autor.shtimAutori()}"
+                  			 actionListener="#{autorBean.addAutor()}"
                   			 
                   			 >
                   			 <f:ajax execute="@form" render="@form"></f:ajax>
@@ -231,24 +231,24 @@
             	cellpadding ="10" cellspacing="1">
 
             	<h:outputLabel value="Titulli" />
-            	<p:inputText styleClass="inputFushat" id="fushaTitulliArtR" value="#{artikull.titulli}"
+            	<p:inputText styleClass="inputFushat" id="fushaTitulliArtR" value="#{artikullBean.artikullIRi.titulli}"
             					required="true">          			
             	</p:inputText>
             	
             
             	<h:outputLabel value="Abstrakti"  />
-            	<p:inputText styleClass="inputFushat" id="fushaAbstraktArtR" value="#{artikull.abstrakti}"
+            	<p:inputText styleClass="inputFushat" id="fushaAbstraktArtR" value="#{artikullBean.artikullIRi.abstrakti}"
             					required="true">          			
             	</p:inputText>
             	
             	
             	<h:outputLabel value="Dokumenti Elektronik"  />
-            	<p:inputText styleClass="inputFushat" id="fushaDokElektronikArtR" value="#{artikull.dokumenti_elektronik}" 
+            	<p:inputText styleClass="inputFushat" id="fushaDokElektronikArtR" value="#{artikullBean.artikullIRi.dokumentiElektronik}" 
             					required="true">          			
             	</p:inputText>
             	     	 
             	<h:outputLabel value="Kontakt"  />
-            	<p:inputText styleClass="inputFushat" id="fushaKontaktArtR" value="#{artikull.kontakt}" 
+            	<p:inputText styleClass="inputFushat" id="fushaKontaktArtR" value="#{artikullBean.artikullIRi.kontakt}" 
             					required="true">          			
             	</p:inputText>
             	
@@ -256,7 +256,7 @@
             	<f:facet name="footer">
                		<h:panelGroup style="display:block; text-align:center">
                   		<h:commandButton class="fontiOL btn btn-primary" value="Ruaj" process="@this"
-                  			 actionListener="#{artikull.shtimArtikulli()}"  
+                  			 actionListener="#{artikullBean.addArtikull()}"  
                   			 >
                   			 <f:ajax execute="@form" render="@form"></f:ajax>
                   			 <f:ajax execute="@this" render="@this"></f:ajax>

@@ -8,9 +8,29 @@ public class ShqyrtuesArtikullDto {
 	private int kuptueshmeria; 
 	private int origjinaliteti; 
 	private int perkatesiKonference;
+	private String emriFull;
+	private String artikull;
+	private String rekomandim;
 	
 	
-	
+	public String getRekomandim() {
+		return rekomandim;
+	}
+	public void setRekomandim(String rekomandim) {
+		this.rekomandim = rekomandim;
+	}
+	public String getArtikull() {
+		return artikull;
+	}
+	public void setArtikull(String artikull) {
+		this.artikull = artikull;
+	}
+	public String getEmriFull() {
+		return emriFull;
+	}
+	public void setEmriFull(String emriFull) {
+		this.emriFull = emriFull;
+	}
 	public String getShqrtid() {
 		return shqrtid;
 	}

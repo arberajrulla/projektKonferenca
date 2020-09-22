@@ -59,7 +59,7 @@
             	
             	
             	<h:outputLabel class="fontiOSB textColor" value="Emri" />
-            	<p:inputText styleClass="inputFushat" id="fushaEmriR" value="#{perdoruesiRi.emri}"
+            	<p:inputText styleClass="inputFushat" id="fushaEmriR" value="#{userBean.newUser.emri}"
             					required="true"
             					requiredMessage="Emri nuk mund te jete bosh">          			
             	</p:inputText>
@@ -68,21 +68,21 @@
             	
             	
             	<h:outputLabel class="fontiOSB textColor" value="Mbiemri"  />
-            	<p:inputText styleClass="inputFushat" id="fushaMbiemriR" value="#{perdoruesiRi.mbiemri}"
+            	<p:inputText styleClass="inputFushat" id="fushaMbiemriR" value="#{userBean.newUser.mbiemri}"
             					required="true"
             					requiredMessage="Mbiemri nuk mund te jete bosh">          			
             	</p:inputText>
             	
             	
             	<h:outputLabel class="fontiOSB textColor" value="E-mail"  />
-            	<p:inputText styleClass="inputFushat" id="fushaEmailR" value="#{perdoruesiRi.email}" 
+            	<p:inputText styleClass="inputFushat" id="fushaEmailR" value="#{userBean.newUser.email}" 
             					required="true"
             					requiredMessage="E-mail nuk mund te jete bosh">          			
             	</p:inputText>
             	     	 
             	
             	<h:outputLabel class="fontiOSB textColor" value="Id"  />
-            	<p:inputText styleClass="inputFushat" id="fushaIdR" value="#{perdoruesiRi.username}"
+            	<p:inputText styleClass="inputFushat" id="fushaIdR" value="#{userBean.newUser.username}"
             			required="true"
             			requiredMessage="Id nuk mund te jete bosh"
             			validatorMessage="Id-ja duhet te permbaje te pakten 6 karaktere"
@@ -93,7 +93,7 @@
 
 
             	<h:outputLabel class="fontiOSB textColor" value="Kategoria"  />
-            	<p:selectOneMenu id="menuR" style="width:100%" styleClass="inputFushat" value="#{perdoruesiRi.kategoria}"
+            	<p:selectOneMenu id="menuR" style="width:100%" styleClass="inputFushat" value="#{userBean.newUser.kategoria}"
             					 required="true"
                                	 requiredMessage="Zgjidhni te pakten nje kategori"> 
    					<f:selectItem itemValue="#{null}" itemLabel="--Zgjidh--" />
@@ -103,7 +103,7 @@
 				
 
             	<h:outputLabel class="fontiOSB textColor" value="Numer kontakti"  />
-            	<p:inputText styleClass="inputFushat" id="fushaNrR" value="#{perdoruesiRi.nrCel}" 
+            	<p:inputText styleClass="inputFushat" id="fushaNrR" value="#{userBean.newUser.nrcel}" 
             					required="true"
             					requiredMessage="Numri nuk mund te jete bosh">          			
             	</p:inputText>
@@ -116,18 +116,18 @@
 			            	required="true"
 			            	requiredMessage="Fjalekalimi nuk mund te jete bosh"
 			            	validatorMessage="Fjalekalimet nuk perputhen"
-			            	value="#{perdoruesiRi.fjalekalimi1}" match="fushaPswRe" />
+			            	value="#{userBean.newUser.password}" match="fushaPswRe" />
             	
             	
             	
             	
             	<h:outputLabel class="fontiOSB textColor" value="Perserisni fjalekalimin"  />
-            	<p:password styleClass="inputFushat" id="fushaPswRe" value="#{perdoruesiRi.fjalekalimi2}"/>
+            	<p:password styleClass="inputFushat" id="fushaPswRe" value="#{userBean.newUser.password}"/>
 
             	<f:facet name="footer">
                		<h:panelGroup style="display:block; text-align:center">
                   		<h:commandButton class="fontiOL btn btn-primary" value="Regjistrohu"
-                  			 action="#{perdoruesiRi.regjistrohu}">
+                  			 action="#{userBean.addUser()}">
                   			 <f:ajax execute="@form" render="@form"/>
                   			 </h:commandButton>
                		</h:panelGroup>
@@ -155,7 +155,7 @@
 		 <h:form>
 		 <h:panelGroup style = "display:block; text-align:center">
                <h:commandButton id="butoniShikues" class="fontiOL btn btn-primary" value="Vazhdo si Shikues" 
-               action="shikues"/>
+               action="shikues.xhtml?faces-redirect=true"/>
          </h:panelGroup>		 
 		 </h:form>
 </div>

@@ -9,7 +9,16 @@ public class UserDto {
 	private String password;
 	private String kategoria;
 	private String nrcel;
+	private byte[] salt;
 	
+	public byte[] getSalt() {
+		return salt;
+	}
+
+	public void setSalt(byte[] salt) {
+		this.salt = salt;
+	}
+
 	public String getUsername() {
 		return username;
 	}

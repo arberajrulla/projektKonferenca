@@ -3,13 +3,17 @@ package com.ikubinfo.konferenca.managedBeans;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import org.apache.log4j.Logger;
+
 import com.ikubinfo.konferenca.dto.UserDto;
 
 @ManagedBean(name = "loggedUserBean")
 @SessionScoped
 public class LoggedUserBean {
 
-	UserDto loggedUser;
+	private static Logger log = Logger.getLogger(LoggedUserBean.class);
+	
+	private UserDto loggedUser;
 
 	public UserDto getLoggedUser() {
 		return loggedUser;

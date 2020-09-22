@@ -1,8 +1,9 @@
 package com.ikubinfo.konferenca.dao;
 
-import java.util.ArrayList;
+import java.util.List;
+
 import com.ikubinfo.konferenca.entity.Autor;
 
 public interface AutorDao {
-	ArrayList<Autor> getAllAutor();
+	List<Autor> getAllAutor();
 }

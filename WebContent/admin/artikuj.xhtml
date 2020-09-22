@@ -17,9 +17,9 @@
 		styleClass="table table-dark"
 		var="artikulli"
 		widgetVar="tabelaAllArtikuj"
-		selection="#{artikullBean.selectedArtikull}"
+		selection="#{artikullBean.selectedArtikuj}"
 		rowKey="#{artikulli.artikullId}"
-		value="#{artikullBean.getListaArtikuj()}" 
+		value="#{artikullBean.listaArtikuj}" 
 		editable="true" reflow="true" rows="5"
 		editMode="row"
 		sortMode="multiple"
@@ -27,7 +27,7 @@
 		paginatorPosition="bottom"
 		paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 		rowsPerPageTemplate="5,10,15,20,50,100"
-		filteredValue="#{artikull.artikujtFiltruar}">
+		filteredValue="#{artikullBean.artikujtFiltruar}">
         
        
         
@@ -39,7 +39,7 @@
 	            <p:separator style="background: rgba(107, 247, 255, 0.2); border-color: rgba(107, 247, 255, 0.2);height:0.2px "/>
 	            <div style="padding-bottom:5px; margin-top:-7px;">
 		            <p:commandButton style="float: left; left: 10px;" process="tabelaArtikuj" 
-		            			actionListener="#{artikull.fshirjeArtikulli()}"
+		            			actionListener="#{artikullBean.deleteArtikull()}"
 	          	 				value="Fshi" update="tabelaArtikuj">
 							<p:confirm header="Konfirmo" message="Kujdes, fushat e perzgjedhura do te fshihen!"/>
 	          		</p:commandButton>	        
@@ -121,7 +121,7 @@
 
 
 <p:contextMenu for="tabelaArtikuj" widgetVar="menujacntx" >
-        <p:menuitem process="@form" actionListener="#{artikull.fshirjeArtikulli()}"
+        <p:menuitem process="@form" actionListener="#{artikullBean.deleteArtikull()}"
         			value="Fshi" update="tabelaArtikuj">
         			<p:confirm header="Konfirmim" message="Deshironi ta fshini kete artikull?!"/>	
         </p:menuitem>
@@ -167,24 +167,24 @@
             	cellpadding ="10" cellspacing="1">
 
             	<h:outputLabel value="Titulli" />
-            	<p:inputText styleClass="inputFushat" id="fushaTitulliArtR" value="#{artikull.titulli}"
+            	<p:inputText styleClass="inputFushat" id="fushaTitulliArtR" value="#{artikullBean.artikullIRi.titulli}"
             					required="true">          			
             	</p:inputText>
             	
             
             	<h:outputLabel value="Abstrakti"  />
-            	<p:inputText styleClass="inputFushat" id="fushaAbstraktArtR" value="#{artikull.abstrakti}"
+            	<p:inputText styleClass="inputFushat" id="fushaAbstraktArtR" value="#{artikullBean.artikullIRi.abstrakti}"
             					required="true">          			
             	</p:inputText>
             	
             	
             	<h:outputLabel value="Dokumenti Elektronik"  />
-            	<p:inputText styleClass="inputFushat" id="fushaDokElektronikArtR" value="#{artikull.dokumenti_elektronik}" 
+            	<p:inputText styleClass="inputFushat" id="fushaDokElektronikArtR" value="#{artikullBean.artikullIRi.dokumentiElektronik}" 
             					required="true">          			
             	</p:inputText>
             	     	 
             	<h:outputLabel value="Kontakt"  />
-            	<p:inputText styleClass="inputFushat" id="fushaKontaktArtR" value="#{artikull.kontakt}" 
+            	<p:inputText styleClass="inputFushat" id="fushaKontaktArtR" value="#{artikullBean.artikullIRi.kontakt}" 
             					required="true">          			
             	</p:inputText>
             	
@@ -192,7 +192,7 @@
             	<f:facet name="footer">
                		<h:panelGroup style="display:block; text-align:center">
                   		<h:commandButton class="fontiOL btn btn-primary" value="Ruaj" process="@this"
-                  			 actionListener="#{artikull.shtimArtikulli()}"
+                  			 actionListener="#{artikullBean.addArtikull()}"
                   			 >
                   			 <f:ajax execute="@form" render="@form"></f:ajax>
                   			 <f:ajax execute="@this" render="@this"></f:ajax>

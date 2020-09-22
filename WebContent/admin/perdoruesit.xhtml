@@ -10,17 +10,19 @@
 	<ui:define name="title">Perdoruesit - Te gjithe</ui:define>
 	 
     <ui:define name="content">
-<h:form id="forma1" prependId="false">
+
 <div style="padding: 60px 100px 0px 100px;">
 
+
+<h:form >
 <p:dataTable id="tabelaAll"
 		styleClass="table table-dark" 
 		var="userDto" 
 		widgetVar="tabelaAllUsers"
-		selection="#{admin.perdoruesitEPerzgjedhur}"
 		
+		selection="#{userBean.selectedUsers}"
 		rowKey="#{userDto.username}"
-		value="#{userBean.getAllUsers()}"  
+		value="#{userBean.allUsersList}"  
 		editable="true" reflow="true" rows="5"
 		editMode="row" 
 		sortMode="multiple"
@@ -28,7 +30,7 @@
 		paginatorPosition="bottom"
 		paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 		rowsPerPageTemplate="5,10,15,20,50,100"
-		filteredValue="#{admin.perdoruesitFiltruar}"
+		filteredValue="#{userBean.filteredUsers}"
 		>
         
        
@@ -41,8 +43,8 @@
 	            <p:separator style="background: rgba(107, 247, 255, 0.2); border-color: rgba(107, 247, 255, 0.2);height:0.2px "/>
 	            <div style="padding-bottom:5px; margin-top:-7px;">
 		            <p:commandButton style="float: left; left: 10px;" process="tabelaAll" 
-		            			actionListener="#{admin.fshiPerdorues()}" 
-	          	 				value="Fshi" update="tabelaAll">
+		            			action="#{userBean.deleteMultipleUsers}"
+	          	 				value="Fshi" update="@form">
 							<p:confirm header="Konfirmo" message="Kujdes, fushat e perzgjedhura do te fshihen!"/>
 	          		</p:commandButton>
 		                <h:outputText class="textColor fontiOEL" style="padding-right:10px; align: right; " value="Kerko:" />
@@ -55,8 +57,8 @@
         
        
          
-        <p:ajax event="rowEdit"/>
-        <p:ajax event="rowEditCancel"/>
+        <p:ajax event="rowEdit" listener="#{userBean.onRowEdit}" />
+        <p:ajax event="rowEditCancel" listener="#{userBean.onRowCancel}" />
         
          
 	<p:column selectionMode="multiple" style="width:35px;text-align:center; margin:auto;"/>
@@ -145,17 +147,16 @@
 
 
 <p:contextMenu for="tabelaAll" widgetVar="menujacntx" >
-        <p:menuitem process="@form" actionListener="#{admin.fshiPerdorues()}"
+        <p:menuitem process="@form" actionListener="#{userBean.deleteMultipleUsers()}"
         			value="Fshi" update="tabelaAll">
         			<p:confirm header="Konfirmim" message="Deshironi ta fshini kete perdorues?!"/>	
         </p:menuitem>
          <p:separator />
          <p:menuitem value="Mbyll" onclick="PF('menujacntx').hide()"/>
 </p:contextMenu>
-</div>
 
 </h:form>
-		
+</div>		
 		
 		
 		
@@ -173,7 +174,7 @@
             	cellpadding ="10" cellspacing="1">
 
             	<h:outputLabel value="Emri" />
-            	<p:inputText styleClass="inputFushat" id="fushaEmriR" value="#{admin.perdoruesIRi.emri}"
+            	<p:inputText styleClass="inputFushat" id="fushaEmriR" value="#{userBean.newUser.emri}"
             					required="true">          			
             	</p:inputText>
             	
@@ -181,36 +182,37 @@
             	
             	
             	<h:outputLabel value="Mbiemri"  />
-            	<p:inputText styleClass="inputFushat" id="fushaMbiemriR" value="#{admin.perdoruesIRi.mbiemri}"
+            	<p:inputText styleClass="inputFushat" id="fushaMbiemriR" value="#{userBean.newUser.mbiemri}"
             					required="true">          			
             	</p:inputText>
             	
             	
             	<h:outputLabel value="E-mail"  />
-            	<p:inputText styleClass="inputFushat" id="fushaEmailR" value="#{admin.perdoruesIRi.email}" 
+            	<p:inputText styleClass="inputFushat" id="fushaEmailR" value="#{userBean.newUser.email}" 
             					required="true">          			
             	</p:inputText>
             	     	 
             	
             	<h:outputLabel value="Id"  />
-            	<p:inputText styleClass="inputFushat" id="fushaIdR" value="#{admin.perdoruesIRi.username}"
+            	<p:inputText styleClass="inputFushat" id="fushaIdR" value="#{userBean.newUser.username}"
             			required="true">
             	</p:inputText>
             	
 
 
             	<h:outputLabel value="Kategoria"  />
-            	<p:selectOneMenu id="menuR" style="width:100%" styleClass="inputFushat" value="#{admin.perdoruesIRi.kategoria}"
+            	<p:selectOneMenu id="menuR" style="width:100%" styleClass="inputFushat" value="#{userBean.newUser.kategoria}"
             					 required="true"
                                	 requiredMessage="Zgjidhni te pakten nje kategori"> 
    					<f:selectItem itemValue="#{null}" itemLabel="--Zgjidh--" />
    					<f:selectItem itemValue="autor" itemLabel="Autor" /> 
    					<f:selectItem itemValue="shqyrtues" itemLabel="Shqyrtues" /> 
+   					<f:selectItem itemValue="admin" itemLabel="Administrator" />
 				</p:selectOneMenu>
 				
 
             	<h:outputLabel value="Numer kontakti"  />
-            	<p:inputText styleClass="inputFushat" id="fushaNrR" value="#{admin.perdoruesIRi.nrCel}" 
+            	<p:inputText styleClass="inputFushat" id="fushaNrR" value="#{userBean.newUser.nrcel}" 
             					required="true">          			
             	</p:inputText>
             	        	
@@ -222,19 +224,19 @@
 			            	required="true"
 			            	requiredMessage="Fjalekalimi nuk mund te jete bosh"
 			            	validatorMessage="Fjalekalimet nuk perputhen"
-			            	value="#{admin.perdoruesIRi.fjalekalimi1}" match="fushaPswRe" />
+			            	value="#{userBean.newUser.password}" match="fushaPswRe" />
             	
             	
             	
             	
             	<h:outputLabel value="Perserisni fjalekalimin"  />
-            	<p:password styleClass="inputFushat" id="fushaPswRe" value="#{admin.perdoruesIRi.fjalekalimi2}"/>
+            	<p:password styleClass="inputFushat" id="fushaPswRe" value="#{userBean.newUser.password}"/>
 
 
             	<f:facet name="footer">
                		<h:panelGroup style="display:block; text-align:center">
                   		<h:commandButton class="fontiOL btn btn-primary" value="Ruaj" process="@this"
-                  			 actionListener="#{admin.shtimPerdoruesi()}"
+                  			 actionListener="#{userBean.addUser()}"
                   			 >
                   			 <f:ajax execute="@form" render="@form"></f:ajax>
                   			 <f:ajax execute="@this" render="@this"></f:ajax>
