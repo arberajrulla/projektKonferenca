@@ -6,6 +6,7 @@ C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\entit
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\entity\Autor.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\service\ShqyrtuesService.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\dto\ArtikullDto.java
+C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\service\impl\ShqyrtuesServiceImpl.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\managedBeans\ShqyrtuesBean.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\entity\Artikull.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\convert\AutorConverter.java
@@ -17,8 +18,11 @@ C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\servi
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\dao\AutorDao.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\service\impl\ArtikullServiceImpl.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\dto\AutorDto.java
+C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\dao\impl\ShqyrtuesArtikullDaoImpl.java
+C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\dao\ShqyrtuesArtikullDao.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\entity\User.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\managedBeans\AutorBean.java
+C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\service\impl\VleresimeServiceImpl.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\managedBeans\ArtikullBean.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\entity\ShqyrtuesArtikull.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\managedBeans\LoggedUserBean.java
@@ -30,6 +34,7 @@ C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\servi
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\convert\ArtikullConverter.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\dto\UserDto.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\convert\ShqyrtuesConverter.java
+C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\convert\VleresimeConverter.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\dto\ShqyrtuesDto.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\service\VleresimeService.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\dto\ShqyrtuesArtikullDto.java

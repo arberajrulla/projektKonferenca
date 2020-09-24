@@ -1,29 +1,31 @@
 package com.ikubinfo.konferenca.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="shqyrtues_artikull")
-public class ShqyrtuesArtikull {
+@SequenceGenerator(name= ShqyrtuesArtikull.sekuencaVleresim, sequenceName = ShqyrtuesArtikull.sekuencaVleresim ,initialValue=10, allocationSize=50)
+public class ShqyrtuesArtikull implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	public static final String sekuencaVleresim = "SEQUENCE_VLERESIMI_ID";
 	
 	@Id
-	@Column(name = "shqrtid")
-	private String shqrtid;
-
-	@Column(name = "arid")
-	private int arid;
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQUENCE_VLERESIMI_ID")
+	@Column(name = "vleresim_id")
+	private int vleresimId;
 
 	@Column(name = "merita_Teknike")
 	private int meritaTeknike; 
@@ -37,29 +39,18 @@ public class ShqyrtuesArtikull {
 	@Column(name = "perkatesi_Konference")
 	private int perkatesiKonference; 
 	
-	/*
-	 * @OneToMany(mappedBy = "shqyrtuesArtikullsh", cascade=CascadeType.ALL) private
-	 * List<Shqyrtues> shqyrtuesit = new ArrayList<>();
-	 * 
-	 * @OneToMany(mappedBy = "shqyrtuesArtikullA", cascade=CascadeType.ALL) private
-	 * List<Artikull> artikujt = new ArrayList<>();
-	 */
+	@Column(name = "rekomandime")
+	private String rekomandim; 
+
 	
-	public String getShqrtid() {
-		return shqrtid;
-	}
-
-	public void setShqrtid(String shqrtid) {
-		this.shqrtid = shqrtid;
-	}
-
-	public int getArid() {
-		return arid;
-	}
-
-	public void setArid(int arid) {
-		this.arid = arid;
-	}
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+	@JoinColumn(name = "shqrtid")
+	private Shqyrtues shqyrtuesVleresim;
+	
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+	@JoinColumn(name = "arid")
+	private Artikull artikullVleresim;
+	
 
 	public int getMeritaTeknike() {
 		return meritaTeknike;
@@ -92,5 +83,33 @@ public class ShqyrtuesArtikull {
 	public void setPerkatesiKonference(int perkatesiKonference) {
 		this.perkatesiKonference = perkatesiKonference;
 	}
-	
+	public Shqyrtues getShqyrtuesVleresim() {
+		return shqyrtuesVleresim;
+	}
+
+	public void setShqyrtuesVleresim(Shqyrtues shqyrtuesVleresim) {
+		this.shqyrtuesVleresim = shqyrtuesVleresim;
+	}
+
+	public Artikull getArtikullVleresim() {
+		return artikullVleresim;
+	}
+
+	public void setArtikullVleresim(Artikull artikullVleresim) {
+		this.artikullVleresim = artikullVleresim;
+	}
+	public String getRekomandim() {
+		return rekomandim;
+	}
+	public void setRekomandim(String rekomandim) {
+		this.rekomandim = rekomandim;
+	}
+
+	public int getVleresimId() {
+		return vleresimId;
+	}
+
+	public void setVleresimId(int vleresimId) {
+		this.vleresimId = vleresimId;
+	}
 }

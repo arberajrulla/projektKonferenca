@@ -11,8 +11,16 @@ public class ShqyrtuesArtikullDto {
 	private String emriFull;
 	private String artikull;
 	private String rekomandim;
+	private int vleresimId;
 	
 	
+
+	public int getVleresimId() {
+		return vleresimId;
+	}
+	public void setVleresimId(int vleresimId) {
+		this.vleresimId = vleresimId;
+	}
 	public String getRekomandim() {
 		return rekomandim;
 	}

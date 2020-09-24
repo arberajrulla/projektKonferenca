@@ -1,5 +1,6 @@
 package com.ikubinfo.konferenca.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,11 +24,8 @@ public class Autor {
 	
 	@Column(name = "mbiemri")
 	private String mbiemri;
-
-	@Column(name = "id")
-	private int id;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(cascade=CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinColumn(name = "artikull_id")
 	private Artikull artikuj;
 	
@@ -56,13 +54,6 @@ public class Autor {
 		this.mbiemri = mbiemri;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 	public Artikull getArtikuj() {
 		return artikuj;
 	}

@@ -51,8 +51,8 @@
             </p:outputPanel>
         </f:facet>
          
-        <p:ajax event="rowEdit"/>
-        <p:ajax event="rowEditCancel"/>
+        <p:ajax event="rowEdit" listener="#{vleresimeBean.onRowEdit}"/>
+        <p:ajax event="rowEditCancel" listener="#{vleresimeBean.onRowCancel}"/>
         
          
 	<p:column selectionMode="multiple" style="width:35px;text-align:center; margin:auto;"/>
@@ -134,7 +134,7 @@
           	
           	<p:commandButton process="@this"
           	 value="Shto Vleresim"
-          	 oncomplete="#" update="tabelaVleresim">
+          	 oncomplete="PF('dialogVleresimIRI').show()" update="tabelaVleresim">
           	</p:commandButton>
 
     </f:facet>
@@ -161,6 +161,75 @@
 </div>
 </h:form>
 		
+
+	
+		
+<h:form>
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogNewVleresim" header="Vleresim i ri" widgetVar="dialogVleresimIRI" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+        
+         <h:outputText value="Ju lutemi kontrolloni fushat e meposhtme!" 
+            	style="color:red; font-family:oswaldB; font-size:15px;"
+            	rendered="#{facesContext.validationFailed}" />
+            	
+            	
+        <h:panelGrid style="width: auto; font-size:15px" columns="2" styleClass="textColorGold fontiOL"
+            	cellpadding ="10" cellspacing="1">
+
+            	<h:outputLabel value="Shqyrtuesi" />
+		        <p:selectOneMenu style="width:100%" styleClass="inputFushat" value="#{vleresimeBean.newVleresim.shqrtid}"
+            					 required="true"> 
+
+					<f:selectItem itemLabel="--Zgjidh--" itemValue="" />
+           			<f:selectItems value="#{vleresimeBean.allShqyrtuesitDropdownList}" />				
+				</p:selectOneMenu>
+	
+            	
+            	<h:outputLabel value="Artikulli" />
+		        <p:selectOneMenu style="width:100%" styleClass="inputFushat" value="#{vleresimeBean.newVleresim.arid}"
+            					 required="true"> 
+
+					<f:selectItem itemLabel="--Zgjidh--" itemValue="" />
+           			<f:selectItems value="#{vleresimeBean.allArtikujtDropdownList}" />				
+				</p:selectOneMenu>
+            	
+            	<h:outputLabel value="Merita Teknike"  />
+            	<p:spinner value="#{vleresimeBean.newVleresim.meritaTeknike}" min="0" max="10" />
+            	
+            	<h:outputLabel value="Kuptueshmeria"  />
+            	<p:spinner value="#{vleresimeBean.newVleresim.kuptueshmeria}" min="0" max="10" />
+            	
+            	<h:outputLabel value="Origjinaliteti"  />
+            	<p:spinner value="#{vleresimeBean.newVleresim.kuptueshmeria}" min="0" max="10" />
+            	
+            	<h:outputLabel value="Perkatesi Konference"  />
+            	<p:spinner value="#{vleresimeBean.newVleresim.perkatesiKonference}" min="0" max="10" />
+            	
+            	<h:outputLabel value="Rekomandim"  />
+            	<p:inputTextarea value="#{vleresimeBean.newVleresim.rekomandim}" rows="6" cols="33" />
+
+            	<f:facet name="footer">
+               		<h:panelGroup style="display:block; text-align:center">
+                  		<h:commandButton class="fontiOL btn btn-primary" value="Ruaj" process="@this"
+                  			 actionListener="#{vleresimeBean.addVleresim}"
+                  			 >
+                  			 <f:ajax execute="@form" render="@form"></f:ajax>
+                  			 </h:commandButton>
+              			 
+               		</h:panelGroup>
+            	</f:facet> 
+
+        </h:panelGrid>
+        </p:outputPanel>
+</p:dialog>  
+
+
+</h:form>		
+	
+		
+
+
 		
 	
 		

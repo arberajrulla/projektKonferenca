@@ -1,5 +1,6 @@
 package com.ikubinfo.konferenca.managedBeans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 
 import org.apache.log4j.Logger;
 import org.primefaces.event.RowEditEvent;
@@ -15,9 +17,11 @@ import com.ikubinfo.konferenca.dto.UserDto;
 import com.ikubinfo.konferenca.service.UserService;
 
 @ManagedBean(name = "userBean")
-@RequestScoped
-public class UserBean {
-	
+@ViewScoped
+public class UserBean implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+
 	private static Logger log = Logger.getLogger(UserBean.class);
 	
 	@ManagedProperty(value = "#{userService}")

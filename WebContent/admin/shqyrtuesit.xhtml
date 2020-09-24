@@ -39,7 +39,7 @@
 	            <p:separator style="background: rgba(107, 247, 255, 0.2); border-color: rgba(107, 247, 255, 0.2);height:0.2px "/>
 	            <div style="padding-bottom:5px; margin-top:-7px;">
 		            <p:commandButton style="float: left; left: 10px;" process="tabelaShqyrtues" 
-		            			actionListener="#{shqyrtuesBean.deleteShqyrtues()}"
+		            			actionListener="#{shqyrtuesBean.deleteShqyrtues}"
 	          	 				value="Fshi" update="tabelaShqyrtues">
 							<p:confirm header="Konfirmo" message="Kujdes, fushat e perzgjedhura do te fshihen!"/>
 	          		</p:commandButton>	        
@@ -54,8 +54,8 @@
         
         
          
-        <p:ajax event="rowEdit"/>
-        <p:ajax event="rowEditCancel"/>
+        <p:ajax event="rowEdit" listener="#{shqyrtuesBean.onRowEdit}"/>
+        <p:ajax event="rowEditCancel"  listener="#{shqyrtuesBean.onRowCancel}"/>
         
          
 	<p:column selectionMode="multiple" style="width:35px;text-align:center; margin:auto;"/>
@@ -102,7 +102,7 @@
     <f:facet name="footer">
 
           	
-          	<p:commandButton process="@this"
+          	<p:commandButton process="@this" immediate="true"
           	 value="Shto Shqyrtues"  
           	 oncomplete="PF('dialogShqyrtuesIRI').show()" update="tabelaShqyrtues">
           	</p:commandButton>
@@ -120,7 +120,7 @@
 
 
 <p:contextMenu for="tabelaShqyrtues" widgetVar="menujacntx" >
-        <p:menuitem process="@form" actionListener="#{shqyrtuesBean.deleteShqyrtues()}"
+        <p:menuitem process="@form" actionListener="#{shqyrtuesBean.deleteShqyrtues}"
         			value="Fshi" update="tabelaShqyrtues">
         			<p:confirm header="Konfirmim" message="Deshironi ta fshini kete shqyrtues?!"/>	
         </p:menuitem>
@@ -191,7 +191,7 @@
             	<f:facet name="footer">
                		<h:panelGroup style="display:block; text-align:center">
                   		<h:commandButton class="fontiOL btn btn-primary" value="Ruaj" process="@this"
-                  			 actionListener="#{shqyrtuesBean.addShqyrtues()}"
+                  			 actionListener="#{shqyrtuesBean.addShqyrtues}"
                   			 >
                   			 <f:ajax execute="@form" render="@form"></f:ajax>
                   			 <f:ajax execute="@this" render="@this"></f:ajax>

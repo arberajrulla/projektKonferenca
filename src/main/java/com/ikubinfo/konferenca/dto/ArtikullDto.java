@@ -1,8 +1,14 @@
 package com.ikubinfo.konferenca.dto;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class ArtikullDto {
 
+	@NotNull
 	private int artikullId;
+	@NotNull
+	@Size(max = 50)
 	private String titulli;
 	private String abstrakti;
 	private String dokumentiElektronik;

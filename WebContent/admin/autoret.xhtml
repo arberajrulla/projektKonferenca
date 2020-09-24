@@ -8,16 +8,10 @@
                 xmlns:utils="http://xmlns.jcp.org/jsf/composite/utils">
                 
 	<ui:define name="title">Autoret</ui:define>
-	<ui:define name="css">
-        <h:outputStylesheet library="css" name="styles.css"></h:outputStylesheet>
-  		<h:outputStylesheet library="css" name="fonts.css"></h:outputStylesheet>
-  		<h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
-  		<h:outputStylesheet library="css" name="primefaces_edit.css"></h:outputStylesheet>
-   </ui:define> 
 	 
 	 
     <ui:define name="content">
-<h:form>
+<h:form id="formone">
 <div style="padding: 60px 100px 0px 100px;">
 
 <p:dataTable id="tabelaAutore"
@@ -48,8 +42,7 @@
 	            <div style="padding-bottom:5px; margin-top:-7px;">
 		            <p:commandButton style="float: left; left: 10px;" process="tabelaAutore" 
 		            			actionListener="#{autorBean.deleteAutor()}"
-	          	 				value="Fshi" update="tabelaAutore">
-							<p:confirm header="Konfirmo" message="Kujdes, fushat e perzgjedhura do te fshihen!"/>
+	          	 				value="Fshi" update="@form" ajax="true">
 	          		</p:commandButton>	        
 		                <h:outputText class="textColor fontiOEL" style="padding-right:10px; align: right; " value="Kerko:" />
 		                <p:inputText id="globalFilter" onkeyup="PF('tabelaAllAutore').filter()" 
@@ -63,8 +56,8 @@
         
         
          
-        <p:ajax event="rowEdit"/>
-        <p:ajax event="rowEditCancel"/>
+        <p:ajax event="rowEdit" listener="#{autorBean.onRowEdit}"/>
+        <p:ajax event="rowEditCancel" listener="#{autorBean.onRowCancel}"/>
         
          
 	<p:column selectionMode="multiple" style="width:35px;text-align:center; margin:auto;"/>
@@ -88,7 +81,7 @@
     </p:column>
  
     <p:column styleClass="hiqOutline" headerText="E-mail" sortBy="#{autori.emailId}" filterStyle="display:none" filterBy="#{autori.emailId}">
-          <p:cellEditor>
+          <p:cellEditor disabled="true">
               <f:facet name="output"><h:outputText style="display: block;" value="#{autori.emailId}" /></f:facet>
               <f:facet name="input"><p:inputText value="#{autori.emailId}" style="width:100%"/></f:facet>
           </p:cellEditor>        
@@ -102,7 +95,7 @@
     </p:column>
     
         <p:column styleClass="hiqOutline" headerText="Artikull ID" sortBy="#{autori.artikullId}" filterStyle="display:none" filterBy="#{autori.artikullId}">
-          <p:cellEditor>
+          <p:cellEditor disabled="true">
               <f:facet name="output"><h:outputText style="display: block;" value="#{autori.artikullId}" /></f:facet>
               <f:facet name="input"><p:inputText value="#{autori.artikullId}" style="width:100%"/></f:facet>
           </p:cellEditor>        
@@ -120,7 +113,7 @@
 
           	
           	<p:commandButton process="@this"
-          	 value="Shto Autor"  actionListener="#{autorBean.getFullArtikullListForNewAutor()}"
+          	 value="Shto Autor" 
           	 oncomplete="PF('dialogAutorIRI').show()" update="tabelaAutore">
           	</p:commandButton>
 
@@ -137,13 +130,10 @@
 
 
 <p:contextMenu for="tabelaAutore" widgetVar="menujacntx" >
-        <p:menuitem process="@form" actionListener="#{autorBean.deleteAutor()}"
+        <p:menuitem process="formone" actionListener="#{autorBean.deleteAutor()}"
         			value="Fshi" update="tabelaAutore">
         			<p:confirm header="Konfirmim" message="Deshironi ta fshini kete autor?!"/>	
-        </p:menuitem>
-        <p:menuitem action="#{autorBean.adminMenuListOfAutoret()}"
-        			value="Rifresko">	
-        </p:menuitem>        
+        </p:menuitem>      
          <p:separator />
          <p:menuitem value="Mbyll" onclick="PF('menujacntx').hide()"/>
 </p:contextMenu>
@@ -153,7 +143,7 @@
 		
 		
 		
-<h:form>
+<h:form id="formtwo">
 
 <p:dialog showEffect="fade" hideEffect="fade" id="dialogNewAutor" header="Autor i ri" widgetVar="dialogAutorIRI" resizable="false" >
 	<p:outputPanel style="text-align:center;">
@@ -188,7 +178,7 @@
             					 required="true"> 
 
 					<f:selectItem itemLabel="--Zgjidh--" itemValue="" />
-           			<f:selectItems value="#{autorBean.artikullListForNewAutor}" />   					
+           			<f:selectItems value="#{autorBean.artikujDropdown}"/>   					
 				</p:selectOneMenu>
 				
 				<h:outputText/>
@@ -203,8 +193,7 @@
                   			 actionListener="#{autorBean.addAutor()}"
                   			 
                   			 >
-                  			 <f:ajax execute="@form" render="@form"></f:ajax>
-                  			 <f:ajax ></f:ajax> 
+                  			 <f:ajax execute="formtwo" render="formtwo"></f:ajax>
                   			 </h:commandButton>
               			 
                		</h:panelGroup>
@@ -217,7 +206,7 @@
 </h:form>
 
 		
-<h:form>
+<h:form id="formthree">
 
 <p:dialog showEffect="fade" hideEffect="fade" id="dialogNewArtikull" header="Artikull i ri" widgetVar="dialogArtikullIRI" resizable="false" >
 	<p:outputPanel style="text-align:center;">
@@ -258,8 +247,7 @@
                   		<h:commandButton class="fontiOL btn btn-primary" value="Ruaj" process="@this"
                   			 actionListener="#{artikullBean.addArtikull()}"  
                   			 >
-                  			 <f:ajax execute="@form" render="@form"></f:ajax>
-                  			 <f:ajax execute="@this" render="@this"></f:ajax>
+                  			 <f:ajax execute="formthree" render="formthree"></f:ajax>
                   			 </h:commandButton>
               			 
                		</h:panelGroup>

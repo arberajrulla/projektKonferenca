@@ -6,7 +6,6 @@ public class AutorDto {
 	private String emri;
 	private String mbiemri;
 	private int artikullId;
-	private int id;
 	private String artikullName;
 	
 	
@@ -39,11 +38,5 @@ public class AutorDto {
 	}
 	public void setArtikullId(int i) {
 		this.artikullId = i;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
 	}
 }

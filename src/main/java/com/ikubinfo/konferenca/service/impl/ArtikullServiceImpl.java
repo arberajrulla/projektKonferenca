@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ikubinfo.konferenca.convert.ArtikullConverter;
+import com.ikubinfo.konferenca.convert.UserConverter;
 import com.ikubinfo.konferenca.dao.ArtikullDao;
 import com.ikubinfo.konferenca.dto.ArtikullDto;
+import com.ikubinfo.konferenca.dto.UserDto;
 import com.ikubinfo.konferenca.entity.Artikull;
 import com.ikubinfo.konferenca.service.ArtikullService;
 
@@ -39,4 +41,40 @@ public class ArtikullServiceImpl implements ArtikullService {
 		return artikujDtoLista;
 	}
 
+	@Transactional
+	public boolean addArtikull(ArtikullDto artikullIRi) {
+		boolean check = false;
+		if(artikullDao.addArtikull(ArtikullConverter.toNewArtikull(artikullIRi))) {
+		log.info("New artikull " + artikullIRi.getTitulli() + " added successfully!");
+			check = true;
+		}else {
+			log.error("Artikull Service couldn't add new artikull!");
+		}
+		return check;
+	}
+
+	@Transactional
+	public boolean deleteArtikull(List<ArtikullDto> selectedArtikuj) {
+		boolean check = false;
+		for(ArtikullDto artikullDto : selectedArtikuj) {
+			check = artikullDao.deleteArtikull(artikullDto.getArtikullId());
+			if(!check) {
+				log.error("Breaking from deletion loop, error occurred!");
+				break;
+			}
+		}
+		return check;
+	}
+
+	@Transactional
+	public boolean updateArtikull(ArtikullDto artikullDto) {
+		boolean check = false;
+		if(artikullDao.updateArtikull(ArtikullConverter.toArtikullUpdate(artikullDto))) {
+			log.info("Service updated artikull successfully!");
+			check = true;
+		}else {
+			log.error("Service couldn't update the artikull!");
+		}
+		return check;
+	}
 }

@@ -54,8 +54,8 @@
         
         
          
-        <p:ajax event="rowEdit"/>
-        <p:ajax event="rowEditCancel"/>
+        <p:ajax event="rowEdit" listener="#{artikullBean.onRowEdit}"/>
+        <p:ajax event="rowEditCancel" listener="#{artikullBean.onRowCancel}"/>
         
          
 	<p:column selectionMode="multiple" style="width:35px;text-align:center; margin:auto;"/>
@@ -103,7 +103,7 @@
     <f:facet name="footer">
 
           	
-          	<p:commandButton process="@this"
+          	<p:commandButton process="@this" 
           	 value="Shto Artikull"  
           	 oncomplete="PF('dialogArtikullIRI').show()" update="tabelaArtikuj">
           	</p:commandButton>
@@ -112,8 +112,10 @@
 </p:dataTable>
 
 
-<p:confirmDialog  id="konfirmoDialog" global="true" showEffect="fade" hideEffect="fade" >
-        <p:commandButton style="align:center;" value="Konfirmo" type="button" styleClass="ui-confirmdialog-yes" />
+<p:confirmDialog  id="konfirmoDialog"  global="true" showEffect="fade" hideEffect="fade" >
+        <p:commandButton style="align:center;" value="Konfirmo" type="button" styleClass="ui-confirmdialog-yes" >
+        <p:ajax update="tabelaArtikuj"></p:ajax>
+        </p:commandButton>
         <p:commandButton style="align:center;" value="Kthehu" type="button" styleClass="ui-confirmdialog-no" />
 </p:confirmDialog>
 
@@ -195,7 +197,6 @@
                   			 actionListener="#{artikullBean.addArtikull()}"
                   			 >
                   			 <f:ajax execute="@form" render="@form"></f:ajax>
-                  			 <f:ajax execute="@this" render="@this"></f:ajax>
                   			 </h:commandButton>
               			 
                		</h:panelGroup>

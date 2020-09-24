@@ -35,13 +35,12 @@ public class Artikull {
 	@Column(name = "kontakt")	
 	private String kontakt;
 	
-	@OneToMany(mappedBy = "artikuj", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "artikuj", cascade=CascadeType.REMOVE)
 	private List<Autor> autoret = new ArrayList<>();
 	
-	//@ManyToOne
-	//private ShqyrtuesArtikull shqyrtuesArtikullA;
-
-
+	@OneToMany(mappedBy = "artikullVleresim", cascade=CascadeType.REMOVE)
+	private List<ShqyrtuesArtikull> shqyrtuesArtikull = new ArrayList<ShqyrtuesArtikull>();
+	
 
 	public int getArtikullId() {
 		return artikullId;

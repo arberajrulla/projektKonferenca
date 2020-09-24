@@ -1,20 +1,25 @@
 package com.ikubinfo.konferenca.managedBeans;
 
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 
 import org.apache.log4j.Logger;
-
+import org.primefaces.event.RowEditEvent;
 import com.ikubinfo.konferenca.dto.ShqyrtuesDto;
 import com.ikubinfo.konferenca.service.ShqyrtuesService;
 
 @ManagedBean(name = "shqyrtuesBean")
-@RequestScoped
-public class ShqyrtuesBean {
+@ViewScoped
+public class ShqyrtuesBean implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+
 	private static Logger log = Logger.getLogger(ShqyrtuesBean.class);
 
 	@ManagedProperty(value = "#{shqyrtuesService}")
@@ -22,10 +27,16 @@ public class ShqyrtuesBean {
 	
 	private ShqyrtuesDto selectedShqyrtues;
 	private List<ShqyrtuesDto> selectedShqyrtuesa = new ArrayList<ShqyrtuesDto>();
-	private List<ShqyrtuesDto> listaShqyrtues;
-	private ShqyrtuesDto shqyrtuesIRi;
+	private List<ShqyrtuesDto> listaShqyrtues = new ArrayList<ShqyrtuesDto>();
+	private ShqyrtuesDto shqyrtuesIRi = new ShqyrtuesDto();
 	private List<ShqyrtuesDto> shqyrtuesitFiltruar;
 	
+	
+	@PostConstruct
+	public void init() {
+		log.info("Filling list of Shqyrtues on init!");
+		listaShqyrtues = shqyrtuesService.getAllShqyrtuesList();
+	}
 	
 	
 	public ShqyrtuesService getShqyrtuesService() {
@@ -64,40 +75,41 @@ public class ShqyrtuesBean {
 	public void setShqyrtuesitFiltruar(List<ShqyrtuesDto> shqyrtuesitFiltruar) {
 		this.shqyrtuesitFiltruar = shqyrtuesitFiltruar;
 	}
-
-
-
-
-
-
-
-
-
-
-	public String adminMenuListOfShqyrtues() {
-		return("/admin/shqyrtuesit.xhtml?faces-redirect=true");
-	}
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
 	public void addShqyrtues() {
-		
+		log.info("Starting the process to add new Shqyrtues");
+		if(shqyrtuesService.addShqyrtues(shqyrtuesIRi)) {
+			log.info("New Shqyrtues was successfully added!");
+		}else{
+			log.error("Error, New Shqyrtues was not added!");
+		}
 	}
+	
 	
 	public void deleteShqyrtues() {
-		
+		log.info("Starting the process to delete Shqyrtues list");
+		if(shqyrtuesService.deleteShqyrtues(selectedShqyrtuesa)) {
+			log.info("Selected Shqyrtues were successfully deleted!");
+		}else{
+			log.error("Error, Shqyrtues were not deleted!");
+		}
 	}
 	
-	public void editShqyrtues() {
+    public void onRowEdit(RowEditEvent<ShqyrtuesDto> event) {
+		log.info("Row edit called: " + event.getObject().getEmri());
 		
-	}
-	
+		if(shqyrtuesService.updateShqyrtues(event.getObject())) {
+			log.info("User object Updated SUCCESSFULLY!");
+		} else {
+			log.error("User wasn't updated!");
+		}
+        
+    }
+     
+    public void onRowCancel(RowEditEvent<ShqyrtuesDto> event) {
+    	log.info("Canceled the editing");
+    }
 	
 }

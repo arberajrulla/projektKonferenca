@@ -18,4 +18,39 @@ public class ArtikullConverter {
 		
 		return artikullDto;
 	}
+	
+	public static Artikull toArtikull(ArtikullDto artikullDto) {
+		Artikull artikull = new Artikull();
+		artikull.setArtikullId(artikullDto.getArtikullId());
+		artikull.setTitulli(artikullDto.getTitulli());
+		artikull.setAbstrakti(artikullDto.getAbstrakti());
+		artikull.setDokumentiElektronik(artikullDto.getDokumentiElektronik());
+		artikull.setKontakt(artikullDto.getKontakt());
+		
+		return artikull;
+	}
+	
+
+	public static Artikull toNewArtikull(ArtikullDto artikullIRi) {
+		Artikull artikull = new Artikull();
+		artikull.setArtikullId(artikullIRi.getArtikullId());
+		artikull.setTitulli(artikullIRi.getTitulli());
+		artikull.setAbstrakti(artikullIRi.getAbstrakti());
+		artikull.setDokumentiElektronik(artikullIRi.getDokumentiElektronik());
+		artikull.setKontakt(artikullIRi.getKontakt());
+		
+		return artikull;
+	}
+
+	public static Artikull toArtikullUpdate(ArtikullDto artikullDto) {
+		Artikull artikull = new Artikull();
+		artikull.setArtikullId(artikullDto.getArtikullId());
+		artikull.setTitulli(artikullDto.getTitulli());
+		artikull.setAbstrakti(artikullDto.getAbstrakti());
+		artikull.setDokumentiElektronik(artikullDto.getDokumentiElektronik());
+		artikull.setKontakt(artikullDto.getKontakt());
+		
+		return artikull;
+	}
+	
 }

@@ -1,5 +1,5 @@
 @font-face {
-	src: url(../fonts/Questrial-Regular.ttf);
+	src: url(../resources/fonts/Questrial-Regular.ttf);
 	font-family: questrial;
 }
 
@@ -9,7 +9,7 @@
 }
 
 @font-face {
-	src: url(../fonts/Cinzel-Regular.ttf);
+	src: url(../resources/fonts/Cinzel-Regular.ttf);
 	font-family: cinzelR;
 }
 
@@ -19,7 +19,7 @@
 }
 
 @font-face {
-	src: url(../fonts/Cinzel-Black.ttf);
+	src: url(../resources/fonts/Cinzel-Black.ttf);
 	font-family: cinzelBl;
 }
 
@@ -29,7 +29,7 @@
 }
 
 @font-face {
-	src: url(../fonts/Cinzel-Bold.ttf);
+	src: url(../resources/fonts/Cinzel-Bold.ttf);
 	font-family: cinzelBo;
 }
 
@@ -43,7 +43,7 @@
 
 
 @font-face {
-	src: url(../fonts/Oswald-Bold.ttf);
+	src: url(../resources/fonts/Oswald-Bold.ttf);
 	font-family: oswaldB;
 }
 
@@ -53,7 +53,7 @@
 }
 
 @font-face {
-	src: url(../fonts/Oswald-Light.ttf);
+	src: url(../resources/fonts/Oswald-Light.ttf);
 	font-family: oswaldL;
 }
 
@@ -63,7 +63,7 @@
 }
 
 @font-face {
-	src: url(../fonts/Oswald-ExtraLight.ttf);
+	src: url(../resources/fonts/Oswald-ExtraLight.ttf);
 	font-family: oswaldEL;
 }
 
@@ -74,7 +74,7 @@
 
 
 @font-face {
-	src: url(../fonts/Oswald-Medium.ttf);
+	src: url(../resources/fonts/Oswald-Medium.ttf);
 	font-family: oswaldM;
 }
 
@@ -85,7 +85,7 @@
 
 
 @font-face {
-	src: url(../fonts/Oswald-Regular.ttf);
+	src: url(../resources/fonts/Oswald-Regular.ttf);
 	font-family: oswaldR;
 }
 
@@ -96,7 +96,7 @@
 
 
 @font-face {
-	src: url(../fonts/Oswald-SemiBold.ttf);
+	src: url(../resources/fonts/Oswald-SemiBold.ttf);
 	font-family: oswaldSB;
 }
 

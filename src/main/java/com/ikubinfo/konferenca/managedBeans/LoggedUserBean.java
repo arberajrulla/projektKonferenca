@@ -23,7 +23,6 @@ public class LoggedUserBean {
 		this.loggedUser = loggedUser;
 	}
 	
-	
 	public void logout() {
 		this.loggedUser = null;
 	}
