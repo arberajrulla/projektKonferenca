@@ -14,7 +14,7 @@
 <div style="padding: 60px 100px 0px 100px;">
 
 
-<h:form >
+<h:form id="form1"  >
 <p:dataTable id="tabelaAll"
 		styleClass="table table-dark" 
 		var="userDto" 
@@ -95,12 +95,6 @@
           </p:cellEditor>        
     </p:column>
     
-        <p:column styleClass="hiqOutline" headerText="Fjalekalimi" sortBy="#{userDto.password}" filterStyle="display:none" filterBy="#{userDto.password}">
-          <p:cellEditor>
-              <f:facet name="output"><h:outputText style="display: block;" value="#{userDto.password}" /></f:facet>
-              <f:facet name="input"><p:inputText value="#{userDto.password}" style="width:100%"/></f:facet>
-          </p:cellEditor>        
-    </p:column>
     
     <p:column styleClass="hiqOutline" headerText="Kategoria" sortBy="#{userDto.kategoria}" filterStyle="display:none" filterBy="#{userDto.kategoria}">
           <p:cellEditor>
@@ -160,88 +154,85 @@
 		
 		
 		
-<h:form id="forma2" prependId="false">
+<h:form id="form2" prependId="false">
 
 <p:dialog showEffect="fade" hideEffect="fade" id="dialogNewUser" header="Perdorues i ri" widgetVar="dialogPerdoruesIRI" resizable="false" >
-	<p:outputPanel id="carDetail" style="text-align:center;">
+	<p:outputPanel style="text-align:center;">
         
-         <h:outputText value="Ju lutemi kontrolloni fushat e meposhtme!" 
+         <h:outputText id="messagePrimo" value="Ju lutemi kontrolloni fushat e meposhtme!" 
             	style="color:red; font-family:oswaldB; font-size:15px;"
             	rendered="#{facesContext.validationFailed}" />
             	
             	
-        <h:panelGrid style="width: auto; font-size:15px" columns="2" styleClass="textColorGold fontiOL"
-            	cellpadding ="10" cellspacing="1">
+        <h:panelGrid id="panelGridDialogUser" style="width: auto; font-size:15px" columns="3" styleClass="textColorGold fontiOL"
+            	cellpadding ="10" >
 
             	<h:outputLabel value="Emri" />
-            	<p:inputText styleClass="inputFushat" id="fushaEmriR" value="#{userBean.newUser.emri}"
-            					required="true">          			
+            	<p:inputText styleClass="inputFushat" id="fushaEmriR" value="#{userBean.newUser.emri}">          			
             	</p:inputText>
-            	
+            	<h:message for="fushaEmriR" styleClass="fontiOL" style="color:red; margin:8px;"/>
 				
             	
             	
             	<h:outputLabel value="Mbiemri"  />
             	<p:inputText styleClass="inputFushat" id="fushaMbiemriR" value="#{userBean.newUser.mbiemri}"
-            					required="true">          			
+            					>          			
             	</p:inputText>
+            	<h:message for="fushaMbiemriR" styleClass="fontiOL" style="color:red; margin:8px;"/>
             	
             	
             	<h:outputLabel value="E-mail"  />
             	<p:inputText styleClass="inputFushat" id="fushaEmailR" value="#{userBean.newUser.email}" 
-            					required="true">          			
+            					>          			
             	</p:inputText>
+            	<h:message for="fushaEmailR" styleClass="fontiOL" style="color:red; margin:8px;"/>
             	     	 
             	
             	<h:outputLabel value="Id"  />
             	<p:inputText styleClass="inputFushat" id="fushaIdR" value="#{userBean.newUser.username}"
-            			required="true">
+            			>
             	</p:inputText>
-            	
+            	<h:message for="fushaIdR" styleClass="fontiOL" style="color:red; margin:8px;"/>
 
 
             	<h:outputLabel value="Kategoria"  />
-            	<p:selectOneMenu id="menuR" style="width:100%" styleClass="inputFushat" value="#{userBean.newUser.kategoria}"
-            					 required="true"
-                               	 requiredMessage="Zgjidhni te pakten nje kategori"> 
+            	<p:selectOneMenu id="menuR" style="width:100%" styleClass="inputFushat" value="#{userBean.newUser.kategoria}"> 
    					<f:selectItem itemValue="#{null}" itemLabel="--Zgjidh--" />
    					<f:selectItem itemValue="autor" itemLabel="Autor" /> 
    					<f:selectItem itemValue="shqyrtues" itemLabel="Shqyrtues" /> 
    					<f:selectItem itemValue="admin" itemLabel="Administrator" />
 				</p:selectOneMenu>
-				
+				<h:message for="menuR" styleClass="fontiOL" style="color:red; margin:8px;"/>
 
             	<h:outputLabel value="Numer kontakti"  />
-            	<p:inputText styleClass="inputFushat" id="fushaNrR" value="#{userBean.newUser.nrcel}" 
-            					required="true">          			
+            	<p:inputText styleClass="inputFushat" id="fushaNrR" value="#{userBean.newUser.nrcel}">          			
             	</p:inputText>
-            	        	
+            	<h:message for="fushaNrR" styleClass="fontiOL" style="color:red; margin:8px;"/>        	
             	
             	
             	
             	<h:outputLabel value="Fjalekalimi"  />
             	<p:password placeholder="Fjalekalimi" id="fushaPswR" styleClass="inputFushat"
-			            	required="true"
-			            	requiredMessage="Fjalekalimi nuk mund te jete bosh"
 			            	validatorMessage="Fjalekalimet nuk perputhen"
 			            	value="#{userBean.newUser.password}" match="fushaPswRe" />
-            	
+            	<h:message for="fushaPswR" styleClass="fontiOL" style="color:red; margin:8px;"/>
             	
             	
             	
             	<h:outputLabel value="Perserisni fjalekalimin"  />
             	<p:password styleClass="inputFushat" id="fushaPswRe" value="#{userBean.newUser.password}"/>
-
+				<h:message for="fushaPswRe" styleClass="fontiOL" style="color:red; margin:8px;"/>
 
             	<f:facet name="footer">
                		<h:panelGroup style="display:block; text-align:center">
-                  		<h:commandButton class="fontiOL btn btn-primary" value="Ruaj" process="@this"
-                  			 actionListener="#{userBean.addUser()}"
+                  		<p:commandButton id="btnbtn" value="Ruaj" 
+                  		actionListener="#{userBean.addUser}"
+                  		process=":form2:dialogNewUser"
+                  		update=":form2:panelGridDialogUser :form2:messagePrimo" 
+                  		oncomplete="if (args &amp;&amp; !args.validationFailed) PF('dialogPerdoruesIRI').hide()"
                   			 >
-                  			 <f:ajax execute="@form" render="@form"></f:ajax>
-                  			 <f:ajax execute="@this" render="@this"></f:ajax>
-                  			 </h:commandButton>
-              			 
+                  			 </p:commandButton>
+                  			 
                		</h:panelGroup>
             	</f:facet> 
 
@@ -251,9 +242,6 @@
 
 
 </h:form>
-		
-
-
 
     </ui:define>
 

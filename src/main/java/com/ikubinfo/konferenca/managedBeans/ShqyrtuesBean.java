@@ -27,7 +27,7 @@ public class ShqyrtuesBean implements Serializable{
 	
 	private ShqyrtuesDto selectedShqyrtues;
 	private List<ShqyrtuesDto> selectedShqyrtuesa = new ArrayList<ShqyrtuesDto>();
-	private List<ShqyrtuesDto> listaShqyrtues = new ArrayList<ShqyrtuesDto>();
+	private List<ShqyrtuesDto> listaShqyrtues;
 	private ShqyrtuesDto shqyrtuesIRi = new ShqyrtuesDto();
 	private List<ShqyrtuesDto> shqyrtuesitFiltruar;
 	
@@ -82,18 +82,22 @@ public class ShqyrtuesBean implements Serializable{
 		log.info("Starting the process to add new Shqyrtues");
 		if(shqyrtuesService.addShqyrtues(shqyrtuesIRi)) {
 			log.info("New Shqyrtues was successfully added!");
+			listaShqyrtues = shqyrtuesService.getAllShqyrtuesList();
 		}else{
 			log.error("Error, New Shqyrtues was not added!");
+			listaShqyrtues = shqyrtuesService.getAllShqyrtuesList();
 		}
 	}
 	
 	
 	public void deleteShqyrtues() {
-		log.info("Starting the process to delete Shqyrtues list");
+		log.info("Starting the process to delete Shqyrtues list "+ selectedShqyrtuesa.toString() );
 		if(shqyrtuesService.deleteShqyrtues(selectedShqyrtuesa)) {
 			log.info("Selected Shqyrtues were successfully deleted!");
+			listaShqyrtues = shqyrtuesService.getAllShqyrtuesList();
 		}else{
 			log.error("Error, Shqyrtues were not deleted!");
+			listaShqyrtues = shqyrtuesService.getAllShqyrtuesList();
 		}
 	}
 	

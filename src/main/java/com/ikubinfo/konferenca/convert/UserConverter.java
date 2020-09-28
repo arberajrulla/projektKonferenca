@@ -59,6 +59,7 @@ public class UserConverter {
 		user.setMbiemri(uDto.getMbiemri());
 		user.setEmail(uDto.getEmail());
 		user.setPassword(uDto.getPassword());
+		user.setSalt(uDto.getSalt());
 		user.setKategoria(uDto.getKategoria());
 		user.setNrcel(uDto.getNrcel());
 		

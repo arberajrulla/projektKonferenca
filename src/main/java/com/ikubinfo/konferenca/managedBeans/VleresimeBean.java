@@ -125,10 +125,13 @@ public class VleresimeBean {
 	
 	
 	public void addVleresim() {
+		log.info("Message from vleresim " + newVleresim.getMeritaTeknike());
 		if(vleresimeService.addVleresim(newVleresim)) {
 			log.info("Vleresim added succesfully");
+			allVleresimeList = vleresimeService.getShqyrtuesArtikullList();
 		}else {
 			log.error("New Vleresim wasn't addded, error!");
+			allVleresimeList = vleresimeService.getShqyrtuesArtikullList();
 		}
 	}
 	
@@ -137,6 +140,7 @@ public class VleresimeBean {
 		
 		if(vleresimeService.deleteVleresim(selectedVleresime)) {
 			log.info("Vleresim list DELETED SUCCESSFULLY!");
+			allVleresimeList = vleresimeService.getShqyrtuesArtikullList();
 		} else {
 			log.error("List of Vleresim wasn't deleted!");
 		}

@@ -29,10 +29,10 @@
 
 
 <h:body >
-<div class="paneliKryesor" style="padding: 0px 0px 30px 0px;">
 
-<div class="row" style="padding: 50px 50px 50px 70px; height: 100%;">
-	<div class="col-md-6"  style="padding: 30px 50px 100px 50px;">
+
+<div class="row mh-100" style="margins: 50px 50px 50px 50px; padding-top: 50px;">
+	<div class="col-md-6" align="center"  style="padding: 100px 50px 100px 50px;">
 	
 			<div class="row fallingStar" >
 					<h:panelGrid id="panel" columns="2" border="0"
@@ -48,7 +48,7 @@
 	
 	
 	</div>
-	<div class="col-md-6"  style=" padding: 50px 50px 50px 50px; ">
+	<div class="col-md-6" align="center"  style=" padding: 50px 50px 50px 50px; ">
 	
 	
 			<div class="row" style="padding: 0px 0px 40px 0px;">
@@ -71,49 +71,41 @@
 			
 			
 
-			
 
 	
-	<div align="center" class="loginWhite">
-	
-	
+	<div align="center" class="loginWhite" style="margin: 30px;">
+
 		<h:form id="forma">
          	<h:panelGroup style = "display:block; text-align:center">
 				<p class= "fontiOM textColor" style="padding: 40px 0px 10px 0px; font-size:20px;">
 					VENDOSNI KREDENCIALET</p>
 			</h:panelGroup>
-
+			
+			<h:outputText styleClass="fontiOEL" value="Te dhenat e futura jane te pasakta, Ju lutemi provoni perseri!" rendered='#{authentikimBean.credentialsKey}' style="color:red; margin:10px; font-size:18px "/>
 
         	<h:panelGrid id="gridFushat" columns="3" 
             	cellpadding="13" cellspacing="1">
             	
          	
-            	<h:outputLabel class="fontiOSB textColor" value="ID" />
+            	<h:outputLabel class="fontiOSB textColor" value="USERNAME" />
             	<h:inputText class="form-control" 
-            				id="fushaId" value="#{authentikimBean.username}" 
-            				required="true"
-            				requiredMessage="Ju lutem plotesoni id"
-            				validatorMessage="Vetem shkronja">
-            				<f:validateRegex pattern="[a-zA-Z]+"/>
+            				id="fushaId" value="#{authentikimBean.username}" >
             				</h:inputText>
-            	<h:message  style="color:red;margin:8px;" for="fushaId" ></h:message>
+            	<h:message styleClass="fontiOL" style="color:red; margin:8px;" for="fushaId" ></h:message>
            
             	
             	
             	<h:outputLabel class="fontiOSB textColor" value="FJALEKALIMI"  />
             	<h:inputSecret class="form-control" 
-            					id="fushaPassword" value="#{authentikimBean.password}"
-            					required="true"
-            					requiredMessage="Ju lutem plotesoni fjalekalimin" >
-            				
-            				</h:inputSecret>
-            	<h:message style="color:red;margin:8px;" for="fushaPassword" ></h:message>
+            					id="fushaPassword" value="#{authentikimBean.password}">
+            	</h:inputSecret>
+            	<h:message styleClass="fontiOL" style="color:red; margin:8px;" for="fushaPassword" ></h:message>
             	
 
             	<div align="right" >
             	      	<h:panelGroup style="display:block; text-align:right">
          				<h:commandLink class="fontiOR textColor linkHov" immediate="true"
-         							value="HARRUAT FJALEKALIMIN?" action="harrimFjalekalimi"/>                  		
+         							value="HARRUAT FJALEKALIMIN?" action="harrimFjalekalimi.xhtml?faces-redirect=true"/>                  		
                			</h:panelGroup>
             	</div>
 
@@ -135,7 +127,7 @@
 		 
 		 
          	<h:panelGroup style="display:block; text-align:center">
-				<p class="fontiOEL textColor" style="padding: 70px 0px 0px 0px; font-size:15px;">
+				<p class="fontiOEL textColor" style="margin-top:40px; font-size:15px;">
 		 			NESE DESHIRONI NJE VESHTRIM TE PERGJITHSHEM MBI KONFERENCEN,
 		 			MUND TE VAZHDONI SI SHIKUES.</p>
 			</h:panelGroup> 
@@ -148,7 +140,7 @@
 		 <h:form id="shikuesButonForma">
 		 	<h:panelGroup style="display:block; text-align:center">
 		 <h:commandButton class="fontiOL btn btn-primary" value="Vazhdo si Shikues"
-		 					action="shikues.xhtml"/>      		
+		 					action="shikues.xhtml?faces-redirect=true"/>      		
                	</h:panelGroup>
 		 </h:form>
    
@@ -158,7 +150,7 @@
             	 
 		</div>
 	</div>
-</div>
+
 
 </h:body>
 </html>

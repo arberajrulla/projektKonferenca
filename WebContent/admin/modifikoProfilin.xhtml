@@ -27,7 +27,7 @@
             	
             	
             	<h:outputLabel class="fontiOSB textColor" value="Emri" />
-            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey" id="fushaEmriR" value="#{perdoruesiRi.emri}"
+            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey" id="fushaEmriR" value="#{loggedUserBean.loggedUser.emri}"
             					required="true"
             					requiredMessage="Emri nuk mund te jete bosh">          			
             	</p:inputText>
@@ -36,21 +36,21 @@
             	
             	
             	<h:outputLabel class="fontiOSB textColor" value="Mbiemri"  />
-            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey" id="fushaMbiemriR" value="#{perdoruesiRi.mbiemri}"
+            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey" id="fushaMbiemriR" value="#{loggedUserBean.loggedUser.mbiemri}"
             					required="true"
             					requiredMessage="Mbiemri nuk mund te jete bosh">          			
             	</p:inputText>
             	
             	
             	<h:outputLabel class="fontiOSB textColor" value="E-mail"  />
-            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey" id="fushaEmailR" value="#{perdoruesiRi.email}" 
+            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey" id="fushaEmailR" value="#{loggedUserBean.loggedUser.email}" 
             					required="true"
             					requiredMessage="E-mail nuk mund te jete bosh">          			
             	</p:inputText>
             	     	 
             	
             	<h:outputLabel class="fontiOSB textColor" value="Id"  />
-            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey" id="fushaIdR" value="#{perdoruesiRi.username}"
+            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey" id="fushaIdR" value="#{loggedUserBean.loggedUser.username}"
             			required="true"
             			requiredMessage="Id nuk mund te jete bosh"
             			validatorMessage="Id-ja duhet te permbaje te pakten 6 karaktere"
@@ -61,41 +61,27 @@
 
 
             	<h:outputLabel class="fontiOSB textColor" value="Kategoria"  />
-            	<p:selectOneMenu id="menuR" style="width:100%" styleClass="inputFushat" value="#{perdoruesiRi.kategoria}"
+            	<p:selectOneMenu id="menuR" style="width:100%" styleClass="inputFushat" value="#{loggedUserBean.loggedUser.kategoria}"
             					 required="true"
                                	 requiredMessage="Zgjidhni te pakten nje kategori"> 
    					<f:selectItem itemValue="#{null}" itemLabel="--Zgjidh--" />
+   					<f:selectItem itemValue="admin" itemLabel="Administrator" /> 
    					<f:selectItem itemValue="autor" itemLabel="Autor" /> 
    					<f:selectItem itemValue="shqyrtues" itemLabel="Shqyrtues" /> 
 				</p:selectOneMenu>
 				
 
             	<h:outputLabel class="fontiOSB textColor" value="Numer kontakti"  />
-            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey" id="fushaNrR" value="#{perdoruesiRi.nrCel}" 
+            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey" id="fushaNrR" value="#{loggedUserBean.loggedUser.nrcel}" 
             					required="true"
             					requiredMessage="Numri nuk mund te jete bosh">          			
             	</p:inputText>
             	        	
-            	
-            	
-            	
-            	<h:outputLabel class="fontiOSB textColor" value="Fjalekalimi"  />
-            	<p:password placeholder="Fjalekalimi" style="background-color:white; color:grey" id="fushaPswR" styleClass="inputFushat"
-			            	required="true"
-			            	requiredMessage="Fjalekalimi nuk mund te jete bosh"
-			            	validatorMessage="Fjalekalimet nuk perputhen"
-			            	value="#{perdoruesiRi.fjalekalimi1}" match="fushaPswRe" />
-            	
-            	
-            	
-            	
-            	<h:outputLabel class="fontiOSB textColor" value="Perserisni fjalekalimin"  />
-            	<p:password styleClass="inputFushat" style="background-color:white; color:grey" id="fushaPswRe" value="#{perdoruesiRi.fjalekalimi2}"/>
-
+            
             	<f:facet name="footer">
                		<h:panelGroup style="display:block; text-align:center">
-                  		<h:commandButton class="fontiOL btn btn-primary" value="Regjistrohu"
-                  			 action="#faqja1">
+                  		<h:commandButton class="fontiOL btn btn-primary" value="Ruaj"
+                  			 action="#{loggedUserBean.updateLoggedUserDetails()}">
                   			 <f:ajax execute="@form" render="@form"/>
                   			 </h:commandButton>
                		</h:panelGroup>

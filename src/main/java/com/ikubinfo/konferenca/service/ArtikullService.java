@@ -9,7 +9,7 @@ public interface ArtikullService {
 	
 	List<ArtikullDto> getArtikujLista();
 	boolean addArtikull(ArtikullDto artikullIRi);
-	boolean deleteArtikull(List<ArtikullDto> selectedArtikuj);
+	void deleteArtikull(List<ArtikullDto> selectedArtikuj);
 	boolean updateArtikull(ArtikullDto artikullDto);
 	
 }

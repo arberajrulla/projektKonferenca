@@ -51,6 +51,15 @@
 	    <servlet-name>Faces Servlet</servlet-name>
 	    <url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
+	   
+	<error-page>
+	    <error-code>403</error-code>
+	    <location>/accessDenied.xhtml</location>
+	</error-page>
 	
+	<error-page>
+	   <error-code>404</error-code>
+	   <location>/error404.xhtml</location>
+	</error-page>
 
 </web-app>

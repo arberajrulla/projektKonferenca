@@ -94,13 +94,6 @@
           </p:cellEditor>        
     </p:column>
     
-        <p:column styleClass="hiqOutline" headerText="Artikull ID" sortBy="#{autori.artikullId}" filterStyle="display:none" filterBy="#{autori.artikullId}">
-          <p:cellEditor disabled="true">
-              <f:facet name="output"><h:outputText style="display: block;" value="#{autori.artikullId}" /></f:facet>
-              <f:facet name="input"><p:inputText value="#{autori.artikullId}" style="width:100%"/></f:facet>
-          </p:cellEditor>        
-    </p:column>
-    
     
     <p:column style="width:80px" headerText="Modifiko" styleClass="editoBorderTabela">							     	
           	<p:rowEditor/>
@@ -143,7 +136,7 @@
 		
 		
 		
-<h:form id="formtwo">
+<h:form id="form2">
 
 <p:dialog showEffect="fade" hideEffect="fade" id="dialogNewAutor" header="Autor i ri" widgetVar="dialogAutorIRI" resizable="false" >
 	<p:outputPanel style="text-align:center;">
@@ -153,49 +146,53 @@
             	rendered="#{facesContext.validationFailed}" />
             	
             	
-        <h:panelGrid style="width: auto; font-size:15px" columns="2" styleClass="textColorGold fontiOL"
+        <h:panelGrid id="panelGridDialogAutor" style="width: auto; font-size:15px" columns="3" styleClass="textColorGold fontiOL"
             	cellpadding ="10" cellspacing="1">
 
             	<h:outputLabel value="Emri" />
             	<p:inputText styleClass="inputFushat" id="fushaEmriAR" value="#{autorBean.newAutor.emri}"
-            					required="true">          			
+            					>          			
             	</p:inputText>
+            	<h:message for="fushaEmriAR" styleClass="fontiOL" style="color:red; margin:8px;"/>
             	
             
             	<h:outputLabel value="Mbiemri" />
             	<p:inputText styleClass="inputFushat" id="fushaMbiemriAR" value="#{autorBean.newAutor.mbiemri}"
-            					required="true">          			
+            					>          			
             	</p:inputText>
+            	<h:message for="fushaMbiemriAR" styleClass="fontiOL" style="color:red; margin:8px;"/>
             	
             	
             	<h:outputLabel value="E-mail" />
             	<p:inputText styleClass="inputFushat" id="fushaEmailAR" value="#{autorBean.newAutor.emailId}" 
-            					required="true">          			
+            					>          			
             	</p:inputText>
+            	<h:message for="fushaEmailAR" styleClass="fontiOL" style="color:red; margin:8px;"/>
             	     	 
             	<h:outputLabel value="Artikulli" />
             	<p:selectOneMenu id="menuR" style="width:100%" styleClass="inputFushat" value="#{autorBean.newAutor.artikullId}"
-            					 required="true"> 
+            					> 
 
 					<f:selectItem itemLabel="--Zgjidh--" itemValue="" />
            			<f:selectItems value="#{autorBean.artikujDropdown}"/>   					
 				</p:selectOneMenu>
+				<h:message for="menuR" styleClass="fontiOL" style="color:red; margin:8px;"/>
 				
 				<h:outputText/>
 				<h:commandLink style="color: #d4d4d4 !important; text-decoration: none;" 
 							class="fontiOR textColor link2Hov" 
           	 				actionListener="#{autorBean.newDialogForNewArtikull()}"
-         					value="Regjistro artikull te ri"><f:ajax/></h:commandLink>
+         					value="Regjistro artikull te ri"><f:ajax/></h:commandLink>		
 
             	<f:facet name="footer">
                		<h:panelGroup style="display:block; text-align:center">
-                  		<h:commandButton class="fontiOL btn btn-primary" value="Ruaj" process="@this"
-                  			 actionListener="#{autorBean.addAutor()}"
-                  			 
-                  			 >
-                  			 <f:ajax execute="formtwo" render="formtwo"></f:ajax>
-                  			 </h:commandButton>
-              			 
+						<p:commandButton value="Ruaj" 
+								actionListener="#{autorBean.addAutor()}"
+								process=":form2:dialogNewAutor"
+								update=":form2:panelGridDialogAutor" 
+								oncomplete="if (args &amp;&amp; !args.validationFailed) PF('dialogAutorIRI').hide()"
+									 >
+						</p:commandButton>
                		</h:panelGroup>
             	</f:facet> 
 
@@ -206,7 +203,7 @@
 </h:form>
 
 		
-<h:form id="formthree">
+<h:form id="form3">
 
 <p:dialog showEffect="fade" hideEffect="fade" id="dialogNewArtikull" header="Artikull i ri" widgetVar="dialogArtikullIRI" resizable="false" >
 	<p:outputPanel style="text-align:center;">
@@ -216,40 +213,47 @@
             	rendered="#{facesContext.validationFailed}" />
             	
             	
-        <h:panelGrid style="width: auto; font-size:15px" columns="2" styleClass="textColorGold fontiOL"
+        <h:panelGrid id="panelGridDialogArtikull" style="width: auto; font-size:15px" columns="3" styleClass="textColorGold fontiOL"
             	cellpadding ="10" cellspacing="1">
 
             	<h:outputLabel value="Titulli" />
             	<p:inputText styleClass="inputFushat" id="fushaTitulliArtR" value="#{artikullBean.artikullIRi.titulli}"
-            					required="true">          			
+            					>
             	</p:inputText>
+            	<h:message for="fushaTitulliArtR" styleClass="fontiOL" style="color:red; margin:8px;"/>
             	
             
-            	<h:outputLabel value="Abstrakti"  />
+            	<h:outputLabel value="Abstrakti" />
             	<p:inputText styleClass="inputFushat" id="fushaAbstraktArtR" value="#{artikullBean.artikullIRi.abstrakti}"
-            					required="true">          			
+            					>
             	</p:inputText>
+            	<h:message for="fushaAbstraktArtR" styleClass="fontiOL" style="color:red; margin:8px;"/>
             	
             	
-            	<h:outputLabel value="Dokumenti Elektronik"  />
+            	<h:outputLabel value="Dokumenti Elektronik" />
             	<p:inputText styleClass="inputFushat" id="fushaDokElektronikArtR" value="#{artikullBean.artikullIRi.dokumentiElektronik}" 
-            					required="true">          			
+            					>
             	</p:inputText>
+            	<h:message for="fushaDokElektronikArtR" styleClass="fontiOL" style="color:red; margin:8px;"/>
+            	
             	     	 
-            	<h:outputLabel value="Kontakt"  />
+            	<h:outputLabel value="Kontakt" />
             	<p:inputText styleClass="inputFushat" id="fushaKontaktArtR" value="#{artikullBean.artikullIRi.kontakt}" 
-            					required="true">          			
+            					>
             	</p:inputText>
+            	<h:message for="fushaKontaktArtR" styleClass="fontiOL" style="color:red; margin:8px;"/>
+            	
             	
 
             	<f:facet name="footer">
                		<h:panelGroup style="display:block; text-align:center">
-                  		<h:commandButton class="fontiOL btn btn-primary" value="Ruaj" process="@this"
-                  			 actionListener="#{artikullBean.addArtikull()}"  
-                  			 >
-                  			 <f:ajax execute="formthree" render="formthree"></f:ajax>
-                  			 </h:commandButton>
-              			 
+						<p:commandButton value="Ruaj" 
+								actionListener="#{artikullBean.addArtikull()}" 
+								process=":form3:dialogNewArtikull"
+								update=":form3:panelGridDialogArtikull" 
+								oncomplete="if (args &amp;&amp; !args.validationFailed) PF('dialogArtikullIRI').hide()"
+									 >
+						</p:commandButton>
                		</h:panelGroup>
             	</f:facet> 
 

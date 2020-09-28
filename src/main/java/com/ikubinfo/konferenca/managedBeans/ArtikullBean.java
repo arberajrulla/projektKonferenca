@@ -73,19 +73,21 @@ public class ArtikullBean implements Serializable {
 	public void addArtikull() {
 		if(artikullService.addArtikull(artikullIRi)) {
 			log.info("Artikull added succesfully");
+			listaArtikuj = artikullService.getArtikujLista();
 		}else {
 			log.error("New Artikull wasn't addded, error!");
 		}
 	}
 	
 	public void deleteArtikull() {
-		log.info("Delete Artikull called " + selectedArtikuj.get(0).getTitulli());
+		log.info("Delete Artikull called " + selectedArtikuj.toString());
+		//throw new RuntimeException("Delete artikull throwed an error"); 
 		
-		if(artikullService.deleteArtikull(selectedArtikuj)) {
-			log.info("Artikuj list DELETED SUCCESSFULLY!");
-		} else {
-			log.error("List of Artikuj wasn't deleted!");
-		}
+		artikullService.deleteArtikull(selectedArtikuj);
+		
+		log.info("Artikuj list DELETED SUCCESSFULLY!"); 
+		listaArtikuj = artikullService.getArtikujLista(); 
+		 
 	}
 	
     public void onRowEdit(RowEditEvent<ArtikullDto> event) {

@@ -24,7 +24,7 @@ public class HashSaltedPassword {
 			dig.update(salt);
 			byte[] hash = dig.digest(plainPassword.getBytes());
 			return bytesToStringHex(hash);
-		} catch (NoSuchAlgorithmException e) {
+		} catch (NoSuchAlgorithmException | NullPointerException e) {
 			log.error("Couldn't generate hashed password!");
 			e.printStackTrace();
 			return null;

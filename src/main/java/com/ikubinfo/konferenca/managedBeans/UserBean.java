@@ -94,6 +94,7 @@ public class UserBean implements Serializable{
 		oneToDelete.add(selectedUser);
 		if(userService.deleteUser(oneToDelete)) {
 			log.info("User DELETED SUCCESSFULLY!");
+			allUsersList = userService.getAllUsers();
 		} else {
 			log.error("User wasn't deleted!");
 		}
@@ -104,8 +105,10 @@ public class UserBean implements Serializable{
 		
 		if(userService.deleteUser(selectedUsers)) {
 			log.info("User list DELETED SUCCESSFULLY!");
+			allUsersList = userService.getAllUsers();
 		} else {
 			log.error("List of Users wasn't deleted!");
+			allUsersList = userService.getAllUsers();
 		}
 	}
 	

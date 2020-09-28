@@ -1,18 +1,32 @@
 package com.ikubinfo.konferenca.dto;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class ShqyrtuesArtikullDto {
 
+	@NotNull(message = "Zgjidhni te pakten nje shqyrtues!")
 	private String shqrtid;
+	
+	//@NotNull(message = "Zgjidhni te pakten nje artikull!")
 	private int arid;
+	
+	//@NotNull(message = "Duhet te kete te pakten nje vleresim per meriten teknike")
+	//@Pattern(regexp = "^[0-9]*$", message = "Zgjidhni nje vleresim !")
 	private int meritaTeknike; 
+	
 	private int kuptueshmeria; 
+	
 	private int origjinaliteti; 
+	
 	private int perkatesiKonference;
+	
 	private String emriFull;
 	private String artikull;
 	private String rekomandim;
 	private int vleresimId;
-	
 	
 
 	public int getVleresimId() {

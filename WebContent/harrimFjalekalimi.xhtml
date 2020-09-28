@@ -20,7 +20,7 @@
 	
 <div class="" style="padding: 0px 0px 30px 0px;">
 
-<div class="row" style="padding: 50px 50px 50px 70px; height: 100%;">
+<div class="row" style="padding: 30px 50px 0px 70px; height: 100%;">
 	
 
 	<div class="col-md-6"  style="padding: 30px 50px 100px 50px; " >
@@ -69,31 +69,13 @@
 	
 		<h:form id="forma">
          	<h:panelGroup style = "display:block; text-align:center">
-				<p class= "fontiOM textColor" style="padding: 40px 0px 10px 0px; font-size:20px;">
-					VENDOSNI KREDENCIALET</p>
+				<p class= "fontiOL textColor" style="padding: 40px 0px 10px 0px; font-size:20px;">
+					Ju lutemi vendosni adresen e E-mail-it</p>
 			</h:panelGroup>
 
 
         	<h:panelGrid id="gridFushat" columns="3" 
             	cellpadding="13" cellspacing="1">
-            	
-         	
-            	<h:outputLabel class="fontiOSB textColor" value="ID" />
-            	<h:inputText class="form-control" 
-            				id="fushaIdRes" value="#{autentikim.username}" 
-            				required="true"
-            				requiredMessage="Ju lutem plotesoni id"
-            				validatorMessage="ID mund te kete vetem karaktere speciale si (.)(_)">
-            				<f:validateRegex pattern="[a-zA-Z]+"/>
-            				</h:inputText>
-            	<h:message style="color:red;margin:8px;" for="fushaIdRes" ></h:message>
-           
-           		<br/>
-               		<h:panelGroup style="display:block; text-align:center">
-							<h:outputText class="fontiOR textColor" value = "OSE"/>
-               		</h:panelGroup>
-				<br/>
-
 				
             	
             	<h:outputLabel class="fontiOSB textColor" value="E-MAIL"  />
@@ -113,6 +95,10 @@
                   		 <f:ajax execute="@form" render="@form" />
                   		 </h:commandButton>
                		</h:panelGroup>
+           		    <h:panelGroup style="display:block; text-align:center; margin-top: 15px;">
+      						<h:commandLink class="fontiOR textColor linkHov" immediate="true"
+      							value="Rikthehuni tek faqja e Logimit" action="login.xhtml?faces-redirect=true"/>                  		
+           			</h:panelGroup>
             	</f:facet>
          </h:panelGrid>
 	</h:form>

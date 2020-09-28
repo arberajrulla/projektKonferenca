@@ -17,10 +17,12 @@ C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\servi
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\service\AutorService.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\dao\AutorDao.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\service\impl\ArtikullServiceImpl.java
+C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\filter\LoggedInUserFilter.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\dto\AutorDto.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\dao\impl\ShqyrtuesArtikullDaoImpl.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\dao\ShqyrtuesArtikullDao.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\entity\User.java
+C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\exception\ExceptionManagement.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\managedBeans\AutorBean.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\service\impl\VleresimeServiceImpl.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\managedBeans\ArtikullBean.java

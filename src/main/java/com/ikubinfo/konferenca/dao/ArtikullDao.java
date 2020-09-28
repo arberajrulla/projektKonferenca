@@ -9,5 +9,5 @@ public interface ArtikullDao {
 	List<Artikull> getAllArtikuj();
 	boolean addArtikull(Artikull a);
 	boolean updateArtikull(Artikull a);
-	boolean deleteArtikull(int artikullId);
+	void deleteArtikull(int artikullId);
 }

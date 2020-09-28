@@ -14,7 +14,7 @@
 </h:head>
 
 
-<h:body>
+<h:body >
 
 	<div class="paneliKryesor" style="position: absolute; padding-top:10px;">
 <h:form>
@@ -30,7 +30,7 @@
 <div class="row" style="margin-left:40px; margin-right:40px; background-color:#002f77">
 	<div style="margin:0px; ">
 			<h:panelGroup style="text-align:center;">
-         		<h:commandButton value="Faqja Kryesore" class="butonMenu" action="#">
+         		<h:commandButton value="Faqja Kryesore" class="butonMenu" action="faqja1.xhtml?faces-redirect=true">
          		</h:commandButton>
          		<h:commandButton value="Perdoruesit" class="butonMenu" action="perdoruesit.xhtml?faces-redirect=true"  />
          		<h:commandButton value="Autoret" class="butonMenu"  
@@ -56,8 +56,8 @@
 
 </h:form>
 
-
-		<ui:insert name="content"></ui:insert>
+		<ui:insert name="content">
+		</ui:insert> 
 		
 
 			

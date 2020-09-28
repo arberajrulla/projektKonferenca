@@ -86,7 +86,7 @@
     			filterStyle="display:none" filterBy="#{vleresimi.meritaTeknike}">
           <p:cellEditor>
               <f:facet name="output"><h:outputText style="display:block;" value="#{vleresimi.meritaTeknike}" /></f:facet>
-              <f:facet name="input"><p:inputText value="#{vleresimi.meritaTeknike}" style="width:100%"/></f:facet>
+              <f:facet name="input"><p:rating value="#{vleresimi.meritaTeknike}" style="width:100%" stars="10" /></f:facet>
           </p:cellEditor>
     </p:column>
     
@@ -94,7 +94,7 @@
     			filterStyle="display:none" filterBy="#{vleresimi.kuptueshmeria}">
           <p:cellEditor>
               <f:facet name="output"><h:outputText style="display:block;" value="#{vleresimi.kuptueshmeria}" /></f:facet>
-              <f:facet name="input"><p:inputText value="#{vleresimi.kuptueshmeria}" style="width:100%"/></f:facet>
+              <f:facet name="input"><p:rating value="#{vleresimi.kuptueshmeria}" style="width:100%" stars="10" /></f:facet>
           </p:cellEditor>
     </p:column>
     
@@ -102,7 +102,7 @@
     			filterStyle="display:none" filterBy="#{vleresimi.origjinaliteti}">
           <p:cellEditor>
               <f:facet name="output"><h:outputText style="display:block;" value="#{vleresimi.origjinaliteti}" /></f:facet>
-              <f:facet name="input"><p:inputText value="#{vleresimi.origjinaliteti}" style="width:100%"/></f:facet>
+              <f:facet name="input"><p:rating value="#{vleresimi.origjinaliteti}" style="width:100%" stars="10" /></f:facet>
           </p:cellEditor>
     </p:column>
     
@@ -110,7 +110,7 @@
     			filterStyle="display:none" filterBy="#{vleresimi.perkatesiKonference}">
           <p:cellEditor>
               <f:facet name="output"><h:outputText style="display:block;" value="#{vleresimi.perkatesiKonference}" /></f:facet>
-              <f:facet name="input"><p:inputText value="#{vleresimi.perkatesiKonference}" style="width:100%"/></f:facet>
+              <f:facet name="input"><p:rating value="#{vleresimi.perkatesiKonference}" style="width:100%" stars="10" /></f:facet>
           </p:cellEditor>
     </p:column>
     
@@ -164,7 +164,7 @@
 
 	
 		
-<h:form>
+<h:form id="form2">
 
 <p:dialog showEffect="fade" hideEffect="fade" id="dialogNewVleresim" header="Vleresim i ri" widgetVar="dialogVleresimIRI" resizable="false" >
 	<p:outputPanel style="text-align:center;">
@@ -174,49 +174,57 @@
             	rendered="#{facesContext.validationFailed}" />
             	
             	
-        <h:panelGrid style="width: auto; font-size:15px" columns="2" styleClass="textColorGold fontiOL"
+        <h:panelGrid id="panelGridDialogVleresim" style="width: auto; font-size:15px" columns="3" styleClass="textColorGold fontiOL"
             	cellpadding ="10" cellspacing="1">
 
             	<h:outputLabel value="Shqyrtuesi" />
-		        <p:selectOneMenu style="width:100%" styleClass="inputFushat" value="#{vleresimeBean.newVleresim.shqrtid}"
-            					 required="true"> 
+		        <p:selectOneMenu id="shqyrtuesiId" style="width:100%" styleClass="inputFushat" value="#{vleresimeBean.newVleresim.shqrtid}"
+            					 > 
 
 					<f:selectItem itemLabel="--Zgjidh--" itemValue="" />
            			<f:selectItems value="#{vleresimeBean.allShqyrtuesitDropdownList}" />				
 				</p:selectOneMenu>
+				<h:message for="shqyrtuesiId" styleClass="fontiOL" style="color:red; margin:8px;"/>
 	
             	
             	<h:outputLabel value="Artikulli" />
-		        <p:selectOneMenu style="width:100%" styleClass="inputFushat" value="#{vleresimeBean.newVleresim.arid}"
-            					 required="true"> 
+		        <p:selectOneMenu id="artikulliId" style="width:100%" styleClass="inputFushat" value="#{vleresimeBean.newVleresim.arid}"
+            					 > 
 
 					<f:selectItem itemLabel="--Zgjidh--" itemValue="" />
            			<f:selectItems value="#{vleresimeBean.allArtikujtDropdownList}" />				
 				</p:selectOneMenu>
+				<h:message for="artikulliId" styleClass="fontiOL" style="color:red; margin:8px;"/>
             	
             	<h:outputLabel value="Merita Teknike"  />
-            	<p:spinner value="#{vleresimeBean.newVleresim.meritaTeknike}" min="0" max="10" />
+            	<p:rating id="meritaTeknikeId" value="#{vleresimeBean.newVleresim.meritaTeknike}" stars="10" />
+            	<h:message for="meritaTeknikeId" styleClass="fontiOL" style="color:red; margin:8px;"/>
             	
             	<h:outputLabel value="Kuptueshmeria"  />
-            	<p:spinner value="#{vleresimeBean.newVleresim.kuptueshmeria}" min="0" max="10" />
+            	<p:rating id="kuptueshmeriaId" value="#{vleresimeBean.newVleresim.kuptueshmeria}" stars="10" />
+            	<h:message for="kuptueshmeriaId" styleClass="fontiOL" style="color:red; margin:8px;"/>
             	
             	<h:outputLabel value="Origjinaliteti"  />
-            	<p:spinner value="#{vleresimeBean.newVleresim.kuptueshmeria}" min="0" max="10" />
+            	<p:rating id="origjinalitetiId" value="#{vleresimeBean.newVleresim.origjinaliteti}" stars="10" />
+            	<h:message for="origjinalitetiId" styleClass="fontiOL" style="color:red; margin:8px;"/>
             	
             	<h:outputLabel value="Perkatesi Konference"  />
-            	<p:spinner value="#{vleresimeBean.newVleresim.perkatesiKonference}" min="0" max="10" />
+            	<p:rating id="perkatesiId" value="#{vleresimeBean.newVleresim.perkatesiKonference}" stars="10" />
+            	<h:message for="perkatesiId" styleClass="fontiOL" style="color:red; margin:8px;"/>
             	
             	<h:outputLabel value="Rekomandim"  />
-            	<p:inputTextarea value="#{vleresimeBean.newVleresim.rekomandim}" rows="6" cols="33" />
+            	<p:inputTextarea id="rekomandimId" value="#{vleresimeBean.newVleresim.rekomandim}" rows="6" cols="33" />
+            	<h:message for="rekomandimId" styleClass="fontiOL" style="color:red; margin:8px;"/>
 
             	<f:facet name="footer">
                		<h:panelGroup style="display:block; text-align:center">
-                  		<h:commandButton class="fontiOL btn btn-primary" value="Ruaj" process="@this"
-                  			 actionListener="#{vleresimeBean.addVleresim}"
-                  			 >
-                  			 <f:ajax execute="@form" render="@form"></f:ajax>
-                  			 </h:commandButton>
-              			 
+						<p:commandButton value="Ruaj" 
+								actionListener="#{vleresimeBean.addVleresim}"
+								process=":form2:dialogNewVleresim"
+								update=":form2:panelGridDialogVleresim" 
+								oncomplete="if (args &amp;&amp; !args.validationFailed) PF('dialogVleresimIRI').hide()"
+									 >
+						</p:commandButton>
                		</h:panelGroup>
             	</f:facet> 
 
@@ -227,13 +235,7 @@
 
 </h:form>		
 	
-		
 
-
-		
-	
-		
-	
 
 
     </ui:define>

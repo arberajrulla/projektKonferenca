@@ -10,12 +10,13 @@
 	<ui:define name="title">Faqja kryesore</ui:define>
 	 
     <ui:define name="content">
-	<div class="paneliKryesor fallingStar" style=" position: absolute; padding-top:150px;">
+	<div class="paneliKryesor fallingStar" style="padding-top:150px;">
 		<div class="row" align="center">
 			<div class="col-md-12" >
 				<p class= "fontiOEL textColor" style="font-size: 30px;">MIRESEERDHET</p>
 				
-				<p class="fontiOEL textColor" style="margin-top:70px;">#{autentikim.emri}
+				<p class="fontiOEL" style="margin-top:70px; font-size: 40px; color:white;">#{loggedUserBean.loggedUser.emri}
+				  #{loggedUserBean.loggedUser.mbiemri}
 				</p>
 				
 			</div>

@@ -54,16 +54,11 @@ public class ArtikullServiceImpl implements ArtikullService {
 	}
 
 	@Transactional
-	public boolean deleteArtikull(List<ArtikullDto> selectedArtikuj) {
-		boolean check = false;
+	public void deleteArtikull(List<ArtikullDto> selectedArtikuj) {
+		
 		for(ArtikullDto artikullDto : selectedArtikuj) {
-			check = artikullDao.deleteArtikull(artikullDto.getArtikullId());
-			if(!check) {
-				log.error("Breaking from deletion loop, error occurred!");
-				break;
-			}
+			 artikullDao.deleteArtikull(artikullDto.getArtikullId());
 		}
-		return check;
 	}
 
 	@Transactional

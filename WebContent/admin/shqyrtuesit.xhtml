@@ -10,7 +10,7 @@
 	<ui:define name="title">Shqyrtuesit</ui:define>
 	 
     <ui:define name="content">
-<h:form>
+<h:form id="form1">
 <div style="padding: 60px 100px 0px 100px;">
 
 <p:dataTable id="tabelaShqyrtues"
@@ -152,7 +152,7 @@
 		
 		
 		
-<h:form>
+<h:form id="form2">
 
 <p:dialog showEffect="fade" hideEffect="fade" id="dialogNewShqyrtues" header="Shqyrtues i ri" widgetVar="dialogShqyrtuesIRI" resizable="false" >
 	<p:outputPanel style="text-align:center;">
@@ -162,41 +162,44 @@
             	rendered="#{facesContext.validationFailed}" />
             	
             	
-        <h:panelGrid style="width: auto; font-size:15px" columns="2" styleClass="textColorGold fontiOL"
+        <h:panelGrid id="panelGridDialogShqyrtues" style="width: auto; font-size:15px" columns="3" styleClass="textColorGold fontiOL"
             	cellpadding ="10" cellspacing="1">
 
             	<h:outputLabel value="Emri" />
             	<p:inputText styleClass="inputFushat" id="fushaEmriShR" value="#{shqyrtuesBean.shqyrtuesIRi.emri}"
-            					required="true">          			
+            					>          			
             	</p:inputText>
-            	
+            	<h:message for="fushaEmriShR" styleClass="fontiOL" style="color:red; margin:8px;"/>
             
             	<h:outputLabel value="Mbiemri"  />
             	<p:inputText styleClass="inputFushat" id="fushaMbiemriShR" value="#{shqyrtuesBean.shqyrtuesIRi.mbiemri}"
-            					required="true">          			
+            					>          			
             	</p:inputText>
+            	<h:message for="fushaMbiemriShR" styleClass="fontiOL" style="color:red; margin:8px;"/>
             	
             	
             	<h:outputLabel value="E-mail"  />
             	<p:inputText styleClass="inputFushat" id="fushaemailShR" value="#{shqyrtuesBean.shqyrtuesIRi.idEmail}" 
-            					required="true">          			
+            					>          			
             	</p:inputText>
+            	<h:message for="fushaemailShR" styleClass="fontiOL" style="color:red; margin:8px;"/>
             	     	 
             	<h:outputLabel value="Institucioni"  />
             	<p:inputText styleClass="inputFushat" id="fushaInstitucioniShR" value="#{shqyrtuesBean.shqyrtuesIRi.institucioni}" 
-            					required="true">          			
+            					>          			
             	</p:inputText>
+            	<h:message for="fushaInstitucioniShR" styleClass="fontiOL" style="color:red; margin:8px;"/>
             	
 
             	<f:facet name="footer">
                		<h:panelGroup style="display:block; text-align:center">
-                  		<h:commandButton class="fontiOL btn btn-primary" value="Ruaj" process="@this"
-                  			 actionListener="#{shqyrtuesBean.addShqyrtues}"
-                  			 >
-                  			 <f:ajax execute="@form" render="@form"></f:ajax>
-                  			 <f:ajax execute="@this" render="@this"></f:ajax>
-                  			 </h:commandButton>
-              			 
+						<p:commandButton value="Ruaj" 
+								actionListener="#{shqyrtuesBean.addShqyrtues}"
+								process=":form2:dialogNewShqyrtues"
+								update=":form2:panelGridDialogShqyrtues :form1:tabelaShqyrtues" 
+								oncomplete="if (args &amp;&amp; !args.validationFailed) PF('dialogShqyrtuesIRI').hide()"
+									 >
+						</p:commandButton>
                		</h:panelGroup>
             	</f:facet> 
 

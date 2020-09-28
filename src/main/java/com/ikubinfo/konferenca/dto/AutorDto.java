@@ -1,13 +1,32 @@
 package com.ikubinfo.konferenca.dto;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class AutorDto {
 	
+	@NotNull(message = "E-mail nuk duhet te jete bosh")
+	@Size(message = "E-mail duhet te kete nga 2 deri 40 karaktere!", min= 2, max = 40)
+	@Email(message = "Formati i e-mail nuk eshte i sakte!")
 	private String emailId;
-	private String emri;
-	private String mbiemri;
-	private int artikullId;
-	private String artikullName;
 	
+	@NotNull(message = "Emri nuk duhet te jete bosh")
+	@Size(message = "Emri duhet te kete nga 2 deri 40 karaktere!", min= 2, max = 40)
+	@Pattern(regexp = "^[a-zA-Z]+$", message = "Emri duhet te permbaje vetem shkronja!")
+	private String emri;
+	
+	@NotNull(message = "Mbiemri nuk duhet te jete bosh")
+	@Size(message = "Mbiemri duhet te kete nga 2 deri 40 karaktere!", min= 2, max = 40)
+	@Pattern(regexp = "^[a-zA-Z]+$", message = "Mbiemri duhet te permbaje vetem shkronja!")
+	private String mbiemri;
+	
+	@NotNull(message = "Zgjidhni te pakten nje kategori!")
+	private int artikullId;
+	
+	private String artikullName;
 	
 	public String getArtikullName() {
 		return artikullName;

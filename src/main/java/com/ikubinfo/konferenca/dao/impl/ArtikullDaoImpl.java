@@ -61,15 +61,12 @@ public class ArtikullDaoImpl implements ArtikullDao {
 	}
 
 	@Override
-	public boolean deleteArtikull(int artikullId) {
-		try {
+	public void deleteArtikull(int artikullId) {
+		
 			Artikull artikullToDelete = entityManager.find(Artikull.class, artikullId);
 			entityManager.remove(artikullToDelete);	
 			log.info("Artikull " + artikullId + " deleted successfully from DB!");
-			return true;
-		}catch(Exception e) {
-			log.error("Couldn't delete Artikull from Database ", e);
-			return false;
-		}
+			
+
 	}
 }

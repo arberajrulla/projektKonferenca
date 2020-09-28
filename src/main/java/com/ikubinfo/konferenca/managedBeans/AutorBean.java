@@ -118,6 +118,7 @@ public class AutorBean implements Serializable{
 	public void addAutor() {
 		if(autorService.addAutor(newAutor)) {
 			log.info("Autor added succesfully");
+			allAutorList = autorService.getAllAutore();
 		}else {
 			log.error("New Autor wasn't addded, error!");
 		}
