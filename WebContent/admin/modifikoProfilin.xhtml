@@ -14,7 +14,7 @@
 <div class="col-md-12"  style=" padding: 0px 50px 50px 50px;">
 	
 
-<div align="center" class="loginWhite" style="min-width:400px;" >
+<div align="center" class="loginWhite" style="margin-left: 10%; margin-right: 10%; margin-top: 40px;" >
 			<br/><br/>
             <h:outputText class="fontiOM textColor" value="JU LUTEMI TE PLOTESONI TE GJITHA FUSHAT"/>
 			<br/><br/>
@@ -22,78 +22,142 @@
 
 <h:form class="row" style=" display: inline-block;" >
 	
-        <h:panelGrid style="width: auto;" id = "gridFushat" columns="2" 
+        <h:panelGrid style="width: auto;" id = "gridFushat" columns="3" 
             	cellpadding = "10" cellspacing="1">
             	
             	
             	<h:outputLabel class="fontiOSB textColor" value="Emri" />
-            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey" id="fushaEmriR" value="#{loggedUserBean.loggedUser.emri}"
-            					required="true"
-            					requiredMessage="Emri nuk mund te jete bosh">          			
+            	<p:inputText styleClass="inputFushat" 
+            					style="background-color:white; color:grey" 
+            					id="fushaEmriR" 
+            					value="#{loggedUserBean.loggedUser.emri}"
+            					>          			
             	</p:inputText>
+            	<h:message for="fushaEmriR" styleClass="fontiOL" style="color:red; margin:8px;"/>
             	
 				
             	
             	
             	<h:outputLabel class="fontiOSB textColor" value="Mbiemri"  />
-            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey" id="fushaMbiemriR" value="#{loggedUserBean.loggedUser.mbiemri}"
-            					required="true"
-            					requiredMessage="Mbiemri nuk mund te jete bosh">          			
+            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey" 
+            					id="fushaMbiemriR" value="#{loggedUserBean.loggedUser.mbiemri}">          			
             	</p:inputText>
+            	<h:message for="fushaMbiemriR" styleClass="fontiOL" style="color:red; margin:8px;"/>
             	
             	
             	<h:outputLabel class="fontiOSB textColor" value="E-mail"  />
-            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey" id="fushaEmailR" value="#{loggedUserBean.loggedUser.email}" 
-            					required="true"
-            					requiredMessage="E-mail nuk mund te jete bosh">          			
+            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey" 
+            					id="fushaEmailR" value="#{loggedUserBean.loggedUser.email}" >          			
             	</p:inputText>
+            	<h:message for="fushaEmailR" styleClass="fontiOL" style="color:red; margin:8px;"/>
             	     	 
             	
-            	<h:outputLabel class="fontiOSB textColor" value="Id"  />
-            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey" id="fushaIdR" value="#{loggedUserBean.loggedUser.username}"
-            			required="true"
-            			requiredMessage="Id nuk mund te jete bosh"
-            			validatorMessage="Id-ja duhet te permbaje te pakten 6 karaktere"
+            	<h:outputLabel class="fontiOSB textColor" value="Username"  />
+            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey" 
+            			id="fushaIdR" value="#{loggedUserBean.loggedUser.username}"
             			>
-            		<f:validateLength min="6" />
             	</p:inputText>
+            	<h:message for="fushaIdR" styleClass="fontiOL" style="color:red; margin:8px;"/>
             	
 
 
             	<h:outputLabel class="fontiOSB textColor" value="Kategoria"  />
-            	<p:selectOneMenu id="menuR" style="width:100%" styleClass="inputFushat" value="#{loggedUserBean.loggedUser.kategoria}"
-            					 required="true"
-                               	 requiredMessage="Zgjidhni te pakten nje kategori"> 
+            	<p:selectOneMenu id="menuR" style="width:100%" 
+            						styleClass="inputFushat" 
+            						value="#{loggedUserBean.loggedUser.kategoria}"> 
    					<f:selectItem itemValue="#{null}" itemLabel="--Zgjidh--" />
    					<f:selectItem itemValue="admin" itemLabel="Administrator" /> 
    					<f:selectItem itemValue="autor" itemLabel="Autor" /> 
    					<f:selectItem itemValue="shqyrtues" itemLabel="Shqyrtues" /> 
 				</p:selectOneMenu>
+				<h:message for="menuR" styleClass="fontiOL" style="color:red; margin:8px;"/>
 				
 
             	<h:outputLabel class="fontiOSB textColor" value="Numer kontakti"  />
-            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey" id="fushaNrR" value="#{loggedUserBean.loggedUser.nrcel}" 
-            					required="true"
-            					requiredMessage="Numri nuk mund te jete bosh">          			
+            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey" 
+            				id="fushaNrR" value="#{loggedUserBean.loggedUser.nrcel}" >          			
             	</p:inputText>
+            	<h:message for="fushaNrR" styleClass="fontiOL" style="color:red; margin:8px;"/>
             	        	
             
             	<f:facet name="footer">
                		<h:panelGroup style="display:block; text-align:center">
-                  		<h:commandButton class="fontiOL btn btn-primary" value="Ruaj"
-                  			 action="#{loggedUserBean.updateLoggedUserDetails()}">
-                  			 <f:ajax execute="@form" render="@form"/>
-                  			 </h:commandButton>
+                  		<p:commandButton class="fontiOL btn btn-primary" value="Ruaj"
+                  			 actionListener="#{loggedUserBean.updateLoggedUserDetails}" 
+                  			 process="@form" update="@form" >
+                  			 </p:commandButton>
                		</h:panelGroup>
             	</f:facet>
 
          </h:panelGrid>
          
-         		<p:messages showIcon="false" id="messages" showDetail="false" closable="true"  >
-        		</p:messages>
 </h:form>
 </div>
 </div>
+
+
+			
+
+
+			
+<h:form id="formaDialogConfirmed">
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogConfirm" header="Sukses!" widgetVar="dialogSuccess" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" onclick="PF('dialogSuccess').hide()">
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>
+</p:dialog>  
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogGabim" header="Gabim!" widgetVar="dialogError" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+            	
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" 
+								onclick=" PF('dialogError').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>	
+</p:dialog>  
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogCust" header="Mesazh!" widgetVar="dialogCustom" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+            	
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" 
+								onclick=" PF('dialogCustom').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>	
+</p:dialog>  
+
+
+</h:form>
+
+
+
+
+
 
 
 

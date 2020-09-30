@@ -11,5 +11,9 @@
         </el-resolver>
     </application>
     
+    <factory>
+        <exception-handler-factory>com.ikubinfo.konferenca.exception.CustomExceptionHandlerFactory</exception-handler-factory>
+    </factory>
+    
     
 </faces-config>

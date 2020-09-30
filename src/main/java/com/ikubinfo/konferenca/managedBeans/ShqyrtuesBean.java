@@ -34,8 +34,7 @@ public class ShqyrtuesBean implements Serializable{
 	
 	@PostConstruct
 	public void init() {
-		log.info("Filling list of Shqyrtues on init!");
-		listaShqyrtues = shqyrtuesService.getAllShqyrtuesList();
+		fillListaShqyrtues();
 	}
 	
 	
@@ -76,40 +75,26 @@ public class ShqyrtuesBean implements Serializable{
 		this.shqyrtuesitFiltruar = shqyrtuesitFiltruar;
 	}
 	
-	
+	public void fillListaShqyrtues() {
+		listaShqyrtues = shqyrtuesService.getAllShqyrtuesList();
+	}
 	
 	public void addShqyrtues() {
 		log.info("Starting the process to add new Shqyrtues");
-		if(shqyrtuesService.addShqyrtues(shqyrtuesIRi)) {
-			log.info("New Shqyrtues was successfully added!");
-			listaShqyrtues = shqyrtuesService.getAllShqyrtuesList();
-		}else{
-			log.error("Error, New Shqyrtues was not added!");
-			listaShqyrtues = shqyrtuesService.getAllShqyrtuesList();
-		}
+		shqyrtuesService.addShqyrtues(shqyrtuesIRi); 
+		fillListaShqyrtues();
 	}
 	
 	
 	public void deleteShqyrtues() {
 		log.info("Starting the process to delete Shqyrtues list "+ selectedShqyrtuesa.toString() );
-		if(shqyrtuesService.deleteShqyrtues(selectedShqyrtuesa)) {
-			log.info("Selected Shqyrtues were successfully deleted!");
-			listaShqyrtues = shqyrtuesService.getAllShqyrtuesList();
-		}else{
-			log.error("Error, Shqyrtues were not deleted!");
-			listaShqyrtues = shqyrtuesService.getAllShqyrtuesList();
-		}
+		shqyrtuesService.deleteShqyrtues(selectedShqyrtuesa); 
+		fillListaShqyrtues();
 	}
 	
     public void onRowEdit(RowEditEvent<ShqyrtuesDto> event) {
 		log.info("Row edit called: " + event.getObject().getEmri());
-		
-		if(shqyrtuesService.updateShqyrtues(event.getObject())) {
-			log.info("User object Updated SUCCESSFULLY!");
-		} else {
-			log.error("User wasn't updated!");
-		}
-        
+		shqyrtuesService.updateShqyrtues(event.getObject()); 
     }
      
     public void onRowCancel(RowEditEvent<ShqyrtuesDto> event) {

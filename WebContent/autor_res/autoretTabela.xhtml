@@ -1,0 +1,166 @@
+<!DOCTYPE HTML>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="kryesore.xhtml"
+     			xmlns:h="http://java.sun.com/jsf/html"
+      			xmlns:f="http://java.sun.com/jsf/core"
+      			xmlns:p="http://primefaces.org/ui"
+                xmlns:utils="http://xmlns.jcp.org/jsf/composite/utils">
+                
+	<ui:define name="title">Autoret</ui:define>
+	<ui:define name="css">
+        <h:outputStylesheet library="css" name="styles.css"></h:outputStylesheet>
+  		<h:outputStylesheet library="css" name="fonts.css"></h:outputStylesheet>
+  		<h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+  		<h:outputStylesheet library="css" name="primefaces_edit.css"></h:outputStylesheet>
+   </ui:define> 
+	 
+	 
+    <ui:define name="content">
+<h:form>
+<div style="padding: 60px 100px 0px 100px;">
+
+<p:dataTable id="tabelaAutore"
+		styleClass="table table-dark" 
+		var="autori" 
+		widgetVar="tabelaAllAutore"
+		selection="#{autor.autoretEPerzgjedhur}"
+		rowKey="#{autor.artikull_id}"
+		value="#{autor.listaAutore}" 
+		editable="true" reflow="true" rows="5"
+		editMode="row" 
+		sortMode="multiple"
+		paginator="true"
+		paginatorPosition="bottom"
+		paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		rowsPerPageTemplate="5,10,15,20,50,100"
+		filteredValue="#{autor.autoretEFiltruar}"
+		>
+        
+       
+        
+        <f:facet name="header">
+            <p:outputPanel>
+            	<div style="text-align:center; padding-top:10px;">
+	            	<h:outputText class="textColor fontiOEL madhesiaHeader" style="align:center" value="Lista e Autoreve" />
+	            </div>	
+	            <p:separator style="background: rgba(107, 247, 255, 0.2); border-color: rgba(107, 247, 255, 0.2);height:0.2px "/>
+	            <div style="padding-bottom:5px; margin-top:-7px;">
+	        
+		                <h:outputText class="textColor fontiOEL" style="padding-right:10px; align: right; " value="Kerko:" />
+		                <p:inputText id="globalFilter" onkeyup="PF('tabelaAllAutore').filter()" 
+		                	style="padding-right:10px; " styleClass="inputFushaFilterKerko"
+	                 		placeholder="Vendos keyword"/>
+	            </div>
+            </p:outputPanel>
+        </f:facet>
+        
+        
+        
+        
+         
+        <p:ajax event="rowEdit"/>
+        <p:ajax event="rowEditCancel"/>
+        
+         
+	<p:column selectionMode="multiple" style="width:35px;text-align:center; margin:auto;"/>
+    <p:column styleClass="hiqOutline" headerText="Emri" 
+    			filterMatchMode="exact" sortBy="#{autori.emri}"
+    			filterStyle="display:none" filterBy="#{autori.emri}">
+          <p:cellEditor>
+              <f:facet name="output"><h:outputText style="display: block;" value="#{autori.emri}" /></f:facet>
+              <f:facet name="input">
+              		<p:inputText id="modelInput" value="#{autori.emri}" style="width:100%" required="true">
+              		</p:inputText>
+              </f:facet>
+          </p:cellEditor>
+    </p:column>
+ 
+    <p:column styleClass="hiqOutline" headerText="Miemri" sortBy="#{autori.mbiemri}" filterStyle="display:none" filterBy="#{autori.mbiemri}">
+          <p:cellEditor>
+              <f:facet name="output"><h:outputText style="display:block;" value="#{autori.mbiemri}" /></f:facet>
+              <f:facet name="input"><p:inputText value="#{autori.mbiemri}" style="width:100%"/></f:facet>
+          </p:cellEditor>        
+    </p:column>
+ 
+    <p:column styleClass="hiqOutline" headerText="Artikulli" sortBy="#{autori.artikull}" filterStyle="display:none" filterBy="#{autori.artikull}">
+          <p:cellEditor>
+              <f:facet name="output"><h:outputText style="display: block;" value="#{autori.artikull}" /></f:facet>
+              <f:facet name="input"><p:inputText value="#{autori.artikull}" style="width:100%"/></f:facet>
+          </p:cellEditor>        
+    </p:column>
+   
+
+
+</p:dataTable>
+
+
+<p:confirmDialog  id="konfirmoDialog" global="true" showEffect="fade" hideEffect="fade" >
+        <p:commandButton style="align:center;" value="Konfirmo" type="button" styleClass="ui-confirmdialog-yes" />
+        <p:commandButton style="align:center;" value="Kthehu" type="button" styleClass="ui-confirmdialog-no" />
+</p:confirmDialog>
+
+</div>
+</h:form>
+		
+		
+		
+		
+<h:form>
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogNewAutor" header="Autor i ri" widgetVar="dialogAutorIRI" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+        
+         <h:outputText value="Ju lutemi kontrolloni fushat e meposhtme!" 
+            	style="color:red; font-family:oswaldB; font-size:15px;"
+            	rendered="#{facesContext.validationFailed}" />
+            	
+            	
+        <h:panelGrid style="width: auto; font-size:15px" columns="2" styleClass="textColorGold fontiOL"
+            	cellpadding ="10" cellspacing="1">
+
+            	<h:outputLabel value="Emri" />
+            	<p:inputText styleClass="inputFushat" id="fushaEmriAR" value="#{autor.emri}"
+            					required="true">          			
+            	</p:inputText>
+            	
+            
+            	<h:outputLabel value="Mbiemri" />
+            	<p:inputText styleClass="inputFushat" id="fushaMbiemriAR" value="#{autor.mbiemri}"
+            					required="true">          			
+            	</p:inputText>
+            	
+            	
+            	<h:outputLabel value="E-mail" />
+            	<p:inputText styleClass="inputFushat" id="fushaEmailAR" value="#{autor.email_id}" 
+            					required="true">          			
+            	</p:inputText>
+            	     	 
+            	<h:outputLabel value="Artikulli" />
+            	<p:selectOneMenu id="menuR" style="width:100%" styleClass="inputFushat" value="#{autor.artikull_id}"
+            					 required="true"> 
+
+					<f:selectItem itemLabel="--Zgjidh--" itemValue="" />
+           			<f:selectItems value="#{artikull.listaDropdownArtikuj}" />   					
+				</p:selectOneMenu>
+				
+				<h:outputText/>
+				<h:commandLink style="color: #d4d4d4 !important; text-decoration: none;" 
+							class="fontiOR textColor link2Hov" 
+          	 				actionListener="#{autor.dialogIRi()}"
+         					value="Regjistro artikull te ri"><f:ajax/></h:commandLink>
+
+
+        </h:panelGrid>
+        </p:outputPanel>
+</p:dialog>  
+
+</h:form>
+
+
+
+
+
+    </ui:define>
+
+</ui:composition>

@@ -99,7 +99,13 @@
     <p:column styleClass="hiqOutline" headerText="Kategoria" sortBy="#{userDto.kategoria}" filterStyle="display:none" filterBy="#{userDto.kategoria}">
           <p:cellEditor>
               <f:facet name="output"><h:outputText style="display: block;" value="#{userDto.kategoria}" /></f:facet>
-              <f:facet name="input"><p:inputText value="#{userDto.kategoria}" style="width:100%"/></f:facet>
+              <f:facet name="input"><p:selectOneMenu  style="width:100%" styleClass="inputFushat" value="#{userDto.kategoria}"> 
+					   					<f:selectItem itemValue="#{null}" itemLabel="--Zgjidh--" />
+					   					<f:selectItem itemValue="admin" itemLabel="Administrator" /> 
+					   					<f:selectItem itemValue="autor" itemLabel="Autor" /> 
+					   					<f:selectItem itemValue="shqyrtues" itemLabel="Shqyrtues" /> 
+									</p:selectOneMenu>
+			  </f:facet>
           </p:cellEditor>        
     </p:column>
     
@@ -228,7 +234,7 @@
                   		<p:commandButton id="btnbtn" value="Ruaj" 
                   		actionListener="#{userBean.addUser}"
                   		process=":form2:dialogNewUser"
-                  		update=":form2:panelGridDialogUser :form2:messagePrimo" 
+                  		update=":form2:panelGridDialogUser :form2:messagePrimo :form1:tabelaAll" 
                   		oncomplete="if (args &amp;&amp; !args.validationFailed) PF('dialogPerdoruesIRI').hide()"
                   			 >
                   			 </p:commandButton>
@@ -242,6 +248,69 @@
 
 
 </h:form>
+
+
+
+			
+<h:form id="formaDialogConfirmed">
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogConfirm" header="Sukses!" widgetVar="dialogSuccess" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" onclick="PF('dialogSuccess').hide()">
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>
+</p:dialog>  
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogGabim" header="Gabim!" widgetVar="dialogError" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+            	
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" 
+								onclick=" PF('dialogError').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>	
+</p:dialog>  
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogCust" header="Mesazh!" widgetVar="dialogCustom" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+            	
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" 
+								onclick=" PF('dialogCustom').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>	
+</p:dialog>  
+
+
+</h:form>
+
+
+
+
+
+
 
     </ui:define>
 

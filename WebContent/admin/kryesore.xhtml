@@ -43,6 +43,8 @@
 	</div>
 
 	<div style="margin-left: auto; display: block;" >
+	<h:outputText styleClass="headerLoginName" style="margin-right: 5px;" value="#{loggedUserBean.loggedUser.emri}" />
+	<h:outputText styleClass="headerLoginName" style="margin-right: 25px" value="#{loggedUserBean.loggedUser.mbiemri}" />
 	<p:menuButton styleClass="butonDropdownMenu" iconPos="right" value="Profili" style="height:100%;" immediate="true">
 		        <p:menuitem value="Modifiko Profilin" outcome="/admin/modifikoProfilin.xhtml?faces-redirect=true" />
 		        <p:menuitem value="Ndrysho fjalekalimin" outcome="/admin/ndryshimFjalekalimi.xhtml?faces-redirect=true" />

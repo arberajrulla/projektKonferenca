@@ -11,6 +11,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 
 import org.apache.log4j.Logger;
+import org.primefaces.PrimeFaces;
 import org.primefaces.event.RowEditEvent;
 
 import com.ikubinfo.konferenca.dto.UserDto;
@@ -27,7 +28,6 @@ public class UserBean implements Serializable{
 	@ManagedProperty(value = "#{userService}")
 	UserService userService;
 
-
 	private UserDto newUser = new UserDto();
 	private UserDto selectedUser;
 	private List<UserDto> filteredUsers;
@@ -36,9 +36,8 @@ public class UserBean implements Serializable{
 	
 	@PostConstruct
 	public void init() {
-		allUsersList = userService.getAllUsers();
+		fillAllUserList();
 	}
-
 	
 	public List<UserDto> getAllUsersList() {
 		return allUsersList;
@@ -52,7 +51,6 @@ public class UserBean implements Serializable{
 	public void setNewUser(UserDto newUser) {
 		this.newUser = newUser;
 	}
-
 	public UserDto getSelectedUser() {
 		return selectedUser;
 	}
@@ -78,50 +76,26 @@ public class UserBean implements Serializable{
 		this.filteredUsers = filteredUsers;
 	}
 
-	
-	
-	public void addUser() {
-		if(userService.addUser(newUser)) {
-			log.info("User added succesfully");
-		}else {
-			log.error("New User wasn't addded, error!");
-		}
+	public void fillAllUserList() {
+		allUsersList = userService.getAllUsers();
 	}
 	
-	public void deleteOneUser() {
-		
-		List<UserDto> oneToDelete = new ArrayList<>();
-		oneToDelete.add(selectedUser);
-		if(userService.deleteUser(oneToDelete)) {
-			log.info("User DELETED SUCCESSFULLY!");
-			allUsersList = userService.getAllUsers();
-		} else {
-			log.error("User wasn't deleted!");
-		}
+	public void addUser() {
+		log.info("Adding new User");
+		userService.addUser(newUser); 
+		fillAllUserList();
 	}
 	
 	public void deleteMultipleUsers() {
 		log.info("Delete Multiple users called " + selectedUsers.get(0).getUsername());
-		
-		if(userService.deleteUser(selectedUsers)) {
-			log.info("User list DELETED SUCCESSFULLY!");
-			allUsersList = userService.getAllUsers();
-		} else {
-			log.error("List of Users wasn't deleted!");
-			allUsersList = userService.getAllUsers();
-		}
+		userService.deleteUser(selectedUsers); 
+		fillAllUserList();
 	}
-	
 	
     public void onRowEdit(RowEditEvent<UserDto> event) {
 		log.info("Row edit called: " + event.getObject().getEmri());
-		
-		if(userService.updateUser(event.getObject())) {
-			log.info("User object Updated SUCCESSFULLY!");
-		} else {
-			log.error("User wasn't updated!");
-		}
-        
+		userService.updateUser(event.getObject()); 
+		fillAllUserList();
     }
      
     public void onRowCancel(RowEditEvent<UserDto> event) {

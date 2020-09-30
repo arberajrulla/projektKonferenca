@@ -20,14 +20,13 @@ public class HashSaltedPassword {
 			MessageDigest dig;
 			dig = MessageDigest.getInstance(algorithm);
 			dig.reset();
-			log.info("Hashing decrypt Trying to print the salt " + salt);
 			dig.update(salt);
 			byte[] hash = dig.digest(plainPassword.getBytes());
 			return bytesToStringHex(hash);
 		} catch (NoSuchAlgorithmException | NullPointerException e) {
 			log.error("Couldn't generate hashed password!");
 			e.printStackTrace();
-			return null;
+			return "";
 		}
 	}
 

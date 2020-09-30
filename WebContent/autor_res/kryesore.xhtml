@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+  <title><ui:insert name="title"></ui:insert></title>
+  <h:outputStylesheet library="css" name="styles.css"></h:outputStylesheet>
+  <h:outputStylesheet library="css" name="fonts.css"/>
+  <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+  <h:outputStylesheet library="css" name="primefaces_edit.css"></h:outputStylesheet>	
+</h:head>
+
+
+<h:body >
+
+	<div class="paneliKryesor" style="position: absolute; padding-top:10px;">
+<h:form>
+				<div class="row d-flex justify-content-center"  style="">
+					<h:panelGrid id="panel" columns="1" border="0"
+							     	cellpadding = "10" cellspacing="1">
+						<div class="fontiR mireseerdhet" style=" font-size: 35px;">KONFERENCA X 
+						<p class="fontiOEL" style="color:white; font-size: 20px;">2020</p>
+						</div>
+					</h:panelGrid>
+				</div>
+
+<div class="row" style="margin-left:40px; margin-right:40px; background-color:#002f77">
+	<div style="margin:0px; ">
+			<h:panelGroup style="text-align:center;">
+         		<h:commandButton value="Faqja Kryesore" class="butonMenu" action="faqja1.xhtml?faces-redirect=true">
+         		</h:commandButton>
+         		<h:commandButton value="Artikulli im" class="butonMenu" action="/autor_res/artikulliIm.xhtml?faces-redirect=true"  />
+         		<h:commandButton value="Autoret" class="butonMenu"  
+         				action="autoret.xhtml?faces-redirect=true"/>
+     			<h:commandButton value="Artikujt" class="butonMenu"  
+     					action="/admin/artikuj.xhtml?faces-redirect=true"/>
+     			<h:commandButton value="Shqyrtuesit" class="butonMenu" action="/admin/shqyrtuesit.xhtml?faces-redirect=true" />
+     			<h:commandButton value="Vleresimet Per Artikullin Tim" class="butonMenu" action="/admin/vleresimet.xhtml?faces-redirect=true" />
+        	</h:panelGroup>	
+	</div>
+
+	<div style="margin-left: auto; display: block;" >
+	<h:outputText styleClass="headerLoginName" style="margin-right: 5px;" value="#{loggedUserBean.loggedUser.emri}" />
+	<h:outputText styleClass="headerLoginName" style="margin-right: 25px" value="#{loggedUserBean.loggedUser.mbiemri}" />
+	<p:menuButton styleClass="butonDropdownMenu" iconPos="right" value="Profili" style="height:100%;" immediate="true">
+		        <p:menuitem value="Modifiko Profilin" outcome="/admin/modifikoProfilin.xhtml?faces-redirect=true" />
+		        <p:menuitem value="Ndrysho fjalekalimin" outcome="/admin/ndryshimFjalekalimi.xhtml?faces-redirect=true" />
+		        <p:separator />
+		        <p:menuitem value="Dil" action="#{authentikimBean.dil()}" />
+		    </p:menuButton> 
+	</div>
+
+</div>
+
+
+</h:form>
+
+		<ui:insert name="content">
+		</ui:insert> 
+		
+
+			
+</div>
+
+</h:body>
+</html>

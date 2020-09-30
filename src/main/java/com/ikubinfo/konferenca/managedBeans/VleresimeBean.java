@@ -1,19 +1,16 @@
 package com.ikubinfo.konferenca.managedBeans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
-
 import org.apache.log4j.Logger;
 import org.primefaces.event.RowEditEvent;
-
 import com.ikubinfo.konferenca.dto.ArtikullDto;
 import com.ikubinfo.konferenca.dto.ShqyrtuesArtikullDto;
 import com.ikubinfo.konferenca.dto.ShqyrtuesDto;
@@ -21,12 +18,12 @@ import com.ikubinfo.konferenca.service.ArtikullService;
 import com.ikubinfo.konferenca.service.ShqyrtuesService;
 import com.ikubinfo.konferenca.service.VleresimeService;
 
-
 @ManagedBean(name = "vleresimeBean")
 @ViewScoped
-public class VleresimeBean {
-	private static Logger log = Logger.getLogger(VleresimeBean.class);
+public class VleresimeBean implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+	private static Logger log = Logger.getLogger(VleresimeBean.class);
 
 	@ManagedProperty(value = "#{vleresimeService}")
 	VleresimeService vleresimeService;
@@ -48,15 +45,9 @@ public class VleresimeBean {
 
 	@PostConstruct
 	public void init() {
-		allVleresimeList = vleresimeService.getShqyrtuesArtikullList();
-		
-		for(ShqyrtuesDto shqyrtuesDto : shqyrtuesService.getAllShqyrtuesList()) {
-			allShqyrtuesitDropdownList.put(shqyrtuesDto.getEmri() + " " + shqyrtuesDto.getMbiemri(), shqyrtuesDto.getIdEmail());
-		}
-		
-		for(ArtikullDto artikullDto : artikullService.getArtikujLista()) {
-			allArtikujtDropdownList.put(artikullDto.getTitulli(), artikullDto.getArtikullId());
-		}
+		fillAllVleresimeList();
+		allShqyrtuesitDropdownListFill();
+		allArtikujtDropdownListFill();
 	}
 	
 	public VleresimeService getVleresimeService() {
@@ -119,45 +110,41 @@ public class VleresimeBean {
 	public void setShqyrtuesService(ShqyrtuesService shqyrtuesService) {
 		this.shqyrtuesService = shqyrtuesService;
 	}
-
-
 	
+	public void allShqyrtuesitDropdownListFill() {
+		for(ShqyrtuesDto shqyrtuesDto : shqyrtuesService.getAllShqyrtuesList()) {
+			allShqyrtuesitDropdownList.put(shqyrtuesDto.getEmri() + " " + shqyrtuesDto.getMbiemri(), shqyrtuesDto.getIdEmail());
+		}
+	}
+	public void allArtikujtDropdownListFill() {
+		for(ArtikullDto artikullDto : artikullService.getArtikujLista()) {
+			allArtikujtDropdownList.put(artikullDto.getTitulli(), artikullDto.getArtikullId());
+		}
+	}
+	public void fillAllVleresimeList() {
+		allVleresimeList = vleresimeService.getShqyrtuesArtikullList();
+	}
 	
 	
 	public void addVleresim() {
 		log.info("Message from vleresim " + newVleresim.getMeritaTeknike());
-		if(vleresimeService.addVleresim(newVleresim)) {
-			log.info("Vleresim added succesfully");
-			allVleresimeList = vleresimeService.getShqyrtuesArtikullList();
-		}else {
-			log.error("New Vleresim wasn't addded, error!");
-			allVleresimeList = vleresimeService.getShqyrtuesArtikullList();
-		}
+		vleresimeService.addVleresim(newVleresim);
+		fillAllVleresimeList();
+		allShqyrtuesitDropdownListFill();
+		allArtikujtDropdownListFill();
 	}
 	
 	public void deleteVleresim() {
 		log.info("Delete Vleresim called " + selectedVleresime.get(0).getEmriFull());
-		
-		if(vleresimeService.deleteVleresim(selectedVleresime)) {
-			log.info("Vleresim list DELETED SUCCESSFULLY!");
-			allVleresimeList = vleresimeService.getShqyrtuesArtikullList();
-		} else {
-			log.error("List of Vleresim wasn't deleted!");
-		}
+		vleresimeService.deleteVleresim(selectedVleresime); 
+		fillAllVleresimeList();
+		allShqyrtuesitDropdownListFill();
+		allArtikujtDropdownListFill();
 	}
-	
-	
-	
 	
     public void onRowEdit(RowEditEvent<ShqyrtuesArtikullDto> event) {
 		log.info("Row edit called: " + event.getObject().getEmriFull());
-		
-		if(vleresimeService.updateVleresim(event.getObject())) {
-			log.info("Vleresim object Updated SUCCESSFULLY!");
-		} else {
-			log.error("Vleresim wasn't updated!");
-		}
-        
+		vleresimeService.updateVleresim(event.getObject());
     }
      
     public void onRowCancel(RowEditEvent<ShqyrtuesArtikullDto> event) {

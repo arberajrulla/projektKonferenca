@@ -11,7 +11,13 @@
 	 
 	 
     <ui:define name="content">
-<h:form id="formone">
+    
+    
+    
+    
+    
+<h:form id="form1">
+
 <div style="padding: 60px 100px 0px 100px;">
 
 <p:dataTable id="tabelaAutore"
@@ -43,6 +49,7 @@
 		            <p:commandButton style="float: left; left: 10px;" process="tabelaAutore" 
 		            			actionListener="#{autorBean.deleteAutor()}"
 	          	 				value="Fshi" update="@form" ajax="true">
+	          	 				<p:confirm header="Konfirmo" message="Kujdes, fushat e perzgjedhura do te fshihen!"/>
 	          		</p:commandButton>	        
 		                <h:outputText class="textColor fontiOEL" style="padding-right:10px; align: right; " value="Kerko:" />
 		                <p:inputText id="globalFilter" onkeyup="PF('tabelaAllAutore').filter()" 
@@ -90,7 +97,13 @@
     <p:column styleClass="hiqOutline" headerText="Artikulli" sortBy="#{autori.artikullName}" filterStyle="display:none" filterBy="#{autori.artikullName}">
           <p:cellEditor>
               <f:facet name="output"><h:outputText style="display: block;" value="#{autori.artikullName}" /></f:facet>
-              <f:facet name="input"><p:inputText value="#{autori.artikullName}" style="width:100%"/></f:facet>
+              <f:facet name="input">
+              			<p:selectOneMenu style="width:100%" styleClass="inputFushat" 
+              								value="#{autori.artikullId}" > 
+								<f:selectItem itemLabel="--Zgjidh--" itemValue="" />
+			           			<f:selectItems value="#{autorBean.artikujDropdown}"/>   					
+						</p:selectOneMenu>
+				</f:facet>
           </p:cellEditor>        
     </p:column>
     
@@ -106,7 +119,7 @@
 
           	
           	<p:commandButton process="@this"
-          	 value="Shto Autor" 
+          	 value="Shto Autor"
           	 oncomplete="PF('dialogAutorIRI').show()" update="tabelaAutore">
           	</p:commandButton>
 
@@ -123,7 +136,7 @@
 
 
 <p:contextMenu for="tabelaAutore" widgetVar="menujacntx" >
-        <p:menuitem process="formone" actionListener="#{autorBean.deleteAutor()}"
+        <p:menuitem process="form1" actionListener="#{autorBean.deleteAutor()}"
         			value="Fshi" update="tabelaAutore">
         			<p:confirm header="Konfirmim" message="Deshironi ta fshini kete autor?!"/>	
         </p:menuitem>      
@@ -189,7 +202,7 @@
 						<p:commandButton value="Ruaj" 
 								actionListener="#{autorBean.addAutor()}"
 								process=":form2:dialogNewAutor"
-								update=":form2:panelGridDialogAutor" 
+								update=":form2:panelGridDialogAutor :form1:tabelaAutore" 
 								oncomplete="if (args &amp;&amp; !args.validationFailed) PF('dialogAutorIRI').hide()"
 									 >
 						</p:commandButton>
@@ -250,7 +263,7 @@
 						<p:commandButton value="Ruaj" 
 								actionListener="#{artikullBean.addArtikull()}" 
 								process=":form3:dialogNewArtikull"
-								update=":form3:panelGridDialogArtikull" 
+								update=":form3:panelGridDialogArtikull :form1:tabelaAutore" 
 								oncomplete="if (args &amp;&amp; !args.validationFailed) PF('dialogArtikullIRI').hide()"
 									 >
 						</p:commandButton>
@@ -261,14 +274,65 @@
         </p:outputPanel>
 </p:dialog>  
 
+</h:form>
+
+
+			
+<h:form id="formaDialogConfirmed">
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogConfirm" header="Sukses!" widgetVar="dialogSuccess" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" onclick="PF('dialogSuccess').hide()">
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>
+</p:dialog>  
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogGabim" header="Gabim!" widgetVar="dialogError" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+            	
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" 
+								onclick=" PF('dialogError').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>	
+</p:dialog>  
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogCust" header="Mesazh!" widgetVar="dialogCustom" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+            	
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" 
+								onclick=" PF('dialogCustom').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>	
+</p:dialog>  
 
 
 </h:form>
 
 
-
-
-
-    </ui:define>
+</ui:define>
 
 </ui:composition>

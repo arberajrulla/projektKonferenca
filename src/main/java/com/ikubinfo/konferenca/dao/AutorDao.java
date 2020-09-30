@@ -7,7 +7,8 @@ import com.ikubinfo.konferenca.entity.User;
 
 public interface AutorDao {
 	List<Autor> getAllAutor();
-	boolean addAutor(Autor a);
-	boolean deleteAutor(String idEmail);
-	boolean updateAutor(Autor a);
+	void addAutor(Autor a);
+	void deleteAutor(String idEmail);
+	void updateAutor(Autor a);
+	boolean checkAutorIfExists(String email);
 }

@@ -11,6 +11,7 @@ import com.ikubinfo.konferenca.dao.UserDao;
 import com.ikubinfo.konferenca.dto.UserDto;
 import com.ikubinfo.konferenca.entity.User;
 import com.ikubinfo.konferenca.service.UserService;
+import com.ikubinfo.konferenca.utils.UtilMessages;
 
 @Service("userService")
 public class UserServiceImpl implements UserService{
@@ -23,11 +24,15 @@ public class UserServiceImpl implements UserService{
 	@Transactional
 	public UserDto getUserForLoggin(String username) {
 		User user = new User();
-		user = userDao.getUserForLogin(username);
-		
-		if(user != null) {
-			return UserConverter.toUserDto(user);
-		}else {
+		UserDto userDto = new UserDto();
+		try {
+			user = userDao.getUserForLogin(username);
+			userDto = UserConverter.toUserDto(user);
+			log.info("Service retrieved user for login successfully!");
+			return userDto;
+		} catch (Exception e) {
+			log.error("Service couldn't retrieve the User for login!", e);
+			UtilMessages.addMessageError( null, "Problem ne marrjen e perdoruesit per login!");
 			return new UserDto();
 		}
 	}
@@ -35,54 +40,81 @@ public class UserServiceImpl implements UserService{
 	@Transactional
 	public ArrayList<UserDto> getAllUsers() {
 		ArrayList<UserDto> usersDto = new ArrayList<UserDto>();
-		ArrayList<User> user = userDao.getAllUser();
 		
-		if(user!=null) {
-			
+		try {
+			ArrayList<User> user = userDao.getAllUser();
 			for(User u : user) {
 				usersDto.add(UserConverter.toUserDto(u));
 			}
+			log.info("Service retrieved user list successfully!");
 			return usersDto;
+		} catch (Exception e) {
+			log.error("Service couldn't retrieve the User list!", e);
+			UtilMessages.addMessageError( null, "Problem ne marrjen e listes se perdoruesve!");
+			return new ArrayList<UserDto>();
 		}
-		return null;
 	}
 
 	@Transactional
-	public boolean addUser(UserDto userDto) {
-		boolean check = false;
-		if(userDao.addUser(UserConverter.toNewUser(userDto))) {
-		log.info("New User " + userDto.getEmri() + " " + userDto.getMbiemri() + " added successfully!");
-			check = true;
+	public void addUser(UserDto userDto) {
+		if (userCheck(userDto.getEmail(), userDto.getUsername())) {
+			UtilMessages.addMessageError(null, "Error, Perdoruesi me kete Username ose E-mail ekziston!");
 		}else {
-			log.error("User Service couldn't add new user!");
-		}
-		return check;
-	}
-
-	@Transactional
-	public boolean updateUser(UserDto userDto) {
-		boolean check = false;
-		if(userDao.updateUser(UserConverter.userUpdate(userDto))) {
-			log.info("Service updated user successfully!");
-			check = true;
-		}else {
-			log.error("Service couldn't update the user!");
-		}
-		return check;
-	}
-
-
-	@Transactional
-	public boolean deleteUser(List<UserDto> userListToDelete) {
-		boolean check = false;
-		for(UserDto userDto : userListToDelete) {
-			check = userDao.deleteUser(userDto.getUsername());
-			if(!check) {
-				log.error("Breaking from deletion loop, error occurred!");
-				break;
+			try {
+				userDao.addUser(UserConverter.toNewUser(userDto));
+				log.info("New User " + userDto.getEmri() + " " + userDto.getMbiemri() + " added successfully!");
+				UtilMessages.addMessageSuccess("Sukses!", "Perdoruesi " + userDto.getEmri() + " u shtua me sukses!");
+			} catch (Exception e) {
+				log.error("User Service couldn't add new user!",e);
+				UtilMessages.addMessageError(null, "Error, perdoruesi nuk u shtua");
 			}
 		}
-		return check;
 	}
 
+	@Transactional
+	public void updateUser(UserDto userDto) {
+		if (userCheck(userDto.getEmail(), userDto.getUsername())) {
+			UtilMessages.addMessageError(null, "Error, Perdoruesi me kete Username ose E-mail ekziston!");
+		}else {
+			try {
+				userDao.updateUser(UserConverter.userUpdate(userDto)); 
+				log.info("Service updated user successfully!");
+				UtilMessages.addMessageSuccess("Sukses!", "Perdoruesi " + userDto.getEmri() + " u modifikua me sukses!");
+			} catch (Exception e) {
+				log.error("Service couldn't update the user!", e);
+				UtilMessages.addMessageError(null, "Error, modifikimi nuk u krye!");
+			}
+		}
+	}
+
+
+	@Transactional
+	public void deleteUser(List<UserDto> userListToDelete) {
+		try {
+			for(UserDto userDto : userListToDelete) {
+			userDao.deleteUser(userDto.getUsername());}
+			log.info("Service deleted user successfully!");
+			UtilMessages.addMessageSuccess("Sukses!", "Fshirja u krye me sukses!");
+		} catch (Exception e) {
+			log.error("Couldn't delete user, error occurred!", e);
+			UtilMessages.addMessageError(null, "Error, fshirja nuk u krye!");
+		}
+	}
+
+	@Override
+	public boolean userCheck(String email, String username) {
+		try {
+			if(userDao.checkUserIfExists(email, username)) {
+				log.error("User with this email or username exists!");
+				return true;
+			}else {
+				log.info("Service, success, User doesn't exist!");
+				return false;
+			}
+		} catch (Exception e) {
+			log.error("Error, Service couldn't get user!", e);
+			UtilMessages.addMessageError(null, "Error, gjate kontrollit, ju lutemi provoni perseri!");
+			return true;
+		}
+	}
 }

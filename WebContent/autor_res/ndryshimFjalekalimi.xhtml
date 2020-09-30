@@ -1,0 +1,178 @@
+<!DOCTYPE HTML>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="kryesore.xhtml"
+     			xmlns:h="http://java.sun.com/jsf/html"
+      			xmlns:f="http://java.sun.com/jsf/core"
+      			xmlns:p="http://primefaces.org/ui"
+                xmlns:utils="http://xmlns.jcp.org/jsf/composite/utils">
+                
+	<ui:define name="title">Ndryshim Fjalekalimi</ui:define>
+	 
+    <ui:define name="content">
+<h:form >    
+<div class="col-md-12"  style=" padding: 70px 50px 50px 50px;">
+
+<div align="center" class="loginWhite" style=" margin-left:15%; margin-right:15%;" >
+
+		<div class="row" style="display: inline-block;">
+         	
+         	<h:panelGroup style = "display:block; text-align:center">
+				<p class= "fontiOM textColor" style="padding: 40px 0px 10px 0px; font-size:20px;">
+					NDRYSHO FJALEKALIMIN</p>
+			</h:panelGroup>
+
+
+        	<h:panelGrid id="gridFushat" columns="3" 
+            	cellpadding="13" cellspacing="1">
+            	
+         	
+            	<h:outputLabel class="fontiOSB textColor" value="Fjalekalimi i Vjeter" />
+            	<p:password id="fushaPassRes1" 
+            				style="background-color: white !important;
+            				color:#002f77; 
+            				border-radius:4px;
+            				width:100%;"
+			            	value="#{loggedUserBean.oldPassword}"/>			
+            	<h:message style="color:red;margin:8px;" for="fushaPassRes1" ></h:message>
+           
+           
+				<h:outputLabel class="fontiOSB textColor" value="Fjalekalimi i Ri" />
+            	<p:password id="fushaPassRes2" 
+            				style="background-color: white !important;
+            				color:#002f77; 
+            				border-radius:4px;
+            				width:100%;"
+			            	value="#{loggedUserBean.newPassword}" match="fushaPassRes3" />
+            	<h:message style="color:red;margin:8px;" for="fushaPassRes2" ></h:message>
+            	
+            	
+            	<h:outputLabel class="fontiOSB textColor" value="Perserisni fjalekalimin e ri"  />
+            	<p:password id="fushaPassRes3" value="#{loggedUserBean.newPasswordConfirm}"
+            				style="background-color: white !important;
+            				color:#002f77; 
+            				border-radius:4px;
+            				width:100%;"
+            				/>
+            	<h:message style="color:red;margin:8px;" for="fushaPassRes3" ></h:message>            	
+            	
+            	
+
+            	
+            	<f:facet name="footer">
+               		<h:panelGroup style="display:block; text-align:center">
+                  		<p:commandButton id="vazhdobtnPswChng" class="fontiOL btn btn-primary" value="RUAJ"
+                  		 actionListener="#{loggedUserBean.changePassword}" process="@form" update="@form" >
+                  		 </p:commandButton>
+               		</h:panelGroup>
+            	</f:facet>
+         </h:panelGrid>
+         </div>
+
+	</div>
+	</div>
+	</h:form>	
+	
+	
+	
+			
+<h:form id="form2">
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogConfirm" header="Sukses!" widgetVar="dialogSuccess" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+         <h:outputText value="Fjalekalimi u ndryshua me sukses!" 
+            	style="color:#55ff00; font-family:oswaldB; font-size:15px;"/>
+            	
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" 
+								onclick=" PF('dialogSuccess').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>
+</p:dialog>  
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogGabim" header="Gabim!" widgetVar="dialogError" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+         <h:outputText value="Gabim, fjalekalimi nuk u ndryshua!" 
+            	style="color:#ff2f00; font-family:oswaldB; font-size:15px;"/>
+            	
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" 
+								onclick=" PF('dialogError').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>	
+</p:dialog>  
+
+</h:form>
+
+
+
+			
+<h:form id="formaDialogConfirmed">
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogConfirm" header="Sukses!" widgetVar="dialogSuccess" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" onclick="PF('dialogSuccess').hide()">
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>
+</p:dialog>  
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogGabim" header="Gabim!" widgetVar="dialogError" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+            	
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" 
+								onclick=" PF('dialogError').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>	
+</p:dialog>  
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogCust" header="Mesazh!" widgetVar="dialogCustom" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+            	
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" 
+								onclick=" PF('dialogCustom').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>	
+</p:dialog>  
+
+
+</h:form>
+
+
+
+
+
+		
+
+    </ui:define>
+
+</ui:composition>

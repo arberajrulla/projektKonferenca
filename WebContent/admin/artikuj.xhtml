@@ -10,14 +10,15 @@
 	<ui:define name="title">Artikujt</ui:define>
 	 
     <ui:define name="content">
-<h:form>
+<h:form id="form1">
 <div style="padding: 60px 100px 0px 100px;">
 
 <p:dataTable id="tabelaArtikuj"
-		styleClass="table table-dark"
+		styleClass="table table-dark"	
 		var="artikulli"
 		widgetVar="tabelaAllArtikuj"
 		selection="#{artikullBean.selectedArtikuj}"
+		rowSelectMode="add"
 		rowKey="#{artikulli.artikullId}"
 		value="#{artikullBean.listaArtikuj}" 
 		editable="true" reflow="true" rows="5"
@@ -26,8 +27,10 @@
 		paginator="true"
 		paginatorPosition="bottom"
 		paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-		rowsPerPageTemplate="5,10,15,20,50,100"
-		filteredValue="#{artikullBean.artikujtFiltruar}">
+		rowsPerPageTemplate="5,10,15,20,50,100" 
+		filteredValue="#{artikullBean.artikujTeFiltruar}"
+		lazy="false"
+		>
         
        
         
@@ -40,11 +43,11 @@
 	            <div style="padding-bottom:5px; margin-top:-7px;">
 		            <p:commandButton style="float: left; left: 10px;" process="tabelaArtikuj" 
 		            			actionListener="#{artikullBean.deleteArtikull()}"
-	          	 				value="Fshi" update="tabelaArtikuj">
+	          	 				value="Fshi" update="@form" ajax="true">
 							<p:confirm header="Konfirmo" message="Kujdes, fushat e perzgjedhura do te fshihen!"/>
 	          		</p:commandButton>	        
 		                <h:outputText class="textColor fontiOEL" style="padding-right:10px; align: right; " value="Kerko:" />
-		                <p:inputText id="globalFilter" onkeyup="PF('tabelaAllArtikuj').filter()" 
+		                <p:inputText id="globalFilter2" onkeyup="PF('tabelaAllArtikuj').filter()" 
 		                	style="padding-right:10px; " styleClass="inputFushaFilterKerko"
 	                 		placeholder="Vendos keyword"/>
 	            </div>
@@ -53,15 +56,16 @@
         
         
         
-         
         <p:ajax event="rowEdit" listener="#{artikullBean.onRowEdit}"/>
         <p:ajax event="rowEditCancel" listener="#{artikullBean.onRowCancel}"/>
         
          
-	<p:column selectionMode="multiple" style="width:35px;text-align:center; margin:auto;"/>
+	<p:column selectionMode="multiple"  style="width:35px;text-align:center; margin:auto;"/>
     <p:column styleClass="hiqOutline" headerText="Titulli" 
-    			filterMatchMode="exact" sortBy="#{artikulli.titulli}"
-    			filterStyle="display:none" filterBy="#{artikulli.titulli}">
+    			sortBy="#{artikulli.titulli}"
+    			filterBy="#{artikulli.titulli}"
+    			filterStyle="display:none" 
+    			>
           <p:cellEditor>
               <f:facet name="output"><h:outputText style="display: block;" value="#{artikulli.titulli}" /></f:facet>
               <f:facet name="input">
@@ -71,21 +75,34 @@
           </p:cellEditor>
     </p:column>
  
-    <p:column styleClass="hiqOutline" headerText="Abstrakti" sortBy="#{artikulli.abstrakti}" filterStyle="display:none" filterBy="#{artikulli.abstrakti}">
+    <p:column styleClass="hiqOutline" 
+    			headerText="Abstrakti"
+    			sortBy="#{artikulli.abstrakti}"
+    			filterStyle="display:none" 
+    			filterBy="#{artikulli.abstrakti}"
+    			 >
           <p:cellEditor>
               <f:facet name="output"><h:outputText style="display:block;" value="#{artikulli.abstrakti}" /></f:facet>
               <f:facet name="input"><p:inputText value="#{artikulli.abstrakti}" style="width:100%"/></f:facet>
           </p:cellEditor>        
     </p:column>
  
-    <p:column styleClass="hiqOutline" headerText="Dokumenti Elektronik" sortBy="#{artikulli.dokumentiElektronik}" filterStyle="display:none" filterBy="#{artikulli.dokumentiElektronik}">
+    <p:column styleClass="hiqOutline" headerText="Dokumenti Elektronik" 
+    			sortBy="#{artikulli.dokumentiElektronik}"
+    			filterStyle="display:none" 
+    			filterBy="#{artikulli.dokumentiElektronik}"
+    			>
           <p:cellEditor>
               <f:facet name="output"><h:outputText style="display: block;" value="#{artikulli.dokumentiElektronik}" /></f:facet>
               <f:facet name="input"><p:inputText value="#{artikulli.dokumentiElektronik}" style="width:100%"/></f:facet>
           </p:cellEditor>        
     </p:column>
     
-    <p:column styleClass="hiqOutline" headerText="Kontakt" sortBy="#{artikulli.kontakt}" filterStyle="display:none" filterBy="#{artikulli.kontakt}">
+    <p:column styleClass="hiqOutline" headerText="Kontakt"  
+    		sortBy="#{artikulli.kontakt}"
+    		filterStyle="display:none" 
+    		filterBy="#{artikulli.kontakt}"
+    		>
           <p:cellEditor>
               <f:facet name="output"><h:outputText style="display: block;" value="#{artikulli.kontakt}" /></f:facet>
               <f:facet name="input"><p:inputText value="#{artikulli.kontakt}" style="width:100%"/></f:facet>
@@ -96,13 +113,9 @@
     <p:column style="width:80px" headerText="Modifiko" styleClass="editoBorderTabela">							     	
           	<p:rowEditor/>
     </p:column>
-	<!--     <p:column style="margin:auto;" >
-         <p:commandButton value="Fshi Rekordin" style="margin:auto; display: flex"/>
-    </p:column>
-     -->
-    <f:facet name="footer">
 
-          	
+
+    <f:facet name="footer">          	
           	<p:commandButton process="@this" 
           	 value="Shto Artikull"  
           	 oncomplete="PF('dialogArtikullIRI').show()" update="tabelaArtikuj">
@@ -130,30 +143,17 @@
          <p:separator />
          <p:menuitem value="Mbyll" onclick="PF('menujacntx').hide()"/>
 </p:contextMenu>
-
-
-
-
-
 </div>
 
-
-
-
-	
 		<div class="row" align="center">
 			<div class="col-md-12" >
-				
-				
-				
-				
 			</div>
 		</div>
 
-		</h:form>
+</h:form>
 		
 		
-		
+		 
 		
 <h:form id="form2">
 
@@ -200,7 +200,7 @@
 						<p:commandButton value="Ruaj" 
 								actionListener="#{artikullBean.addArtikull()}"
 								process=":form2:dialogNewArtikull"
-								update=":form2:panelGridDialogArtikull" 
+								update=":form2:panelGridDialogArtikull :form1:tabelaArtikuj" 
 								oncomplete="if (args &amp;&amp; !args.validationFailed) PF('dialogArtikullIRI').hide()"
 									 >
 						</p:commandButton>
@@ -214,7 +214,65 @@
 
 </h:form>
 		
+		
+		
+		
+					
+<h:form id="formaDialogConfirmed">
 
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogConfirm" header="Sukses!" widgetVar="dialogSuccess" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" onclick="PF('dialogSuccess').hide()">
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>
+</p:dialog>  
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogGabim" header="Gabim!" widgetVar="dialogError" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+            	
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" 
+								onclick=" PF('dialogError').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>	
+</p:dialog>  
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogCust" header="Mesazh!" widgetVar="dialogCustom" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+            	
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" 
+								onclick=" PF('dialogCustom').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>	
+</p:dialog>  
+
+
+</h:form>
+		
+		
 
 
     </ui:define>

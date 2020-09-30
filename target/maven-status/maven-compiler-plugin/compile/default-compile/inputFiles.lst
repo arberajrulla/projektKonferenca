@@ -3,12 +3,14 @@ C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\utils
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\service\impl\UserServiceImpl.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\dao\impl\AutorDaoImpl.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\entity\Shqyrtues.java
+C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\exception\CustomExceptionHandler.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\entity\Autor.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\service\ShqyrtuesService.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\dto\ArtikullDto.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\service\impl\ShqyrtuesServiceImpl.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\managedBeans\ShqyrtuesBean.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\entity\Artikull.java
+C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\exception\CustomExceptionHandlerFactory.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\convert\AutorConverter.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\managedBeans\UserBean.java
 C:\Users\Arber\git\projektKonferenca\src\main\java\com\ikubinfo\konferenca\managedBeans\VleresimeBean.java

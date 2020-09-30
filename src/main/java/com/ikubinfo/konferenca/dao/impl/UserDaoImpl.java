@@ -1,6 +1,7 @@
 package com.ikubinfo.konferenca.dao.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -40,24 +41,16 @@ public class UserDaoImpl implements UserDao {
 			session = SessionFactoryUtil.getSessionFactory().openSession();
 			session.beginTransaction();
 			
-			/*
-			 * CriteriaBuilder builder = session.getCriteriaBuilder(); CriteriaQuery<User>
-			 * criteria = builder.createQuery(User.class); TypedQuery<User> typo =
-			 * session.createQuery(criteria);
-			 */
 			Criteria c = session.createCriteria(User.class);
 			users = (ArrayList<User>) c.list();
-			
-			//ArrayList<User> users =  (ArrayList<User>) session.createCriteria(User.class).list();
-			
-			System.out.println("Lista u be fetch: " + users.size() + " objekte");
 			
 			if(users.size()>0) {
 				return users;
 			}
 			return null;
 		}catch(Exception e) {
-			System.out.println("Error while retrieving all users " + e);
+			log.error("Error while retrieving all users ", e);
+			
 			return null;
 		}finally {
 			session.close();
@@ -83,7 +76,7 @@ public class UserDaoImpl implements UserDao {
 			return null;
 			
 		} catch(Exception e) {
-			System.out.println("Problem retrieving user for login " + e.getMessage());
+			log.error("Problem retrieving user for login ",e);
 			return null;
 		} finally {
 			session.close();
@@ -97,49 +90,40 @@ public class UserDaoImpl implements UserDao {
 	@PersistenceContext
 	EntityManager entityManager;
 
-		
 
 	@Override
-	public boolean addUser(User u) {
-		try {
-			log.info("Persisting " + u.getPassword() + "  " /*+ u.getSalt()*/);
-			//entityManager.getTransaction().begin();
+	public void addUser(User u) {
+
+			log.info("Persisting " + u.getEmri());
 			entityManager.merge(u);
-			//entityManager.getTransaction().commit();
 			log.info("User was persisted into DB successfully!");
-			return true;
-		}catch(Exception e) {
-			log.error("Error persisting new user into DB ", e);
-			return false;
-		}
 	}
 
 	@Override
-	public boolean deleteUser(String username) {
-		try {
+	public void deleteUser(String username) {
 			User userToDelete = entityManager.find(User.class, username);
 			entityManager.remove(userToDelete);	
 			log.info("User " + username + " deleted successfully from DB!");
-			return true;
-		}catch(Exception e) {
-			log.error("Couldn't delete User from Database ", e);
-			return false;
-		}
 	}
 
 	@Override
-	public boolean updateUser(User u) {
-		try {
+	public void updateUser(User u) {
 			log.info("Updating user " + u.getEmri());
-			
 			entityManager.merge(u);
-			
 			log.info("User was updated into DB successfully!");
-			return true;
-		}catch(Exception e) {
-			log.error("Error updating user into DB ", e);
+	}
+	
+	@Override
+	public boolean checkUserIfExists(String email, String username) {
+			log.info("Checking if " + email + " if exists in DB!");
+			TypedQuery<User> checkQuery = entityManager
+					.createQuery("SELECT user FROM User user WHERE user.username = :username OR user.email = :email", User.class);
+			int a = checkQuery.setParameter("username", username)
+								.setParameter("email", email)
+								.getResultList().size();
+			if(a>0) {
+				return true;
+			}
 			return false;
-		}
-		
 	}
 }

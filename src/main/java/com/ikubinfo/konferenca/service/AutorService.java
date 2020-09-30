@@ -8,7 +8,8 @@ import com.ikubinfo.konferenca.dto.AutorDto;
 public interface AutorService {
 	List<AutorDto> getAllAutore();
 
-	boolean addAutor(AutorDto newAutor);
-	boolean deleteAutor(List<AutorDto> selectedAutor);
-	boolean updateAutor(AutorDto autorDto);
+	void addAutor(AutorDto newAutor);
+	void deleteAutor(List<AutorDto> selectedAutor);
+	void updateAutor(AutorDto autorDto);
+	boolean autorCheck(String email);
 }

@@ -23,22 +23,31 @@ public class ArtikullBean implements Serializable {
 	@ManagedProperty(value = "#{artikullService}")
 	ArtikullService artikullService;
 	
-	private List<ArtikullDto> selectedArtikuj = new ArrayList<ArtikullDto>();
+	@ManagedProperty(value = "#{autorBean}")
+	AutorBean autorBean;
+
 	private List<ArtikullDto> listaArtikuj;
 	private ArtikullDto artikullIRi = new ArtikullDto();
-	private List<ArtikullDto> artikujtFiltruar;
+	private List<ArtikullDto> artikujTeFiltruar;
+	private List<ArtikullDto> selectedArtikuj;	
 	
+
 	@PostConstruct
 	public void init() {
-		listaArtikuj = artikullService.getArtikujLista();
+		fillListaArtikuj();
 	}
 	
-	
-	public List<ArtikullDto> getArtikujtFiltruar() {
-		return artikujtFiltruar;
+	public ArtikullService getArtikullService() {
+		return artikullService;
 	}
-	public void setArtikujtFiltruar(List<ArtikullDto> artikujtFiltruar) {
-		this.artikujtFiltruar = artikujtFiltruar;
+	public void setArtikullService(ArtikullService artikullService) {
+		this.artikullService = artikullService;
+	}
+	public List<ArtikullDto> getListaArtikuj() {
+		return listaArtikuj;
+	}
+	public void setListaArtikuj(List<ArtikullDto> listaArtikuj) {
+		this.listaArtikuj = listaArtikuj;
 	}
 	public ArtikullDto getArtikullIRi() {
 		return artikullIRi;
@@ -46,59 +55,48 @@ public class ArtikullBean implements Serializable {
 	public void setArtikullIRi(ArtikullDto artikullIRi) {
 		this.artikullIRi = artikullIRi;
 	}
-	public List<ArtikullDto> getListaArtikuj() {
-		return artikullService.getArtikujLista();
+	public List<ArtikullDto> getArtikujTeFiltruar() {
+		return artikujTeFiltruar;
 	}
-	public void setListaArtikuj(List<ArtikullDto> listaArtikuj) {
-		this.listaArtikuj = listaArtikuj;
-	}
-	public ArtikullService getArtikullService() {
-		return artikullService;
-	}
-	public void setArtikullService(ArtikullService aService) {
-		this.artikullService = aService;
+	public void setArtikujTeFiltruar(List<ArtikullDto> artikujTeFiltruar) {
+		this.artikujTeFiltruar = artikujTeFiltruar;
 	}
 	public List<ArtikullDto> getSelectedArtikuj() {
 		return selectedArtikuj;
 	}
 	public void setSelectedArtikuj(List<ArtikullDto> selectedArtikuj) {
 		this.selectedArtikuj = selectedArtikuj;
+		log.info("settingSelectedArtikuj " + selectedArtikuj.size());
+	}
+	public AutorBean getAutorBean() {
+		return autorBean;
+	}
+	public void setAutorBean(AutorBean autorBean) {
+		this.autorBean = autorBean;
 	}
 	
 	
-
-
+	public void fillListaArtikuj() {
+		listaArtikuj = artikullService.getArtikujLista();
+	}
 	
 	
 	public void addArtikull() {
-		if(artikullService.addArtikull(artikullIRi)) {
-			log.info("Artikull added succesfully");
-			listaArtikuj = artikullService.getArtikujLista();
-		}else {
-			log.error("New Artikull wasn't addded, error!");
-		}
+		artikullService.addArtikull(artikullIRi);
+		log.info("Artikull added succesfully");
+		fillListaArtikuj();
+		autorBean.artikujDropdownFill();
 	}
 	
 	public void deleteArtikull() {
-		log.info("Delete Artikull called " + selectedArtikuj.toString());
-		//throw new RuntimeException("Delete artikull throwed an error"); 
-		
+		log.info("Delete Artikull called " + selectedArtikuj.toString() + selectedArtikuj.size());
 		artikullService.deleteArtikull(selectedArtikuj);
-		
-		log.info("Artikuj list DELETED SUCCESSFULLY!"); 
-		listaArtikuj = artikullService.getArtikujLista(); 
-		 
+		fillListaArtikuj();
 	}
 	
     public void onRowEdit(RowEditEvent<ArtikullDto> event) {
 		log.info("Row edit called: " + event.getObject().getTitulli());
-		
-		if(artikullService.updateArtikull(event.getObject())) {
-			log.info("Artikull object Updated SUCCESSFULLY!");
-		} else {
-			log.error("Artikull wasn't updated!");
-		}
-        
+		artikullService.updateArtikull(event.getObject());
     }
      
     public void onRowCancel(RowEditEvent<ArtikullDto> event) {

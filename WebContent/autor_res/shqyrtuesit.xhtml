@@ -1,0 +1,277 @@
+<!DOCTYPE HTML>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="kryesore.xhtml"
+     			xmlns:h="http://java.sun.com/jsf/html"
+      			xmlns:f="http://java.sun.com/jsf/core"
+      			xmlns:p="http://primefaces.org/ui"
+                xmlns:utils="http://xmlns.jcp.org/jsf/composite/utils">
+                
+	<ui:define name="title">Shqyrtuesit</ui:define>
+	 
+    <ui:define name="content">
+<h:form id="form1">
+<div style="padding: 60px 100px 0px 100px;">
+
+<p:dataTable id="tabelaShqyrtues"
+		styleClass="table table-dark"
+		var="shqyrtuesi"
+		widgetVar="tabelaAllShqyrtues"
+		selection="#{shqyrtuesBean.selectedShqyrtuesa}"
+		rowKey="#{shqyrtuesi.idEmail}"
+		value="#{shqyrtuesBean.listaShqyrtues}" 
+		editable="true" reflow="true" rows="5"
+		editMode="row"
+		sortMode="multiple"
+		paginator="true"
+		paginatorPosition="bottom"
+		paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		rowsPerPageTemplate="5,10,15,20,50,100"
+		filteredValue="#{shqyrtuesBean.shqyrtuesitFiltruar}">
+        
+       
+        
+        <f:facet name="header">
+            <p:outputPanel>
+            	<div style="text-align:center; padding-top:10px;">
+	            	<h:outputText class="textColor fontiOEL madhesiaHeader" style="align:center" value="Lista e Shqyrtuesve" />
+	            </div>	
+	            <p:separator style="background: rgba(107, 247, 255, 0.2); border-color: rgba(107, 247, 255, 0.2);height:0.2px "/>
+	            <div style="padding-bottom:5px; margin-top:-7px;">
+		            <p:commandButton style="float: left; left: 10px;" process="tabelaShqyrtues" 
+		            			actionListener="#{shqyrtuesBean.deleteShqyrtues}"
+	          	 				value="Fshi" update="tabelaShqyrtues">
+							<p:confirm header="Konfirmo" message="Kujdes, fushat e perzgjedhura do te fshihen!"/>
+	          		</p:commandButton>	        
+		                <h:outputText class="textColor fontiOEL" style="padding-right:10px; align: right; " value="Kerko:" />
+		                <p:inputText id="globalFilter" onkeyup="PF('tabelaAllShqyrtues').filter()" 
+		                	style="padding-right:10px; " styleClass="inputFushaFilterKerko"
+	                 		placeholder="Vendos keyword"/>
+	            </div>
+            </p:outputPanel>
+        </f:facet>
+        
+        
+        
+         
+        <p:ajax event="rowEdit" listener="#{shqyrtuesBean.onRowEdit}"/>
+        <p:ajax event="rowEditCancel"  listener="#{shqyrtuesBean.onRowCancel}"/>
+        
+         
+	<p:column selectionMode="multiple" style="width:35px;text-align:center; margin:auto;"/>
+    <p:column styleClass="hiqOutline" headerText="Emri" 
+    			filterMatchMode="exact" sortBy="#{shqyrtuesi.emri}"
+    			filterStyle="display:none" filterBy="#{shqyrtuesi.emri}">
+          <p:cellEditor>
+              <f:facet name="output"><h:outputText style="display: block;" value="#{shqyrtuesi.emri}" /></f:facet>
+              <f:facet name="input">
+              		<p:inputText id="modelInput" value="#{shqyrtuesi.emri}" style="width:100%" required="true">
+              		</p:inputText>
+              </f:facet>
+          </p:cellEditor>
+    </p:column>
+ 
+    <p:column styleClass="hiqOutline" headerText="Mbiemri" sortBy="#{shqyrtuesi.mbiemri}" filterStyle="display:none" filterBy="#{shqyrtuesi.mbiemri}">
+          <p:cellEditor>
+              <f:facet name="output"><h:outputText style="display: block;" value="#{shqyrtuesi.mbiemri}" /></f:facet>
+              <f:facet name="input"><p:inputText value="#{shqyrtuesi.mbiemri}" style="width:100%"/></f:facet>
+          </p:cellEditor>        
+    </p:column>
+    
+    <p:column styleClass="hiqOutline" headerText="E-mail" sortBy="#{shqyrtuesi.idEmail}" filterStyle="display:none" filterBy="#{shqyrtuesi.idEmail}">
+          <p:cellEditor>
+              <f:facet name="output"><h:outputText style="display: block;" value="#{shqyrtuesi.idEmail}" /></f:facet>
+              <f:facet name="input"><p:inputText value="#{shqyrtuesi.idEmail}" style="width:100%"/></f:facet>
+          </p:cellEditor>        
+    </p:column>
+    
+    <p:column styleClass="hiqOutline" headerText="Institucioni" sortBy="#{shqyrtuesi.institucioni}" filterStyle="display:none" filterBy="#{shqyrtuesi.institucioni}">
+          <p:cellEditor>
+              <f:facet name="output"><h:outputText style="display:block;" value="#{shqyrtuesi.institucioni}" /></f:facet>
+              <f:facet name="input"><p:inputText value="#{shqyrtuesi.institucioni}" style="width:100%"/></f:facet>
+          </p:cellEditor>        
+    </p:column>
+    
+    <p:column style="width:80px" headerText="Modifiko" styleClass="editoBorderTabela">							     	
+          	<p:rowEditor/>
+    </p:column>
+	<!--     <p:column style="margin:auto;" >
+         <p:commandButton value="Fshi Rekordin" style="margin:auto; display: flex"/>
+    </p:column>
+     -->
+    <f:facet name="footer">
+
+          	
+          	<p:commandButton process="@this" immediate="true"
+          	 value="Shto Shqyrtues"  
+          	 oncomplete="PF('dialogShqyrtuesIRI').show()" update="tabelaShqyrtues">
+          	</p:commandButton>
+
+    </f:facet>
+</p:dataTable>
+
+
+<p:confirmDialog  id="konfirmoDialog" global="true" showEffect="fade" hideEffect="fade" >
+        <p:commandButton style="align:center;" value="Konfirmo" type="button" styleClass="ui-confirmdialog-yes" />
+        <p:commandButton style="align:center;" value="Kthehu" type="button" styleClass="ui-confirmdialog-no" />
+</p:confirmDialog>
+
+
+
+
+<p:contextMenu for="tabelaShqyrtues" widgetVar="menujacntx" >
+        <p:menuitem process="@form" actionListener="#{shqyrtuesBean.deleteShqyrtues}"
+        			value="Fshi" update="tabelaShqyrtues">
+        			<p:confirm header="Konfirmim" message="Deshironi ta fshini kete shqyrtues?!"/>	
+        </p:menuitem>
+         <p:separator />
+         <p:menuitem value="Mbyll" onclick="PF('menujacntx').hide()"/>
+</p:contextMenu>
+
+
+
+
+
+</div>
+
+
+
+
+	
+		<div class="row" align="center">
+			<div class="col-md-12" >
+				
+				
+				
+				
+			</div>
+		</div>
+
+		</h:form>
+		
+		
+		
+		
+<h:form id="form2">
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogNewShqyrtues" header="Shqyrtues i ri" widgetVar="dialogShqyrtuesIRI" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+        
+         <h:outputText value="Ju lutemi kontrolloni fushat e meposhtme!" 
+            	style="color:red; font-family:oswaldB; font-size:15px;"
+            	rendered="#{facesContext.validationFailed}" />
+            	
+            	
+        <h:panelGrid id="panelGridDialogShqyrtues" style="width: auto; font-size:15px" columns="3" styleClass="textColorGold fontiOL"
+            	cellpadding ="10" cellspacing="1">
+
+            	<h:outputLabel value="Emri" />
+            	<p:inputText styleClass="inputFushat" id="fushaEmriShR" value="#{shqyrtuesBean.shqyrtuesIRi.emri}"
+            					>          			
+            	</p:inputText>
+            	<h:message for="fushaEmriShR" styleClass="fontiOL" style="color:red; margin:8px;"/>
+            
+            	<h:outputLabel value="Mbiemri"  />
+            	<p:inputText styleClass="inputFushat" id="fushaMbiemriShR" value="#{shqyrtuesBean.shqyrtuesIRi.mbiemri}"
+            					>          			
+            	</p:inputText>
+            	<h:message for="fushaMbiemriShR" styleClass="fontiOL" style="color:red; margin:8px;"/>
+            	
+            	
+            	<h:outputLabel value="E-mail"  />
+            	<p:inputText styleClass="inputFushat" id="fushaemailShR" value="#{shqyrtuesBean.shqyrtuesIRi.idEmail}" 
+            					>          			
+            	</p:inputText>
+            	<h:message for="fushaemailShR" styleClass="fontiOL" style="color:red; margin:8px;"/>
+            	     	 
+            	<h:outputLabel value="Institucioni"  />
+            	<p:inputText styleClass="inputFushat" id="fushaInstitucioniShR" value="#{shqyrtuesBean.shqyrtuesIRi.institucioni}" 
+            					>          			
+            	</p:inputText>
+            	<h:message for="fushaInstitucioniShR" styleClass="fontiOL" style="color:red; margin:8px;"/>
+            	
+
+            	<f:facet name="footer">
+               		<h:panelGroup style="display:block; text-align:center">
+						<p:commandButton value="Ruaj" 
+								actionListener="#{shqyrtuesBean.addShqyrtues}"
+								process=":form2:dialogNewShqyrtues"
+								update=":form2:panelGridDialogShqyrtues :form1:tabelaShqyrtues" 
+								oncomplete="if (args &amp;&amp; !args.validationFailed) PF('dialogShqyrtuesIRI').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+            	</f:facet> 
+
+        </h:panelGrid>
+        </p:outputPanel>
+</p:dialog>  
+
+
+</h:form>
+		
+
+
+
+			
+<h:form id="formaDialogConfirmed">
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogConfirm" header="Sukses!" widgetVar="dialogSuccess" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" onclick="PF('dialogSuccess').hide()">
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>
+</p:dialog>  
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogGabim" header="Gabim!" widgetVar="dialogError" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+            	
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" 
+								onclick=" PF('dialogError').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>	
+</p:dialog>  
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogCust" header="Mesazh!" widgetVar="dialogCustom" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+            	
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" 
+								onclick=" PF('dialogCustom').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>	
+</p:dialog>  
+
+
+</h:form>
+
+
+
+
+
+    </ui:define>
+
+</ui:composition>

@@ -16,6 +16,7 @@ import com.ikubinfo.konferenca.dto.ArtikullDto;
 import com.ikubinfo.konferenca.dto.AutorDto;
 import com.ikubinfo.konferenca.service.ArtikullService;
 import com.ikubinfo.konferenca.service.AutorService;
+import com.ikubinfo.konferenca.utils.UtilMessages;
 
 @ManagedBean(name = "autorBean")
 @ViewScoped
@@ -29,7 +30,7 @@ public class AutorBean implements Serializable{
 	
 	@ManagedProperty(value = "#{artikullService}")
 	ArtikullService artikullService;
-	
+
 	private AutorDto newAutor = new AutorDto();
 	private AutorDto selectedAutor;
 	private List<AutorDto> filteredAutore;
@@ -37,17 +38,16 @@ public class AutorBean implements Serializable{
 	private List<AutorDto> allAutorList;
 	private List<ArtikullDto> artikullListForNewAutor;
 	private Map<String,Integer> artikujDropdown = new HashMap<String, Integer>();
+	private Map<String,Integer> artikujDropdownModify = new HashMap<String, Integer>();
+
 	
 	@PostConstruct
 	public void init() {
-		allAutorList = autorService.getAllAutore();
-		artikullListForNewAutor = artikullService.getArtikujLista();
-		
-		for(ArtikullDto artikullDto: artikullListForNewAutor) {
-			artikujDropdown.put(artikullDto.getTitulli(), artikullDto.getArtikullId());
-		}
-	}		
-			
+		fillAutorList();
+		artikujDropdownFill();
+		fillArtikujDropdownModify();
+	}
+	
 
 	public Map<String, Integer> getArtikujDropdown() {
 		return artikujDropdown;
@@ -104,52 +104,54 @@ public class AutorBean implements Serializable{
 		this.selectedAutore = selectedAutore;
 	}
 
+	
+	public List<AutorDto> fillAutorList(){
+		allAutorList = autorService.getAllAutore();
+		return allAutorList;
+	}
+	
+	public void fillArtikujDropdownModify(){
+		artikullListForNewAutor = artikullService.getArtikujLista();
+		for(ArtikullDto artikullDto: artikullListForNewAutor) {
+			artikujDropdownModify.put(artikullDto.getTitulli(), artikullDto.getArtikullId());
+		}
+	}
+	
+	public void artikujDropdownFill(){
+		artikullListForNewAutor = artikullService.getArtikujLista();
+		
+		for(ArtikullDto artikullDto: artikullListForNewAutor) {
+			artikujDropdown.put(artikullDto.getTitulli(), artikullDto.getArtikullId());
+		}
+	}
 
+	public void addAutor() {
+			autorService.addAutor(newAutor);
+			fillAutorList();
+			artikujDropdownFill();
+	}
 	
+	public void deleteAutor() {
+		log.info("Delete Autor called " + selectedAutore.get(0).getEmri());
+		autorService.deleteAutor(selectedAutore); 
+		fillAutorList();
+		artikujDropdownFill();
+	}
 	
+    public void onRowEdit(RowEditEvent<AutorDto> event) {
+		log.info("Row edit called: " + event.getObject().getEmri());
+		autorService.updateAutor(event.getObject()); 
+		fillAutorList();
+	}
+     
+    public void onRowCancel(RowEditEvent<AutorDto> event) {
+    	log.info("Canceled the editing");
+    }
+    
 	public void newDialogForNewArtikull() {
 		PrimeFaces current = PrimeFaces.current();
 		current.executeScript("PF('dialogAutorIRI').hide()");
 		current.executeScript("PF('dialogArtikullIRI').show()");
 	}
-	
-
-	
-	public void addAutor() {
-		if(autorService.addAutor(newAutor)) {
-			log.info("Autor added succesfully");
-			allAutorList = autorService.getAllAutore();
-		}else {
-			log.error("New Autor wasn't addded, error!");
-		}
-	}
-	
-	public void deleteAutor() {
-		log.info("Delete Autor called " + selectedAutore.get(0).getEmri());
-		
-		if(autorService.deleteAutor(selectedAutore)) {
-			log.info("Autor list DELETED SUCCESSFULLY!");
-			allAutorList = autorService.getAllAutore();
-		} else {
-			log.error("List of Autor wasn't deleted!");
-		}
-	}
-	
-    public void onRowEdit(RowEditEvent<AutorDto> event) {
-		log.info("Row edit called: " + event.getObject().getEmri());
-		
-		if(autorService.updateAutor(event.getObject())) {
-			log.info("Autor object Updated SUCCESSFULLY!");
-		} else {
-			log.error("Autor wasn't updated!");
-		}
-        
-    }
-     
-    public void onRowCancel(RowEditEvent<AutorDto> event) {
-    	log.info("Canceled the editing");
-    }
-	
-	
 	
 }

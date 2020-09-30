@@ -25,7 +25,7 @@ public class Autor {
 	@Column(name = "mbiemri")
 	private String mbiemri;
 	
-	@ManyToOne(cascade=CascadeType.MERGE, fetch = FetchType.EAGER)
+	@ManyToOne(cascade=CascadeType.REFRESH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "artikull_id")
 	private Artikull artikuj;
 	

@@ -6,7 +6,8 @@ import com.ikubinfo.konferenca.entity.ShqyrtuesArtikull;
 
 public interface ShqyrtuesArtikullDao {
 	List<ShqyrtuesArtikull> getAllShqyrtuesArtikull();
-	boolean addShqyrtuesArtikull(ShqyrtuesArtikull sa);
-	boolean deleteShqyrtuesArtikull(int arId);
-	boolean updateShqyrtuesArtikull(ShqyrtuesArtikull saU);
+	void addShqyrtuesArtikull(ShqyrtuesArtikull sa);
+	void deleteShqyrtuesArtikull(int arId);
+	void updateShqyrtuesArtikull(ShqyrtuesArtikull saU);
+	boolean checkShqyrtuesArtikullIfExists(String shqrtid, int arid);
 }

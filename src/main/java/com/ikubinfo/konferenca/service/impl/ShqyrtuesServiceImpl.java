@@ -13,8 +13,10 @@ import com.ikubinfo.konferenca.convert.UserConverter;
 import com.ikubinfo.konferenca.dao.ShqyrtuesDao;
 import com.ikubinfo.konferenca.dto.ShqyrtuesDto;
 import com.ikubinfo.konferenca.dto.UserDto;
+import com.ikubinfo.konferenca.entity.Autor;
 import com.ikubinfo.konferenca.entity.Shqyrtues;
 import com.ikubinfo.konferenca.service.ShqyrtuesService;
+import com.ikubinfo.konferenca.utils.UtilMessages;
 
 @Service("shqyrtuesService")
 public class ShqyrtuesServiceImpl implements ShqyrtuesService{
@@ -24,58 +26,79 @@ public class ShqyrtuesServiceImpl implements ShqyrtuesService{
 	@Autowired
 	ShqyrtuesDao shqyrtuesDao;
 	
-	
-	@SuppressWarnings("unused")
 	@Transactional
 	public List<ShqyrtuesDto> getAllShqyrtuesList() {
-		
 		List<ShqyrtuesDto> listaShqyrtues = new ArrayList<ShqyrtuesDto>();
-		for(Shqyrtues shqyrtues : shqyrtuesDao.getAllShqyrtues()) {
-			listaShqyrtues.add(ShqyrtuesConverter.toShqyrtuesDto(shqyrtues));
-		}
-		if(listaShqyrtues!=null) {
-			log.info("Service got the Shqyrtues list successfully: " + listaShqyrtues.size() + " objects!");
+		try {
+			for(Shqyrtues shqyrtues : shqyrtuesDao.getAllShqyrtues()) {
+				listaShqyrtues.add(ShqyrtuesConverter.toShqyrtuesDto(shqyrtues));
+			}
 			return listaShqyrtues;
-		}else {
-			log.error("Error, Service got an empty Shqyrtues list");
-			return null;
+		} catch (Exception e) {
+			log.error("Error, Service got an empty Shqyrtues list", e);
+			UtilMessages.addMessageError( null, "Problem ne marrjen e listes se shqyrtuesve!");
+			return new ArrayList<ShqyrtuesDto>();
 		}
 	}
 
 	@Transactional
-	public boolean addShqyrtues(ShqyrtuesDto shqyrtuesDto) {
-		boolean check = false;
-		if(shqyrtuesDao.addShqyrtues(ShqyrtuesConverter.toShqyrtues(shqyrtuesDto))) {
-		log.info("New Shqyrtues " + shqyrtuesDto.getEmri() + " " + shqyrtuesDto.getMbiemri() + " added successfully!");
-			check = true;
+	public void addShqyrtues(ShqyrtuesDto shqyrtuesDto) {
+		if (shqyrtuesCheck(shqyrtuesDto.getIdEmail())) {
+			UtilMessages.addMessageError(null, "Error, Shqyrtuesi me kete E-mail ekziston!");
 		}else {
-			log.error("Shqyrtues Service couldn't add new Shqyrtues!");
-		}
-		return check;
-	}
-
-	@Transactional
-	public boolean updateShqyrtues(ShqyrtuesDto shqyrtuesDto) {
-		boolean check = false;
-		if(shqyrtuesDao.updateShqyrtues(ShqyrtuesConverter.toShqyrtuesUpdate(shqyrtuesDto))) {
-			log.info("Service updated shqyrtues successfully!");
-			check = true;
-		}else {
-			log.error("Service couldn't update the shqyrtues!");
-		}
-		return check;
-	}
-
-	@Transactional
-	public boolean deleteShqyrtues(List<ShqyrtuesDto> shqyrtuesListToDelete) {
-		boolean check = false;
-		for(ShqyrtuesDto shqyrtuesDto : shqyrtuesListToDelete) {
-			check = shqyrtuesDao.deleteShqyrtues(shqyrtuesDto.getIdEmail());
-			if(!check) {
-				log.error("Breaking from deletion loop, error occurred!");
-				break;
+			try {
+				shqyrtuesDao.addShqyrtues(ShqyrtuesConverter.toShqyrtues(shqyrtuesDto)); 
+				log.info("New Shqyrtues " + shqyrtuesDto.getEmri() + " " + shqyrtuesDto.getMbiemri() + " added successfully!");
+				UtilMessages.addMessageSuccess("Sukses!", "Shqyrtuesi " + shqyrtuesDto.getEmri() + " u shtua me sukses!");
+			} catch (Exception e) {
+				log.error("Shqyrtues Service couldn't add new Shqyrtues!", e);
+				UtilMessages.addMessageError(null, "Error, shqyrtuesi nuk u shtua");
 			}
 		}
-		return check;
+	}
+
+	@Transactional
+	public void updateShqyrtues(ShqyrtuesDto shqyrtuesDto) {
+		if (shqyrtuesCheck(shqyrtuesDto.getIdEmail())) {
+			UtilMessages.addMessageError(null, "Error, Shqyrtuesi me kete E-mail ekziston!");
+		}else {			
+			try {
+				shqyrtuesDao.updateShqyrtues(ShqyrtuesConverter.toShqyrtuesUpdate(shqyrtuesDto)); 
+				log.info("Service updated shqyrtues successfully!");
+				UtilMessages.addMessageSuccess("Sukses!", "Shqyrtuesi " + shqyrtuesDto.getEmri() + " u modifikua me sukses!");
+			} catch (Exception e) {
+				log.error("Service couldn't update the shqyrtues!", e);
+				UtilMessages.addMessageError(null, "Error, modifikimi nuk u krye!");
+			}
+		}
+	}
+
+	@Transactional
+	public void deleteShqyrtues(List<ShqyrtuesDto> shqyrtuesListToDelete) {
+		try {
+			for(ShqyrtuesDto shqyrtuesDto : shqyrtuesListToDelete) {
+				shqyrtuesDao.deleteShqyrtues(shqyrtuesDto.getIdEmail());}
+			UtilMessages.addMessageSuccess("Sukses!", "Fshirja u krye me sukses!");
+		} catch (Exception e) {
+			log.error("Breaking from deletion loop, error occurred!", e);
+			UtilMessages.addMessageError(null, "Error, fshirja nuk u krye!");
+		}
+	}
+
+	@Override
+	public boolean shqyrtuesCheck(String idEmail) {
+		try {
+			if(shqyrtuesDao.checkShqyrtuesIfExists(idEmail)) {
+				log.error("Shqyrtues with this email exists!");
+				return true;
+			}else {
+				log.info("Service, success, Shqyrtues doesn't exist!");
+				return false;
+			}
+		} catch (Exception e) {
+			log.error("Error, Service couldn't get Shqyrtues!", e);
+			UtilMessages.addMessageError(null, "Error, gjate kontrollit, ju lutemi provoni perseri!");
+			return true;
+		}
 	}
 }

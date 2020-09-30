@@ -7,7 +7,8 @@ import com.ikubinfo.konferenca.dto.UserDto;
 
 public interface ShqyrtuesService {
 	List<ShqyrtuesDto> getAllShqyrtuesList();
-	boolean addShqyrtues(ShqyrtuesDto shqyrtuesDto);
-	boolean updateShqyrtues(ShqyrtuesDto shqyrtuesDto);
-	boolean deleteShqyrtues(List<ShqyrtuesDto> shqyrtuesListToDelete);
+	void addShqyrtues(ShqyrtuesDto shqyrtuesDto);
+	void updateShqyrtues(ShqyrtuesDto shqyrtuesDto);
+	void deleteShqyrtues(List<ShqyrtuesDto> shqyrtuesListToDelete);
+	boolean shqyrtuesCheck(String idEmail);
 }

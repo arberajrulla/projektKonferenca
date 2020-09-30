@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="kryesore.xhtml"
+     			xmlns:h="http://java.sun.com/jsf/html"
+      			xmlns:f="http://java.sun.com/jsf/core"
+      			xmlns:p="http://primefaces.org/ui"
+                xmlns:utils="http://xmlns.jcp.org/jsf/composite/utils"
+                xmlns:b="http://bootsfaces.net/ui">
+                
+	<ui:define name="title">Autoret</ui:define>
+	 
+	 
+    <ui:define name="content">
+    
+    
+<div style="margin: 80px;">
+<h:form id="form">
+    <p:dataView var="autor" value="#{autorBean.allAutorList}"
+                gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+ 
+        <p:dataViewGridItem>
+            <p:panel header="#{autor.emri} #{autor.mbiemri}" style="text-align:center">
+                <h:panelGrid columns="1" style="width:100%">
+                    <p:graphicImage name="demo/images/car/#{car.brand}.gif"/> 
+ 
+                    <h:outputText value="#{car.brand}" />
+ 					<h:outputText value="#{car.brand}" />
+                </h:panelGrid>
+            </p:panel>
+        </p:dataViewGridItem>
+ 
+        <p:dataViewListItem>
+            <h:panelGrid columns="3" style="width:100%" columnClasses="logo,detail">
+                <p:graphicImage name="demo/images/car/#{car.brand}-big.gif" /> 
+ 
+                <p:outputPanel>
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputText value="Emri:" />
+                        <h:outputText value="#{autor.emri}" style="font-weight: bold"/>
+ 
+                        <h:outputText value="Mbiemri:" />
+                        <h:outputText value="#{autor.mbiemri}" style="font-weight: bold"/>
+ 
+                        <h:outputText value="Artikulli:" />
+                        <h:outputText value="#{autor.artikullName}" style="font-weight: bold"/>
+                    </h:panelGrid>
+                </p:outputPanel>
+ 
+				<p:outputLabel value="Brand new"></p:outputLabel>
+            </h:panelGrid>
+        </p:dataViewListItem>
+    </p:dataView>
+ 
+</h:form>
+	
+
+</div>
+
+
+
+
+
+
+
+
+
+
+			
+<h:form id="formaDialogConfirmed">
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogConfirm" header="Sukses!" widgetVar="dialogSuccess" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" onclick="PF('dialogSuccess').hide()">
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>
+</p:dialog>  
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogGabim" header="Gabim!" widgetVar="dialogError" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+            	
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" 
+								onclick=" PF('dialogError').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>	
+</p:dialog>  
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogCust" header="Mesazh!" widgetVar="dialogCustom" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+            	
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" 
+								onclick=" PF('dialogCustom').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>	
+</p:dialog>  
+
+
+</h:form>
+
+
+</ui:define>
+
+</ui:composition>

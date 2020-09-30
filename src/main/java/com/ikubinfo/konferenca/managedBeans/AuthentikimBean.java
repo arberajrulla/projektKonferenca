@@ -72,30 +72,31 @@ public class AuthentikimBean {
 	}
 	
 	public String authentikim() {
-		
-		UserDto userDto = new UserDto();
+		UserDto userDto;
 		userDto = uService.getUserForLoggin(username);
-		System.out.println(username);
 		if(userDto!=null) {
 			HashSaltedPassword hashCheck = new HashSaltedPassword();
-			try {
-				if(userDto.getPassword()
-						.equals(hashCheck.hashGenerate(password, userDto.getSalt()))) {
+			
+				if(userDto.getPassword().equals(hashCheck.hashGenerate(password, userDto.getSalt()))) {
 					loggedUserBean.setLoggedUser(userDto);
-					System.out.println("Login successful");
-					log.info("Login successful from log");
-					return ("admin/kryesore.xhtml?faces-redirect=true");
+					credentialsKey = false;
+					log.info("Login successful");
+					switch (userDto.getKategoria()) {
+					case "admin":
+						return ("admin/faqja1.xhtml?faces-redirect=true");
+					case "autor":
+						return ("autor_res/faqja1.xhtml?faces-redirect=true");						
+					case "shqyrtues":
+						return ("shqyrtues_res/faqja1.xhtml?faces-redirect=true");
+					default:
+						return ("login.xhtml?faces-redirect=true");
+					}
 				}else {
-					System.out.println("Incorrect password");
+					log.error("Incorrect password");
 					credentialsKey = true;
 				}
-		
-			}catch(NullPointerException e) {
-				credentialsKey = true;				
-			}
-
 		} else {
-				System.out.println("Incorrect username");
+			log.error("Incorrect username");
 				credentialsKey = true;
 		}
 		return null;
