@@ -44,9 +44,9 @@ public class LoggedUserBean {
 	
 	private UserDto temporaryLoggedUser;
 	
-	private AutorDto loggedAutor;
+	private AutorDto loggedAutor = new AutorDto();
 	
-	private ShqyrtuesDto loggedShqyrtues;
+	private ShqyrtuesDto loggedShqyrtues = new ShqyrtuesDto();
 
 	@NotEmpty(message = "Fjalekalimi nuk mund te jete bosh!")
 	@Size(min=6, max=20, message = "Fjalekalimi duhet te kete nga 6 deri 20 karaktere!")
@@ -201,14 +201,14 @@ public class LoggedUserBean {
 		userService.deleteUser(lst);
 		this.loggedUser = null;
 		
-		if(loggedAutor!=null) {
+		if(loggedAutor!=null && !loggedAutor.getEmailId().isEmpty()) {
 			List<AutorDto> lstA = new ArrayList<AutorDto>();
 			lstA.add(loggedAutor);
 			autorService.deleteAutor(lstA);
 			this.loggedAutor = null;
 		}
 		
-		if(loggedShqyrtues!=null) {
+		if(loggedShqyrtues!=null && !loggedShqyrtues.getIdEmail().isEmpty()) {
 			List<ShqyrtuesDto> lstS = new ArrayList<ShqyrtuesDto>();
 			lstS.add(loggedShqyrtues);
 			shqyrtuesService.deleteShqyrtues(lstS);

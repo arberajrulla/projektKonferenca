@@ -195,15 +195,16 @@ public class AutorBean implements Serializable{
 		loggedUserBean.temporaryToPermanentLoggedUser();
 		loggedUserBean.getLoggedUser().setRegisterStatus(1);
 		loggedUserBean.updateLoggedUserDetails();
-		loggedUserBean.setLoggedAutor(newAutor);
+		AutorDto autorDto = autorService.getAutor(newAutor.getEmailId());
+		loggedUserBean.setLoggedAutor(autorDto);
 		return "/autor_res/faqja1.xhtml?faces-redirect=true";
 	}
 	
 	public double averagePoints() {
 		double shuma = 0;
 		int counter = 0;
-		if ((loggedUserBean.getLoggedAutor()!=null) 
-				&& !loggedUserBean.getLoggedAutor().getVleresimeDto().isEmpty()) {
+		if (loggedUserBean.getLoggedAutor()!=null
+				&& loggedUserBean.getLoggedAutor().getVleresimeDto()!=null) {
 			for(ShqyrtuesArtikullDto shqyrtuesArtikullDto: loggedUserBean.getLoggedAutor().getVleresimeDto()) {
 				double avgTemp = 0;
 				avgTemp += shqyrtuesArtikullDto.getOrigjinaliteti();
@@ -233,7 +234,8 @@ public class AutorBean implements Serializable{
 		int countBashkautore=0;
 		List<AutorDto> autorDtoBashkautore = new ArrayList<>();
 
-		if (!loggedUserBean.getLoggedAutor().getArtikullDto().getAutorDtoListForArtikull().isEmpty() && loggedUserBean.getLoggedAutor()!=null) {
+		if (loggedUserBean.getLoggedAutor()!=null
+				&& loggedUserBean.getLoggedAutor().getArtikullDto()!=null) {
 			for(AutorDto au : loggedUserBean.getLoggedAutor().getArtikullDto().getAutorDtoListForArtikull()) {
 				if(!(au.getEmailId().equals(loggedUserBean.getLoggedAutor().getEmailId()))) {
 					autorDtoBashkautore.add(au);
