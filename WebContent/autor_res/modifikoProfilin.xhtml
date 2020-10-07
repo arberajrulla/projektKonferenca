@@ -11,10 +11,8 @@
 	 
     <ui:define name="content">
 
-<div class="col-md-12"  style=" padding: 0px 50px 50px 50px;">
-	
 
-<div align="center" class="loginWhite" style="margin-left: 10%; margin-right: 10%; margin-top: 40px;" >
+<div align="center" class="loginWhite" style="margin:50px 30%;" >
 			<br/><br/>
             <h:outputText class="fontiOM textColor" value="JU LUTEMI TE PLOTESONI TE GJITHA FUSHAT"/>
 			<br/><br/>
@@ -60,19 +58,6 @@
             	<h:message for="fushaIdR" styleClass="fontiOL" style="color:red; margin:8px;"/>
             	
 
-
-            	<h:outputLabel class="fontiOSB textColor" value="Kategoria"  />
-            	<p:selectOneMenu id="menuR" style="width:100%" 
-            						styleClass="inputFushat" 
-            						value="#{loggedUserBean.loggedUser.kategoria}"> 
-   					<f:selectItem itemValue="#{null}" itemLabel="--Zgjidh--" />
-   					<f:selectItem itemValue="admin" itemLabel="Administrator" /> 
-   					<f:selectItem itemValue="autor" itemLabel="Autor" /> 
-   					<f:selectItem itemValue="shqyrtues" itemLabel="Shqyrtues" /> 
-				</p:selectOneMenu>
-				<h:message for="menuR" styleClass="fontiOL" style="color:red; margin:8px;"/>
-				
-
             	<h:outputLabel class="fontiOSB textColor" value="Numer kontakti"  />
             	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey" 
             				id="fushaNrR" value="#{loggedUserBean.loggedUser.nrcel}" >          			
@@ -83,18 +68,31 @@
             	<f:facet name="footer">
                		<h:panelGroup style="display:block; text-align:center">
                   		<p:commandButton class="fontiOL btn btn-primary" value="Ruaj"
-                  			 actionListener="#{loggedUserBean.updateLoggedUserDetails}" 
+                  			 actionListener="#{loggedUserBean.updateLoggedAutorDetails}" 
                   			 process="@form" update="@form" >
                   			 </p:commandButton>
                		</h:panelGroup>
             	</f:facet>
-
+		
          </h:panelGrid>
+	     <h:panelGroup style="display:block; text-align:center; margin: 20px 0px;">
+         		<p:commandLink class="fontiOL textColor linkHov" immediate="true"
+         				value="Fshi profilin tim!" action="#{loggedUserBean.deleteLoggedUser()}">
+         			<p:confirm header="Konfirmo" message="Kujdes, profili juaj do te fshihet pergjithmone!"/>
+         		</p:commandLink>                  		
+         </h:panelGroup>         
+         
+         
+         
+ <p:confirmDialog  id="konfirmoDialogFshirjeProfili" global="true" showEffect="fade" hideEffect="fade" >
+        <p:commandButton style="align:center;" value="Konfirmo" type="button" styleClass="ui-confirmdialog-yes" />
+        <p:commandButton style="align:center;" value="Kthehu" type="button" styleClass="ui-confirmdialog-no" />
+</p:confirmDialog>        
+         
+         
          
 </h:form>
 </div>
-</div>
-
 
 			
 

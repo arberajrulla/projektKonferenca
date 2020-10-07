@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+  <title>Perfundim Regjistrimi</title>
+  <h:outputStylesheet library="css" name="styles.css"></h:outputStylesheet>
+  <h:outputStylesheet library="css" name="fonts.css"/>
+  <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+  <h:outputStylesheet library="css" name="primefaces_edit.css"></h:outputStylesheet>
+</h:head>
+
+
+<h:body>
+
+<div class="row fallingStar">
+
+
+	<div class="paneliKryesor " style=" padding-top:10px;">
+
+				<div class="row " style="padding-top:30px;">
+					<h:panelGrid id="panel" columns="1" border="0"
+							     	cellpadding = "10" cellspacing="1">
+						<div class="fontiR mireseerdhet" style=" font-size: 45px;">KONFERENCA X 
+						<p class="fontiOEL" style="color:white; font-size: 30px;">2020</p>
+						</div>
+					</h:panelGrid>
+				</div>
+
+	<div align="center" style="padding-top:30px;">
+	
+		<p class="fontiOEL" style="color:#15dde8; font-size: 35px;">Mireseerdhet</p>
+		<p class="fontiOEL" style="color: white; font-size: 25px;">Edhe nje hap dhe jeni pjese e konferences.</p>
+		<p class="fontiOEL" style="color:white; font-size: 20px;">Per tu bashkuar si autor ju lutem regjistroni artikullin tuaj ose zgjidhni nga lista nese jeni bashkautor i njerit prej artikujve ekzistues.</p>
+		
+	</div>
+	</div>
+</div>		
+	
+	
+
+<h:form id="forma1" >	
+<div class="row fallingStar">
+	<div class="col-md-12">
+		<div align="center"  style="margin: 40px;">
+		
+		<h:form >	
+           		<h:panelGroup  style="display:block; text-align:center; margin-bottom: 15px; font-size: 20px;">
+					<h:commandLink style="color: #15dde8 !important; text-decoration: none;" 
+								class="fontiOL textColor link2Hov" 
+								onclick="PF('dialogArtikullIRI').show()"
+	         					value="Regjistro artikull te ri">
+	         					<f:ajax/>
+	         		</h:commandLink>
+   				</h:panelGroup>		
+		</h:form>
+		
+		
+		
+            <h:outputText class="fontiOEL" style="color:white; font-size: 17px;" value="Ose zgjidhni nga lista me poshte!"/>
+
+			
+
+
+	
+        <h:panelGrid  style="width: 27%;" id = "gridFushat" columns="1" 
+            	cellpadding = "10" cellspacing="1">
+
+            	<p:selectOneMenu id="menuArtikullRegjistrim" style="width:100%; margin-top:20px" styleClass="inputFushat" value="#{autorBean.newAutor.artikullId}"
+            					> 
+
+					<f:selectItem itemLabel="--Zgjidh nje artikull--" itemValue="" />
+           			<f:selectItems value="#{autorBean.artikujDropdown}"/>   					
+				</p:selectOneMenu>
+				<h:message for="menuArtikullRegjistrim" styleClass="fontiOL" style="color:red; margin:8px;"/>
+            	
+				
+				<f:facet name="footer">
+
+   
+   
+               		<h:panelGroup style="display:block; text-align:center">
+                  		<p:commandButton class="fontiOL btn btn-primary" value="Perfundo Regjistrimin"
+                  			 action="#{autorBean.finishAutorRegistration()}" 
+                  			 process="@form" update="@form" >
+                  			 </p:commandButton>
+               		</h:panelGroup>
+            	</f:facet>
+
+         </h:panelGrid>
+         
+
+
+
+
+	
+				
+		               	<h:panelGroup style="display:block; text-align:center; margin-top: 30px;">
+	         				<h:commandLink class="fontiOR textColor linkHov" immediate="true"
+	         							value="Klikoni ketu per tu rikthyer tek faqja e logimit!" action="/login.xhtml?faces-redirect=true"/> 
+               			</h:panelGroup>
+               			               			
+</div>
+</div>               	
+</div>	
+</h:form>	
+	
+
+
+
+
+
+		
+<h:form id="form3" enctype="multipart/form-data">
+<p:dialog showEffect="fade" hideEffect="fade" width="600" id="dialogNewArtikull" header="Artikull i ri" widgetVar="dialogArtikullIRI" resizable="false" >
+	<div align="center" style="width: 100%;">
+	<p:outputPanel >
+        
+         <h:outputText value="Ju lutemi kontrolloni fushat e meposhtme!" 
+            	style="color:red; font-family:oswaldB; font-size:15px;"
+            	rendered="#{facesContext.validationFailed}" />
+            	
+            	
+        <h:panelGrid id="panelGridDialogArtikull" style="width: 80%; font-size:15px" columns="3" styleClass="textColorGold fontiOL"
+            	cellpadding ="10" cellspacing="1">
+
+            	<h:outputLabel value="Titulli" />
+            	<p:inputText styleClass="inputFushat" id="fushaTitulliArtR" value="#{artikullBean.artikullIRi.titulli}"
+            					>
+            	</p:inputText>
+            	<h:message for="fushaTitulliArtR" styleClass="fontiOR" style="color:red; margin:8px;"/>
+            	
+            
+            	<h:outputLabel value="Abstrakti" />
+            	<p:inputTextarea styleClass="inputFushat" id="fushaAbstraktArtR"  autoResize="false" 
+            					value="#{artikullBean.artikullIRi.abstrakti}"
+            					style="width: 100%;"
+            					>
+            	</p:inputTextarea>
+            	<h:message for="fushaAbstraktArtR" styleClass="fontiOR" style="color:red; margin:8px;"/>
+            	
+            	
+            	<h:outputLabel value="Dokumenti Elektronik" />
+            	<p:inputText styleClass="inputFushat" id="fushaDokElektronikArtR" value="#{artikullBean.artikullIRi.dokumentiElektronik}" 
+            					>
+            	</p:inputText>
+            	<h:message for="fushaDokElektronikArtR" styleClass="fontiOR" style="color:red; margin:8px;"/>
+            	
+            	     	 
+            	<h:outputLabel value="Kontakt" />
+            	<p:inputText styleClass="inputFushat" id="fushaKontaktArtR" value="#{artikullBean.artikullIRi.kontakt}" 
+            					>
+            	</p:inputText>
+            	<h:message for="fushaKontaktArtR" styleClass="fontiOR" style="color:red; margin:8px;"/>
+            	
+            	
+            	<h:outputLabel value="Ngarko dokumentin" />
+            	<p:fileUpload id="uploadButton" 
+            				label="Ngarko" performVirusScan="true" 
+            				value="#{artikullBean.uploadedArtikull}" 
+            				mode="simple" skinSimple="true"/>
+            	<h:message for="uploadButton" styleClass="fontiOR" style="color:red; margin:8px;"/> 
+            	
+            	<h:outputLabel value="Ngarko foto per kopertinen e artikullit" />
+            	<p:fileUpload id="uploadButton2" 
+            				label="Ngarko" performVirusScan="true"
+            				value="#{artikullBean.uploadedArtikullPicture}" 
+            				mode="simple" skinSimple="true"/>
+            	<h:message for="uploadButton2" styleClass="fontiOR" style="color:red; margin:8px;"/> 
+            	
+
+            	<f:facet name="footer">
+               		<h:panelGroup style="display:block; text-align:center">
+						<p:commandButton value="Ruaj" 
+								ajax="false"
+								actionListener="#{artikullBean.addArtikull()}" 
+								process=":form3:dialogNewArtikull"
+								update=":forma1:menuArtikullRegjistrim :form3:panelGridDialogArtikull" 
+								oncomplete="if (args &amp;&amp; !args.validationFailed) PF('dialogArtikullIRI').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+            	</f:facet> 
+
+        </h:panelGrid>
+        </p:outputPanel>
+        </div>
+</p:dialog>  
+</h:form>
+
+
+
+
+
+
+					
+<h:form id="formaDialogConfirmed">
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogConfirm" header="Sukses!" widgetVar="dialogSuccess" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" onclick="PF('dialogSuccess').hide()">
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>
+</p:dialog>  
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogGabim" header="Gabim!" widgetVar="dialogError" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+            	
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" 
+								onclick=" PF('dialogError').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>	
+</p:dialog>  
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogCust" header="Mesazh!" widgetVar="dialogCustom" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+            	
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" 
+								onclick=" PF('dialogCustom').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>	
+</p:dialog>  
+
+
+</h:form>
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+</h:body>
+</html>
+
+
+
+
+
+

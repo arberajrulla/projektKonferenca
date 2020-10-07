@@ -49,7 +49,7 @@ public class ArtikullServiceImpl implements ArtikullService {
 			UtilMessages.addMessageError(null, "Error, Artikulli me kete Dokument Elektronik ekziston!");
 		}else {
 			try {
-				artikullDao.addArtikull(ArtikullConverter.toNewArtikull(artikullIRi)); 
+				artikullDao.addArtikull(artikullConverter.toNewArtikull(artikullIRi)); 
 				log.info("New artikull " + artikullIRi.getTitulli() + " added successfully!");
 				UtilMessages.addMessageSuccess("Sukses!", "Artikulli " + artikullIRi.getTitulli() + " u shtua me sukses!");
 			} catch (Exception e) {
@@ -75,18 +75,15 @@ public class ArtikullServiceImpl implements ArtikullService {
 
 	@Transactional
 	public void updateArtikull(ArtikullDto artikullDto) {
-		if (artikullCheck(artikullDto.getDokumentiElektronik())) {
-			UtilMessages.addMessageError(null, "Error, Artikulli me kete Dokument Elektronik ekziston!");
-		}else {	
 			try {
-				artikullDao.updateArtikull(ArtikullConverter.toArtikullUpdate(artikullDto)); 
+				artikullDao.updateArtikull(artikullConverter.toArtikullUpdate(artikullDto)); 
 				log.info("Artikull service updated artikull successfully!");
 				UtilMessages.addMessageSuccess("Sukses!", "Artikulli " + artikullDto.getTitulli() + " u modifikua me sukses!");
 			} catch (Exception e) {
 				log.error("Artikull service couldn't update the artikull!", e);
 				UtilMessages.addMessageError(null, "Error, modifikimi nuk u krye!");
 			}
-		}
+		
 	}
 
 	@Override

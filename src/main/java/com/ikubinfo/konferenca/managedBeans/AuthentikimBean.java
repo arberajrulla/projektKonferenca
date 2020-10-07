@@ -12,7 +12,11 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 
 import com.ikubinfo.konferenca.dao.impl.UserDaoImpl;
+import com.ikubinfo.konferenca.dto.AutorDto;
+import com.ikubinfo.konferenca.dto.ShqyrtuesDto;
 import com.ikubinfo.konferenca.dto.UserDto;
+import com.ikubinfo.konferenca.service.AutorService;
+import com.ikubinfo.konferenca.service.ShqyrtuesService;
 import com.ikubinfo.konferenca.service.UserService;
 import com.ikubinfo.konferenca.utils.HashSaltedPassword;
 
@@ -23,8 +27,22 @@ public class AuthentikimBean {
 	@ManagedProperty(value = "#{userService}")
 	UserService uService;
 
+
 	@ManagedProperty(value = "#{loggedUserBean}")
 	LoggedUserBean loggedUserBean;
+	
+	@ManagedProperty(value = "#{shqyrtuesBean}")
+	ShqyrtuesBean shqyrtuesBean;
+	
+	@ManagedProperty(value = "#{autorService}")
+	AutorService autorService;
+	
+	@ManagedProperty(value = "#{shqyrtuesService}")
+	ShqyrtuesService shqyrtuesService;
+
+	@ManagedProperty(value = "#{autorBean}")
+	AutorBean autorBean;
+
 
 	private static Logger log = Logger.getLogger(AuthentikimBean.class);
 	
@@ -70,6 +88,32 @@ public class AuthentikimBean {
 	public void setLoggedUserBean(LoggedUserBean loggedUserBean) {
 		this.loggedUserBean = loggedUserBean;
 	}
+	public ShqyrtuesBean getShqyrtuesBean() {
+		return shqyrtuesBean;
+	}
+	public void setShqyrtuesBean(ShqyrtuesBean shqyrtuesBean) {
+		this.shqyrtuesBean = shqyrtuesBean;
+	}
+	public AutorService getAutorService() {
+		return autorService;
+	}
+	public void setAutorService(AutorService autorService) {
+		this.autorService = autorService;
+	}
+	public AutorBean getAutorBean() {
+		return autorBean;
+	}
+	public void setAutorBean(AutorBean autorBean) {
+		this.autorBean = autorBean;
+	}
+	public ShqyrtuesService getShqyrtuesService() {
+		return shqyrtuesService;
+	}
+	public void setShqyrtuesService(ShqyrtuesService shqyrtuesService) {
+		this.shqyrtuesService = shqyrtuesService;
+	}
+	
+	
 	
 	public String authentikim() {
 		UserDto userDto;
@@ -78,16 +122,33 @@ public class AuthentikimBean {
 			HashSaltedPassword hashCheck = new HashSaltedPassword();
 			
 				if(userDto.getPassword().equals(hashCheck.hashGenerate(password, userDto.getSalt()))) {
-					loggedUserBean.setLoggedUser(userDto);
+					
 					credentialsKey = false;
 					log.info("Login successful");
 					switch (userDto.getKategoria()) {
 					case "admin":
+						loggedUserBean.setLoggedUser(userDto);
 						return ("admin/faqja1.xhtml?faces-redirect=true");
 					case "autor":
-						return ("autor_res/faqja1.xhtml?faces-redirect=true");						
+						AutorDto autorDto = autorService.getAutor(userDto.getEmail());
+						if (userDto.getRegisterStatus()==0) {
+							loggedUserBean.setTemporaryLoggedUser(userDto);
+							return ("autor_res/perfundimRegjistrimi.xhtml?faces-redirect=true");
+						}else {
+							loggedUserBean.setLoggedUser(userDto);
+							loggedUserBean.setLoggedAutor(autorDto);
+							return ("autor_res/faqja1.xhtml?faces-redirect=true");
+						}
 					case "shqyrtues":
-						return ("shqyrtues_res/faqja1.xhtml?faces-redirect=true");
+						ShqyrtuesDto shqyrtuesDto = shqyrtuesService.getShqyrtues(userDto.getEmail());
+						if (userDto.getRegisterStatus()==0) {
+							loggedUserBean.setTemporaryLoggedUser(userDto);
+							return ("shqyrtues_res/perfundimRegjistrimi.xhtml?faces-redirect=true");
+						}else {
+							loggedUserBean.setLoggedUser(userDto);
+							loggedUserBean.setLoggedShqyrtues(shqyrtuesDto);
+							return ("shqyrtues_res/faqja1.xhtml?faces-redirect=true");
+						}
 					default:
 						return ("login.xhtml?faces-redirect=true");
 					}

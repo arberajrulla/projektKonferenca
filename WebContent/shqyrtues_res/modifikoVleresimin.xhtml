@@ -1,0 +1,251 @@
+<!DOCTYPE HTML>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="kryesore.xhtml"
+     			xmlns:h="http://java.sun.com/jsf/html"
+      			xmlns:f="http://java.sun.com/jsf/core"
+      			xmlns:p="http://primefaces.org/ui"
+                xmlns:utils="http://xmlns.jcp.org/jsf/composite/utils">
+                
+	<ui:define name="title">Modifiko Vleresimin</ui:define>
+	 
+    <ui:define name="content">
+
+  
+
+<h:form >
+
+	<div style="margin: 50px 100px; padding: 30px;" class="backgroundLayer loginWhite" >
+	
+    	<div class="row">
+    	
+    		<div class="col-md-2 centerDivAutorPanel" >
+    			<p:graphicImage  style="width: 90%;
+  						height:auto; margin:10px; border-radius: 20%;" name="/uploads/artikullPics/#{shqyrtuesBean.shqyrtuesHolderBean.vleresimEdit.artikullPerShqyrtuesin.docPicture}" />    		
+    		</div>
+    		<div class="col-md-2" >
+    		    <div class="row" >
+					<div class="col-md-12">
+						<h:outputText styleClass="titujTextShq3" value="Titulli" /><br/>
+						<h:outputText styleClass="contentTextShq3" value="#{shqyrtuesBean.shqyrtuesHolderBean.vleresimEdit.artikullPerShqyrtuesin.titulli}" /><br/><br/>
+						<h:outputText styleClass="titujTextShq3" value="Dokumenti Elektronik" /><br/>
+						<h:outputText styleClass="contentTextShq3" value="#{shqyrtuesBean.shqyrtuesHolderBean.vleresimEdit.artikullPerShqyrtuesin.dokumentiElektronik}" /><br/><br/>
+						<h:outputText styleClass="titujTextShq3" value="Kontakt" /><br/>
+						<h:outputText styleClass="contentTextShq3" value="#{shqyrtuesBean.shqyrtuesHolderBean.vleresimEdit.artikullPerShqyrtuesin.kontakt}" /><br/><br/>
+						
+						
+					</div>
+				</div>  		    		
+    		</div>
+    		<div class="col-md-2" >
+    		    <div class="row" >
+					<div class="col-md-12">
+						<h:outputText styleClass="titujTextShq3" value="Autoret" /><br/>
+						<ui:repeat value="#{shqyrtuesBean.shqyrtuesHolderBean.vleresimEdit.listaAutorPerArtikullShqyrtues}" var="autorPerArtikull" >
+							<h:outputText class="contentText3" value="#{autorPerArtikull.emri} #{autorPerArtikull.mbiemri}" /><br/>
+						</ui:repeat>
+						
+					</div>
+				</div>  		    		
+    		</div>
+    		<div class="col-md-4" >
+				<div class="row " style="height: 100%;">
+
+							<div class="col-md-12" align="center">		
+									<h:outputText styleClass="titujTextShq3" value="Abstrakti" /><br/>
+									<h:outputText styleClass="contentTextShq3" value="#{shqyrtuesBean.shqyrtuesHolderBean.vleresimEdit.artikullPerShqyrtuesin.abstrakti}" /><br/><br/>
+								
+							</div>
+	
+				</div>
+    		</div>
+
+			
+			
+			<div class="col-md-2 centerDivAutorPanel" align="center"
+						>
+						<h:form >
+						<div class="row">
+							<div class="col-md-12" align="center"
+								>
+								<h:commandLink class="fontiOR textColor linkHov"
+									immediate="true" value="Shfaq dokumentin e plote"
+									update=":shikoArtikullDialog:dialogpdf"
+									onclick="PF('panelPerDokumentin').show()" />
+
+							</div>
+
+						</div>
+						</h:form>
+
+					</div>
+
+				</div>
+    
+
+        <hr color="white" width="80%"/>
+        
+        
+        <div class="row" align="center" >
+        	<div class="col-md-3 vleresimetPerArtikullinTimRepeatBottom">
+        		<h:outputText styleClass="vleresimeTextStars" value="Origjinaliteti" />
+        		<p:rating value="#{shqyrtuesBean.shqyrtuesHolderBean.vleresimEdit.origjinaliteti}" stars="10" cancel="false"/>
+        	</div>
+        	<div class="col-md-3 vleresimetPerArtikullinTimRepeatBottom">
+        		<h:outputText styleClass="vleresimeTextStars" value="Kuptueshmeria" />
+        		<p:rating value="#{shqyrtuesBean.shqyrtuesHolderBean.vleresimEdit.kuptueshmeria}" stars="10" cancel="false"/>
+        	</div>
+        	<div class="col-md-3 vleresimetPerArtikullinTimRepeatBottom">
+        		<h:outputText styleClass="vleresimeTextStars" value="Merita Teknike" />
+        		<p:rating value="#{shqyrtuesBean.shqyrtuesHolderBean.vleresimEdit.meritaTeknike}" stars="10" cancel="false"/>
+        	</div>
+        	<div class="col-md-3 vleresimetPerArtikullinTimRepeatBottom">
+        		<h:outputText styleClass="vleresimeTextStars" value="Perkatesi Konference" />
+        		<p:rating value="#{shqyrtuesBean.shqyrtuesHolderBean.vleresimEdit.perkatesiKonference}" stars="10" cancel="false"/>
+        	</div>
+        	
+        </div>
+        
+        <hr color="white" width="80%"/>
+        <div class="row" align="center" >
+			<div class="col-md-12 vleresimetPerArtikullinTimRepeatBottom" >
+				<div class="row centerDivAutorPanel" style="height: 100%;">
+
+							<div class="col-md-12" align="center">		
+									<h:outputText styleClass="titujTextShq3" value="Rekomandimi im" /><br/><br/>
+									<p:inputTextarea rows="5" cols="40" styleClass="hinputtextCustom"
+										style="background-color: white !important; color:black !important; text-align: left !important; font-family:oswaldEL !important;
+										font-size: 18px; !important"
+										counter="karakteretLast" maxlength="1000" 
+										counterTemplate="{0} karaktere te mbetura." 
+										autoResize="false" 
+										value="#{shqyrtuesBean.shqyrtuesHolderBean.vleresimEdit.rekomandim}" 
+										/>
+							<br />
+    					<h:outputText styleClass="contentText3" id="karakteretLast" />
+								<br/><br/>
+							</div>
+	
+				</div>
+    		</div>
+        </div>
+        
+         <div class="row" align="center" style=" margin-top: -20px">
+			<div class="col-md-12 vleresimetPerArtikullinTimRepeatBottom" >
+				<div class="row centerDivAutorPanel" style="height: 100%;">
+        		<h:panelGrid style="width: auto;" id = "gridFushatVleresime" columns="1" 
+            				cellpadding = "10" cellspacing="1" >
+					<p:commandButton actionListener="#{shqyrtuesBean.modifikoVleresimin}" value="Ruaj ndryshimet" style="width:100% !important;" ></p:commandButton>
+
+    			</h:panelGrid>
+        </div>
+        </div>
+        
+     </div>   
+         
+  </div>   
+  
+	
+</h:form>
+
+
+
+
+<h:form id="shikoArtikullDialog">
+		<p:dialog width="100%" 
+					height="90%" showEffect="fade" 
+					hideEffect="fade" id="dialogpdf" 
+					header="Dokumenti!" 
+					widgetVar="panelPerDokumentin" 
+					resizable="false" >
+
+				<p:media id="panelipdf" value="/resources/uploads/artikullDocs/#{shqyrtuesBean.shqyrtuesHolderBean.vleresimEdit.artikullPerShqyrtuesin.docName}"
+					player="pdf" width="100%" height="600px">
+					<h:outputLink value="/resources/uploads/artikullDocs/#{shqyrtuesBean.shqyrtuesHolderBean.vleresimEdit.artikullPerShqyrtuesin.docName}">
+					Kliko per te shkarkuar dokumentin.</h:outputLink>
+				</p:media>
+
+				<h:panelGroup
+					style="display:block; text-align:center; margin-top:10px;">
+					<p:commandButton value="Mbyll" oncomplete="PF('panelPerDokumentin').hide()">
+					</p:commandButton>
+				</h:panelGroup>
+
+		</p:dialog>  
+</h:form>
+
+
+
+
+
+
+
+
+		<h:form id="formaDialogConfirmed">
+			<p:dialog showEffect="fade" hideEffect="fade" id="dialogConfirm"
+				header="Sukses!" widgetVar="dialogSuccess" resizable="false">
+				<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true"
+						showIcon="false">
+						<p:autoUpdate />
+					</p:messages>
+
+					<h:panelGroup
+						style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll"
+							onclick="PF('dialogSuccess').hide()">
+						</p:commandButton>
+					</h:panelGroup>
+
+				</p:outputPanel>
+			</p:dialog>
+
+
+			<p:dialog showEffect="fade" hideEffect="fade" id="dialogGabim"
+				header="Gabim!" widgetVar="dialogError" resizable="false">
+				<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true"
+						showIcon="false">
+						<p:autoUpdate />
+					</p:messages>
+
+					<h:panelGroup
+						style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" onclick=" PF('dialogError').hide()">
+						</p:commandButton>
+					</h:panelGroup>
+
+				</p:outputPanel>
+			</p:dialog>
+
+
+			<p:dialog showEffect="fade" hideEffect="fade" id="dialogCust"
+				header="Mesazh!" widgetVar="dialogCustom" resizable="false">
+				<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true"
+						showIcon="false">
+						<p:autoUpdate />
+					</p:messages>
+
+					<h:panelGroup
+						style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll"
+							onclick=" PF('dialogCustom').hide()">
+						</p:commandButton>
+					</h:panelGroup>
+
+				</p:outputPanel>
+			</p:dialog>
+
+		</h:form>
+
+
+
+
+
+
+
+
+    </ui:define>
+
+</ui:composition>

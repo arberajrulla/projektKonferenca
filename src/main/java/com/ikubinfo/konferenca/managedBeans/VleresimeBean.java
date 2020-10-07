@@ -43,6 +43,8 @@ public class VleresimeBean implements Serializable{
 	private Map<String,Integer> allArtikujtDropdownList = new HashMap<>();
  	
 
+
+
 	@PostConstruct
 	public void init() {
 		fillAllVleresimeList();
@@ -121,10 +123,13 @@ public class VleresimeBean implements Serializable{
 			allArtikujtDropdownList.put(artikullDto.getTitulli(), artikullDto.getArtikullId());
 		}
 	}
+	
+
+	
 	public void fillAllVleresimeList() {
 		allVleresimeList = vleresimeService.getShqyrtuesArtikullList();
 	}
-	
+
 	
 	public void addVleresim() {
 		log.info("Message from vleresim " + newVleresim.getMeritaTeknike());

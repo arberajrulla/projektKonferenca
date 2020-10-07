@@ -18,6 +18,7 @@ public class UserConverter {
 		userDto.setKategoria(u.getKategoria());
 		userDto.setNrcel(u.getNrcel());
 		userDto.setSalt(u.getSalt());
+		userDto.setRegisterStatus(u.getRegisterStatus());
 		return userDto;
 	}
 	
@@ -31,7 +32,7 @@ public class UserConverter {
 		user.setPassword(uDto.getPassword());
 		user.setKategoria(uDto.getKategoria());
 		user.setNrcel(uDto.getNrcel());
-		
+		user.setRegisterStatus(uDto.getRegisterStatus());
 		return user;
 	}
 	
@@ -47,6 +48,7 @@ public class UserConverter {
 		user.setSalt(salt);
 		user.setKategoria(uDto.getKategoria());
 		user.setNrcel(uDto.getNrcel());
+		user.setRegisterStatus(0);
 		return user;
 	}	
 	
@@ -62,8 +64,18 @@ public class UserConverter {
 		user.setSalt(uDto.getSalt());
 		user.setKategoria(uDto.getKategoria());
 		user.setNrcel(uDto.getNrcel());
-		
+		user.setRegisterStatus(uDto.getRegisterStatus());
 		return user;
 	}
+	
+	public static User userPasswordReturn(UserDto uDto) {
+		User user = new User();
+		HashSaltedPassword encrypt = new HashSaltedPassword();
+		byte[] salt = encrypt.createSalt();
+		uDto.setPassword(encrypt.hashGenerate(uDto.getPassword(), salt));
+		uDto.setSalt(salt);
+		return user;
+	}
+	
 	
 }

@@ -73,9 +73,6 @@ public class VleresimeServiceImpl implements VleresimeService{
 
 	@Transactional
 	public void updateVleresim(ShqyrtuesArtikullDto vleresim) {
-		if (vleresimCheck(vleresim.getShqrtid(), vleresim.getArid())) {
-			UtilMessages.addMessageError(null, "Error, Shqyrtuesi e ka vleresuar njehere kete artikull!");
-		}else {
 			try {
 				shqyrtuesArtikullDao.updateShqyrtuesArtikull(vleresimeConverter.toShqyrtuesArtikull(vleresim)); 
 				log.info("Service updated Vleresim successfully!");
@@ -84,7 +81,7 @@ public class VleresimeServiceImpl implements VleresimeService{
 				log.error("Service couldn't update the Vleresim!");
 				UtilMessages.addMessageError(null, "Error, modifikimi nuk u krye!");
 			}
-		}
+		
 	}
 
 	@Override
@@ -104,5 +101,22 @@ public class VleresimeServiceImpl implements VleresimeService{
 			return true;
 		}
 	}
+	
+	@Transactional
+	public List<ShqyrtuesArtikullDto> getShqyrtuesArtikullListForShqyrtues() {
+		List<ShqyrtuesArtikullDto> listaVleresimeDto = new ArrayList<ShqyrtuesArtikullDto>();
+		try {		
+			
+			for(ShqyrtuesArtikull shqyrtuesArtikull : shqyrtuesArtikullDao.getAllShqyrtuesArtikull()) {
+				listaVleresimeDto.add(vleresimeConverter.toShqyrtuesArtikullDtoForShqyrtuesConverter(shqyrtuesArtikull));
+			}
+			return listaVleresimeDto;
+		} catch (Exception e) {
+			log.error("Something went wrong! Couldn't convert ShqyrtuesArtikull list to DTO", e);
+			return new ArrayList<ShqyrtuesArtikullDto>();
+		}
+	}
+	
+	
 
 }

@@ -7,7 +7,8 @@ import com.ikubinfo.konferenca.dto.AutorDto;
 
 public interface AutorService {
 	List<AutorDto> getAllAutore();
-
+	AutorDto getAutor(String email);
+	AutorDto getAutorByArtikullId(int artikullId);
 	void addAutor(AutorDto newAutor);
 	void deleteAutor(List<AutorDto> selectedAutor);
 	void updateAutor(AutorDto autorDto);

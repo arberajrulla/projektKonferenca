@@ -73,9 +73,6 @@ public class UserServiceImpl implements UserService{
 
 	@Transactional
 	public void updateUser(UserDto userDto) {
-		if (userCheck(userDto.getEmail(), userDto.getUsername())) {
-			UtilMessages.addMessageError(null, "Error, Perdoruesi me kete Username ose E-mail ekziston!");
-		}else {
 			try {
 				userDao.updateUser(UserConverter.userUpdate(userDto)); 
 				log.info("Service updated user successfully!");
@@ -84,7 +81,7 @@ public class UserServiceImpl implements UserService{
 				log.error("Service couldn't update the user!", e);
 				UtilMessages.addMessageError(null, "Error, modifikimi nuk u krye!");
 			}
-		}
+		
 	}
 
 
@@ -116,5 +113,32 @@ public class UserServiceImpl implements UserService{
 			UtilMessages.addMessageError(null, "Error, gjate kontrollit, ju lutemi provoni perseri!");
 			return true;
 		}
+	}
+
+	@Override
+	public UserDto getSingleUser(String email) {
+		UserDto userDto = new UserDto();
+		try {
+			userDto = UserConverter.toUserDto(userDao.getSingleUser(email));
+			log.info("Service retrieved user successfully!");
+			return userDto;
+		} catch (Exception e) {
+			log.error("Service couldn't retrieve the User!", e);
+			UtilMessages.addMessageError(null, "Error, ky perdorues nuk ekziston!");
+			return new UserDto();
+		}
+	}
+
+	@Override
+	public void recoverUserPassword(UserDto userDto) {
+		try {
+			userDao.updateUser(UserConverter.userPasswordReturn(userDto)); 
+			log.info("Service recovered user password successfully!");
+			UtilMessages.addMessageSuccess("Sukses!", "Fjalekalimi u ruajt me sukses!");
+		} catch (Exception e) {
+			log.error("Service couldn't update the user password!", e);
+			UtilMessages.addMessageError(null, "Error, modifikimi nuk u krye!");
+		}
+		
 	}
 }

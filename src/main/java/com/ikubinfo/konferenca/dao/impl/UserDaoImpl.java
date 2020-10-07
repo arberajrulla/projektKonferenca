@@ -126,4 +126,15 @@ public class UserDaoImpl implements UserDao {
 			}
 			return false;
 	}
+	
+	
+
+	@Override
+	public User getSingleUser(String email) {
+		log.info("Getting user " + email + " from DB!");
+		TypedQuery<User> checkQuery = entityManager
+				.createQuery("SELECT user FROM User user WHERE user.email = :email", User.class);
+		User u = checkQuery.setParameter("email", email).getSingleResult();
+		return u;
+	}
 }

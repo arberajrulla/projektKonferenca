@@ -9,11 +9,17 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.validation.constraints.NotNull;
+
 import org.apache.log4j.Logger;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.model.file.UploadedFile;
+
 import com.ikubinfo.konferenca.dto.ArtikullDto;
 import com.ikubinfo.konferenca.dto.AutorDto;
+import com.ikubinfo.konferenca.dto.ShqyrtuesArtikullDto;
+import com.ikubinfo.konferenca.dto.UserDto;
 import com.ikubinfo.konferenca.service.ArtikullService;
 import com.ikubinfo.konferenca.service.AutorService;
 import com.ikubinfo.konferenca.utils.UtilMessages;
@@ -30,6 +36,9 @@ public class AutorBean implements Serializable{
 	
 	@ManagedProperty(value = "#{artikullService}")
 	ArtikullService artikullService;
+	
+	@ManagedProperty(value = "#{loggedUserBean}")
+	LoggedUserBean loggedUserBean;
 
 	private AutorDto newAutor = new AutorDto();
 	private AutorDto selectedAutor;
@@ -39,8 +48,9 @@ public class AutorBean implements Serializable{
 	private List<ArtikullDto> artikullListForNewAutor;
 	private Map<String,Integer> artikujDropdown = new HashMap<String, Integer>();
 	private Map<String,Integer> artikujDropdownModify = new HashMap<String, Integer>();
+	private int bashkAutoreCount;
 
-	
+
 	@PostConstruct
 	public void init() {
 		fillAutorList();
@@ -103,6 +113,24 @@ public class AutorBean implements Serializable{
 	public void setSelectedAutore(List<AutorDto> selectedAutore) {
 		this.selectedAutore = selectedAutore;
 	}
+	public Map<String, Integer> getArtikujDropdownModify() {
+		return artikujDropdownModify;
+	}
+	public void setArtikujDropdownModify(Map<String, Integer> artikujDropdownModify) {
+		this.artikujDropdownModify = artikujDropdownModify;
+	}
+	public LoggedUserBean getLoggedUserBean() {
+		return loggedUserBean;
+	}
+	public void setLoggedUserBean(LoggedUserBean loggedUserBean) {
+		this.loggedUserBean = loggedUserBean;
+	}
+	public int getBashkAutoreCount() {
+		return bashkAutoreCount;
+	}
+	public void setBashkAutoreCount(int bashkAutoreCount) {
+		this.bashkAutoreCount = bashkAutoreCount;
+	}
 
 	
 	public List<AutorDto> fillAutorList(){
@@ -153,5 +181,70 @@ public class AutorBean implements Serializable{
 		current.executeScript("PF('dialogAutorIRI').hide()");
 		current.executeScript("PF('dialogArtikullIRI').show()");
 	}
+	
+	
+	public void setFinishRegisterAsNewAutor() {
+		newAutor.setEmri(loggedUserBean.getTemporaryLoggedUser().getEmri());
+		newAutor.setMbiemri(loggedUserBean.getTemporaryLoggedUser().getMbiemri());
+		newAutor.setEmailId(loggedUserBean.getTemporaryLoggedUser().getEmail());
+	}
+	
+	public String finishAutorRegistration() {
+		setFinishRegisterAsNewAutor();
+		addAutor();
+		loggedUserBean.temporaryToPermanentLoggedUser();
+		loggedUserBean.getLoggedUser().setRegisterStatus(1);
+		loggedUserBean.updateLoggedUserDetails();
+		loggedUserBean.setLoggedAutor(newAutor);
+		return "/autor_res/faqja1.xhtml?faces-redirect=true";
+	}
+	
+	public double averagePoints() {
+		double shuma = 0;
+		int counter = 0;
+		if ((loggedUserBean.getLoggedAutor()!=null) 
+				&& !loggedUserBean.getLoggedAutor().getVleresimeDto().isEmpty()) {
+			for(ShqyrtuesArtikullDto shqyrtuesArtikullDto: loggedUserBean.getLoggedAutor().getVleresimeDto()) {
+				double avgTemp = 0;
+				avgTemp += shqyrtuesArtikullDto.getOrigjinaliteti();
+				avgTemp += shqyrtuesArtikullDto.getKuptueshmeria();
+				avgTemp += shqyrtuesArtikullDto.getMeritaTeknike();
+				avgTemp += shqyrtuesArtikullDto.getPerkatesiKonference();
+				shuma += avgTemp/4;
+				counter++;
+			}	
+			
+			
+		}
+
+		if(counter > 0) {
+			return Math.round(shuma/counter * 1) / 1.0;
+		}else {
+			return 0;
+		}
+	}
+	
+	public int averageStars() {
+		return (int)Math.round(averagePoints());
+	}
+	
+	
+	public List<AutorDto> bashkAutore(){
+		int countBashkautore=0;
+		List<AutorDto> autorDtoBashkautore = new ArrayList<>();
+
+		if (!loggedUserBean.getLoggedAutor().getArtikullDto().getAutorDtoListForArtikull().isEmpty() && loggedUserBean.getLoggedAutor()!=null) {
+			for(AutorDto au : loggedUserBean.getLoggedAutor().getArtikullDto().getAutorDtoListForArtikull()) {
+				if(!(au.getEmailId().equals(loggedUserBean.getLoggedAutor().getEmailId()))) {
+					autorDtoBashkautore.add(au);
+					countBashkautore++;
+				}
+			}
+		}
+
+		bashkAutoreCount = countBashkautore;
+		return autorDtoBashkautore;
+	}
+	
 	
 }

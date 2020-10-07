@@ -1,6 +1,7 @@
 package com.ikubinfo.konferenca.managedBeans;
 
-import java.util.EmptyStackException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -8,13 +9,15 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
 import org.apache.log4j.Logger;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.primefaces.PrimeFaces;
-import org.primefaces.event.RowEditEvent;
 
+import com.ikubinfo.konferenca.dto.AutorDto;
+import com.ikubinfo.konferenca.dto.ShqyrtuesDto;
 import com.ikubinfo.konferenca.dto.UserDto;
+import com.ikubinfo.konferenca.service.ArtikullService;
+import com.ikubinfo.konferenca.service.AutorService;
+import com.ikubinfo.konferenca.service.ShqyrtuesService;
 import com.ikubinfo.konferenca.service.UserService;
 import com.ikubinfo.konferenca.utils.HashSaltedPassword;
 import com.ikubinfo.konferenca.utils.UtilMessages;
@@ -28,8 +31,23 @@ public class LoggedUserBean {
 	@ManagedProperty (value = "#{userService}")
 	UserService userService;
 
+	@ManagedProperty (value = "#{autorService}")
+	AutorService autorService;
+
+	@ManagedProperty (value = "#{shqyrtuesService}")
+	ShqyrtuesService shqyrtuesService;
+	
+	@ManagedProperty (value = "#{artikullService}")
+	ArtikullService artikullService;
+
 	private UserDto loggedUser;
 	
+	private UserDto temporaryLoggedUser;
+	
+	private AutorDto loggedAutor;
+	
+	private ShqyrtuesDto loggedShqyrtues;
+
 	@NotEmpty(message = "Fjalekalimi nuk mund te jete bosh!")
 	@Size(min=6, max=20, message = "Fjalekalimi duhet te kete nga 6 deri 20 karaktere!")
 	private String oldPassword;
@@ -74,18 +92,85 @@ public class LoggedUserBean {
 	public void setOldPassword(String oldPassword) {
 		this.oldPassword = oldPassword;
 	}
+	public UserDto getTemporaryLoggedUser() {
+		return temporaryLoggedUser;
+	}
+	public void setTemporaryLoggedUser(UserDto temporaryLoggedUser) {
+		this.temporaryLoggedUser = temporaryLoggedUser;
+	}
+	public AutorDto getLoggedAutor() {
+		return loggedAutor;
+	}
+	public void setLoggedAutor(AutorDto loggedAutor) {
+		this.loggedAutor = loggedAutor;
+	}
+	public ShqyrtuesDto getLoggedShqyrtues() {
+		return loggedShqyrtues;
+	}
+	public void setLoggedShqyrtues(ShqyrtuesDto loggedShqyrtues) {
+		this.loggedShqyrtues = loggedShqyrtues;
+	}
+	public AutorService getAutorService() {
+		return autorService;
+	}
+	public void setAutorService(AutorService autorService) {
+		this.autorService = autorService;
+	}
+	public ShqyrtuesService getShqyrtuesService() {
+		return shqyrtuesService;
+	}
+	public void setShqyrtuesService(ShqyrtuesService shqyrtuesService) {
+		this.shqyrtuesService = shqyrtuesService;
+	}
+	public ArtikullService getArtikullService() {
+		return artikullService;
+	}
+	public void setArtikullService(ArtikullService artikullService) {
+		this.artikullService = artikullService;
+	}
+	
+	
+	
+	public void temporaryToPermanentLoggedUser() {
+		loggedUser=temporaryLoggedUser;
+	}
+	
 	
 	public void logout() {
+		this.loggedAutor = null;
 		this.loggedUser = null;
+		this.loggedShqyrtues = null;
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        //return "/home.xhtml?faces-redirect=true";
 	}
 	
     public void updateLoggedUserDetails() {
 		log.info("Preparing to update Logged user details");
 		userService.updateUser(loggedUser);
-			//return("faqja1.xhtml?faces-redirect=true");
     }
+    
+    public void updateLoggedAutorDetails() {
+    	loggedAutor.setEmri(loggedUser.getEmri());
+    	loggedAutor.setMbiemri(loggedUser.getMbiemri());
+    	loggedAutor.setEmailId(loggedUser.getEmail());
+    	loggedAutor.setArtikullId(loggedAutor.getArtikullDto().getArtikullId());
+    	autorService.updateAutor(loggedAutor);
+    	userService.updateUser(loggedUser);
+    }
+    
+    public void updateLoggedAutorArtikull() {
+    	artikullService.updateArtikull(loggedAutor.getArtikullDto());
+    }
+    
+    
+	/* Shqyrtues panel methods */
+    
+    public void updateLoggedShqyrtuesDetails() {
+    	loggedShqyrtues.setEmri(loggedUser.getEmri());
+    	loggedShqyrtues.setMbiemri(loggedUser.getMbiemri());
+    	loggedShqyrtues.setIdEmail(loggedUser.getEmail());
+    	shqyrtuesService.updateLoggedShqyrtues(loggedShqyrtues);
+    	userService.updateUser(loggedUser);
+    }    
     
     
     public void changePassword() {
@@ -109,5 +194,30 @@ public class LoggedUserBean {
     		UtilMessages.addMessageError("Error! ", "Fjalekalimi i vjeter nuk eshte i sakte!");
     	}
     }
+    
+	public String deleteLoggedUser() {
+		List<UserDto> lst = new ArrayList<UserDto>();
+		lst.add(loggedUser);
+		userService.deleteUser(lst);
+		this.loggedUser = null;
+		
+		if(loggedAutor!=null) {
+			List<AutorDto> lstA = new ArrayList<AutorDto>();
+			lstA.add(loggedAutor);
+			autorService.deleteAutor(lstA);
+			this.loggedAutor = null;
+		}
+		
+		if(loggedShqyrtues!=null) {
+			List<ShqyrtuesDto> lstS = new ArrayList<ShqyrtuesDto>();
+			lstS.add(loggedShqyrtues);
+			shqyrtuesService.deleteShqyrtues(lstS);
+			this.loggedShqyrtues = null;
+		}
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return("/login.xhtml?faces-redirect=true");
+	}
+
+    
 }
 

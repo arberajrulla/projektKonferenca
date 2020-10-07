@@ -59,4 +59,12 @@ public class ShqyrtuesDaoImpl implements ShqyrtuesDao {
 		}
 		return false;
 	}
+
+	@Override
+	public Shqyrtues getShqyrtues(String emailId) {
+		log.info("Getting shqyrtues " + emailId + " from DB!");
+		TypedQuery<Shqyrtues> fetchQuery = entityManager.createQuery("SELECT shqyrtues FROM Shqyrtues shqyrtues WHERE shqyrtues.idEmail = :emailId", Shqyrtues.class);
+		Shqyrtues shqyrtues = fetchQuery.setParameter("emailId", emailId).getSingleResult();
+		return shqyrtues;
+	}
 }

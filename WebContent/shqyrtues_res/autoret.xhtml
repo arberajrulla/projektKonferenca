@@ -1,0 +1,150 @@
+<!DOCTYPE HTML>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="kryesore.xhtml"
+     			xmlns:h="http://java.sun.com/jsf/html"
+      			xmlns:f="http://java.sun.com/jsf/core"
+      			xmlns:p="http://primefaces.org/ui"
+                xmlns:utils="http://xmlns.jcp.org/jsf/composite/utils"
+                xmlns:b="http://bootsfaces.net/ui">
+                
+	<ui:define name="title">Autoret</ui:define>
+	 
+	 
+    <ui:define name="content">
+    
+
+<h:form >
+
+<ui:repeat value="#{autorBean.allAutorList}" var="autor">
+	<div style="margin: 30px 60px; padding: 10px;" class="backgroundLayer loginWhite">
+	<hr color="white" width="80%"/>
+		<div class="row" align="center" >
+		
+			<div class="col-md-1" />
+			<div class="col-md-2 centerDivAutorPanel"  >
+					<p:graphicImage height="120px" style="margin:20px; border-radius: 20%;" name="/uploads/artikullPics/Pgg4xQAAwu.jpg" />
+			</div>
+			
+			
+			<div class="col-md-1" >
+				<div class="row centerDivAutorPanel" style=" height: 100%;">
+							<div class="col-md-12">
+									<h:outputText styleClass="titujText2" value="Emri" /><br/>
+									<h:outputText styleClass="contentText2" value="#{autor.emri}" />
+							</div>
+							<div class="col-md-12">
+									<h:outputText styleClass="titujText2" value="Mbiemri" /><br/>
+									<h:outputText styleClass="contentText2" value="#{autor.mbiemri}" /><br/><br/>
+							</div>
+				</div>
+			</div>
+
+
+			<div class="col-md-2">
+				<div class="row centerDivAutorPanel" style="height: 100%;">
+
+							<div class="col-md-12" align="center">		
+									<h:outputText styleClass="titujText2" value="Kontakt" /><br/>
+									<h:outputText styleClass="contentText2" value="#{autor.emailId}" /><br/><br/>
+							</div>
+	
+				</div>
+			
+			
+			</div>
+			
+			
+			
+			<hr style=" border-left:1px solid hsla(200, 10%, 50%,100); height:20vh;"/>
+			<div class="col-md-4">
+				<div class="row centerDivAutorPanel" style="height: 100%;">
+
+							<div class="col-md-12" align="center">		
+									<h:outputText styleClass="titujText" value="Artikulli" /><br/>
+									<h:outputText styleClass="contentText" value="#{autor.artikullName}" /><br/><br/>
+							</div>
+	
+				</div>
+			
+			
+			</div>
+			<div class="col-md-1"/>
+		</div>
+		
+		
+		<hr color="white" width="80%"/>
+			
+		
+	</div>	
+	
+</ui:repeat>	
+	
+</h:form>
+
+
+
+
+
+
+
+
+
+
+			
+<h:form id="formaDialogConfirmed">
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogConfirm" header="Sukses!" widgetVar="dialogSuccess" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" onclick="PF('dialogSuccess').hide()">
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>
+</p:dialog>  
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogGabim" header="Gabim!" widgetVar="dialogError" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+            	
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" 
+								onclick=" PF('dialogError').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>	
+</p:dialog>  
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogCust" header="Mesazh!" widgetVar="dialogCustom" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+            	
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" 
+								onclick=" PF('dialogCustom').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>	
+</p:dialog>  
+
+
+</h:form>
+
+
+</ui:define>
+
+</ui:composition>

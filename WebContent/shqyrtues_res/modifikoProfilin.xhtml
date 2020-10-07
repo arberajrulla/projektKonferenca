@@ -1,0 +1,164 @@
+<!DOCTYPE HTML>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="kryesore.xhtml"
+     			xmlns:h="http://java.sun.com/jsf/html"
+      			xmlns:f="http://java.sun.com/jsf/core"
+      			xmlns:p="http://primefaces.org/ui"
+                xmlns:utils="http://xmlns.jcp.org/jsf/composite/utils">
+                
+	<ui:define name="title">Modifiko Profilin</ui:define>
+	 
+    <ui:define name="content">
+
+
+<div align="center" class="loginWhite" style="margin:50px 30%;" >
+			<br/><br/>
+            <h:outputText class="fontiOM textColor" value="JU LUTEMI TE PLOTESONI TE GJITHA FUSHAT"/>
+			<br/><br/>
+			
+
+<h:form class="row" style=" display: inline-block;" >
+	
+        <h:panelGrid style="width: auto;" id = "gridFushat" columns="3" 
+            	cellpadding = "10" cellspacing="1">
+            	
+            	
+            	<h:outputLabel class="fontiOSB textColor" value="Emri" />
+            	<p:inputText styleClass="inputFushat" 
+            					style="background-color:white; color:grey" 
+            					id="fushaEmriR" 
+            					value="#{loggedUserBean.loggedUser.emri}"
+            					>          			
+            	</p:inputText>
+            	<h:message for="fushaEmriR" styleClass="fontiOL" style="color:red; margin:8px;"/>
+            	
+				
+            	
+            	
+            	<h:outputLabel class="fontiOSB textColor" value="Mbiemri"  />
+            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey" 
+            					id="fushaMbiemriR" value="#{loggedUserBean.loggedUser.mbiemri}">          			
+            	</p:inputText>
+            	<h:message for="fushaMbiemriR" styleClass="fontiOL" style="color:red; margin:8px;"/>
+            	
+            	
+            	<h:outputLabel class="fontiOSB textColor" value="E-mail"  />
+            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey" 
+            					id="fushaEmailR" value="#{loggedUserBean.loggedUser.email}" >          			
+            	</p:inputText>
+            	<h:message for="fushaEmailR" styleClass="fontiOL" style="color:red; margin:8px;"/>
+            	     	 
+            	
+            	<h:outputLabel class="fontiOSB textColor" value="Username"  />
+            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey" 
+            			id="fushaIdR" value="#{loggedUserBean.loggedUser.username}"
+            			>
+            	</p:inputText>
+            	<h:message for="fushaIdR" styleClass="fontiOL" style="color:red; margin:8px;"/>
+            	
+
+            	<h:outputLabel class="fontiOSB textColor" value="Numer kontakti"  />
+            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey" 
+            				id="fushaNrR" value="#{loggedUserBean.loggedUser.nrcel}" >          			
+            	</p:inputText>
+            	<h:message for="fushaNrR" styleClass="fontiOL" style="color:red; margin:8px;"/>
+            	        	
+            
+            	<f:facet name="footer">
+               		<h:panelGroup style="display:block; text-align:center">
+                  		<p:commandButton class="fontiOL btn btn-primary" value="Ruaj"
+                  			 actionListener="#{loggedUserBean.updateLoggedShqyrtuesDetails}" 
+                  			 process="@form" update="@form" >
+                  			 </p:commandButton>
+               		</h:panelGroup>
+            	</f:facet>
+		
+         </h:panelGrid>
+	     <h:panelGroup style="display:block; text-align:center; margin: 20px 0px;">
+         		<p:commandLink class="fontiOL textColor linkHov" immediate="true"
+         				value="Fshi profilin tim!" action="#{loggedUserBean.deleteLoggedUser()}">
+         			<p:confirm header="Konfirmo" message="Kujdes, profili juaj do te fshihet pergjithmone!"/>
+         		</p:commandLink>                  		
+         </h:panelGroup>         
+         
+         
+         
+ <p:confirmDialog  id="konfirmoDialogFshirjeProfili" global="true" showEffect="fade" hideEffect="fade" >
+        <p:commandButton style="align:center;" value="Konfirmo" type="button" styleClass="ui-confirmdialog-yes" />
+        <p:commandButton style="align:center;" value="Kthehu" type="button" styleClass="ui-confirmdialog-no" />
+</p:confirmDialog>        
+         
+         
+         
+</h:form>
+</div>
+
+			
+
+
+			
+<h:form id="formaDialogConfirmed">
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogConfirm" header="Sukses!" widgetVar="dialogSuccess" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" onclick="PF('dialogSuccess').hide()">
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>
+</p:dialog>  
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogGabim" header="Gabim!" widgetVar="dialogError" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+            	
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" 
+								onclick=" PF('dialogError').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>	
+</p:dialog>  
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogCust" header="Mesazh!" widgetVar="dialogCustom" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+            	
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" 
+								onclick=" PF('dialogCustom').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>	
+</p:dialog>  
+
+
+</h:form>
+
+
+
+
+
+
+
+
+    </ui:define>
+
+</ui:composition>

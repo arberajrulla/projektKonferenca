@@ -1,9 +1,8 @@
 package com.ikubinfo.konferenca.dto;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import java.util.List;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 public class ShqyrtuesArtikullDto {
 
@@ -28,7 +27,31 @@ public class ShqyrtuesArtikullDto {
 	private String rekomandim;
 	private int vleresimId;
 	
+	private ShqyrtuesDto shqyrtuesPerVleresimin;
+	
+	private ArtikullDto artikullPerShqyrtuesin;
+	
+	private List<AutorDto> listaAutorPerArtikullShqyrtues;
+	
 
+	public List<AutorDto> getListaAutorPerArtikullShqyrtues() {
+		return listaAutorPerArtikullShqyrtues;
+	}
+	public void setListaAutorPerArtikullShqyrtues(List<AutorDto> listaAutorPerArtikullShqyrtues) {
+		this.listaAutorPerArtikullShqyrtues = listaAutorPerArtikullShqyrtues;
+	}
+	public ArtikullDto getArtikullPerShqyrtuesin() {
+		return artikullPerShqyrtuesin;
+	}
+	public void setArtikullPerShqyrtuesin(ArtikullDto artikullPerShqyrtuesin) {
+		this.artikullPerShqyrtuesin = artikullPerShqyrtuesin;
+	}
+	public ShqyrtuesDto getShqyrtuesPerVleresimin() {
+		return shqyrtuesPerVleresimin;
+	}
+	public void setShqyrtuesPerVleresimin(ShqyrtuesDto shqyrtuesPerVleresimin) {
+		this.shqyrtuesPerVleresimin = shqyrtuesPerVleresimin;
+	}
 	public int getVleresimId() {
 		return vleresimId;
 	}

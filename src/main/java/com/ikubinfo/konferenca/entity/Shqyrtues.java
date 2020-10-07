@@ -2,14 +2,14 @@ package com.ikubinfo.konferenca.entity;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name="shqyrtues")
@@ -30,10 +30,19 @@ public class Shqyrtues {
 	private String institucioni;
 	
 	
-	@OneToMany(mappedBy = "shqyrtuesVleresim", cascade=CascadeType.REMOVE) 
+	@OneToMany(mappedBy = "shqyrtuesVleresim", cascade= {CascadeType.REMOVE, CascadeType.MERGE}) 
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<ShqyrtuesArtikull> vleresime = new ArrayList<ShqyrtuesArtikull>();
 	
 	
+
+	public List<ShqyrtuesArtikull> getVleresime() {
+		return vleresime;
+	}
+
+	public void setVleresime(List<ShqyrtuesArtikull> vleresime) {
+		this.vleresime = vleresime;
+	}
 
 	public String getIdEmail() {
 		return idEmail;

@@ -7,7 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -38,11 +40,11 @@ public class User implements Serializable{
 	@Column(name = "nrcel")
 	private String nrcel;
 	
-	
 	@Column(name = "salt")
 	private byte[] salt;
 	
-	
+	@Column(name = "register_status")
+	private int registerStatus;
 	
 	
 	public byte[] getSalt() { return salt; }
@@ -104,6 +106,12 @@ public class User implements Serializable{
 
 	public void setNrcel(String nrcel) {
 		this.nrcel = nrcel;
+	}
+	public int getRegisterStatus() {
+		return registerStatus;
+	}
+	public void setRegisterStatus(int registerStatus) {
+		this.registerStatus = registerStatus;
 	}
 	
 }

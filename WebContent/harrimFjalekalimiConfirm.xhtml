@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+  <title>Ndryshim fjalekalimi - Konferenca X 2020</title>
+
+  	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
+	
+  <h:outputStylesheet library="css" name="styles.css"></h:outputStylesheet>
+  <h:outputStylesheet library="css" name="fonts.css"></h:outputStylesheet> 
+  <h:outputStylesheet library="css" name="primefaces_edit.css"></h:outputStylesheet>
+</h:head>
+
+
+<h:body>	
+	
+<div class="" style="padding: 0px 0px 30px 0px;">
+
+<div class="row" style="padding: 30px 50px 0px 70px; height: 100%;">
+	
+
+	<div class="col-md-6"  style="padding: 30px 50px 100px 50px; " >
+		<div class="row fallingStar" align="center" style=" background-color: yellow;">
+			<div class="fontiOL knf ">KONFERENCA&nbsp; X <br/>
+				<p class="fontiOEL" style="color:white; font-size: 27px;">2020 </p>
+			</div>
+		</div>
+	</div>
+
+	
+	
+	<div class="col-md-6"  style=" padding: 30px 50px 50px 50px; ">
+		<div class="row" style="padding: 0px 0px 20px 0px;">
+			<div class="col-md-3" ></div>
+			<div class="col-md-5"  style="padding: 4px 0px 0px 0px; " >
+
+			</div>
+			
+			<div class="col-md-3" >
+
+			</div>
+			<div class="col-md-1"></div>
+		</div>	
+		<br/>	
+			
+		<h:panelGroup style = "display:block; text-align:left">
+        	<div class="fontiOL textColor">
+                   		<p class= "fontiOL textColor" style=" font-size:20px;">
+					Rikthimi i fjalekalimit!</p>                 		
+            </div>
+        </h:panelGroup>
+		<br/><br/>			
+
+			
+
+	
+	<div align="center" class="loginWhite">
+	
+	
+		<h:form id="forma">
+         	<h:panelGroup style = "display:block; text-align:center">
+				<p class= "fontiOL textColor" style="padding: 40px 0px 10px 0px; font-size:20px;">
+					Ju lutemi plotesoni fjalekalimin e ri</p>
+			</h:panelGroup>
+
+
+        	<h:panelGrid id="gridFushat" columns="3" 
+            	cellpadding="13" cellspacing="1">
+				
+            	<h:outputLabel class="fontiOSB textColor" value="Fjalekalimi i Ri" />
+            	<p:password id="fushaPassRes2" 
+            				style="background-color: white !important;
+            				color:#002f77; 
+            				border-radius:4px;
+            				width:100%;"
+            				validatorMessage="Fjalekalimet nuk jane vendosur sakte"
+			            	value="#{passwordRestoreBean.newPassword}" match="fushaPassRes3" />
+            	<h:message style="color:red;margin:8px;" for="fushaPassRes2" ></h:message>
+            	
+            	
+            	<h:outputLabel class="fontiOSB textColor" value="Perserisni fjalekalimin e ri"  />
+            	<p:password id="fushaPassRes3" value="#{passwordRestoreBean.newPasswordConfirm}"
+            				style="background-color: white !important;
+            				color:#002f77; 
+            				border-radius:4px;
+            				width:100%;" 
+            				/>
+            	<h:message style="color:red;margin:8px;" for="fushaPassRes3" ></h:message>
+            	
+            	
+      
+            	
+            	<f:facet name="footer">
+               		<h:panelGroup style="display:block; text-align:center">
+                  		<h:commandButton id="vazhdobtnPs" class="fontiOL btn btn-primary" value="Perfundo"
+                  		 action="#{passwordRestoreBean.setNewPassword()}" >
+                  		 <f:ajax execute="@form" render="@form" />
+                  		 </h:commandButton>
+               		</h:panelGroup>
+           		    <h:panelGroup style="display:block; text-align:center; margin-top: 15px;">
+      						<h:commandLink class="fontiOR textColor linkHov" immediate="true"
+      							value="Rikthehuni tek faqja e Logimit" action="login.xhtml?faces-redirect=true"/>                  		
+           			</h:panelGroup>
+            	</f:facet>
+         </h:panelGrid>
+	</h:form>
+</div>
+</div>
+</div>
+</div>	
+
+
+
+			
+<h:form id="form2">
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogConfirm" header="Sukses!" widgetVar="dialogSuccess" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+         <h:outputText value="Fjalekalimi u ndryshua me sukses!" 
+            	style="color:#55ff00; font-family:oswaldB; font-size:15px;"/>
+            	
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" 
+								onclick=" PF('dialogSuccess').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>
+</p:dialog>  
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogGabim" header="Gabim!" widgetVar="dialogError" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+         <h:outputText value="Gabim, fjalekalimi nuk u ndryshua!" 
+            	style="color:#ff2f00; font-family:oswaldB; font-size:15px;"/>
+            	
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" 
+								onclick=" PF('dialogError').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>	
+</p:dialog>  
+
+</h:form>
+
+
+	
+
+</h:body>
+</html>

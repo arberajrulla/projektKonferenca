@@ -1,5 +1,7 @@
 package com.ikubinfo.konferenca.dto;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -42,9 +44,12 @@ public class UserDto {
 	@Pattern(regexp = "^[0-9+]*$", message = "Numri i celularit mund te permbaje vetem numra dhe simbolin \"+\"!")
 	private String nrcel;
 	
-	
 	private byte[] salt;
 	
+	@Min(value = 0)
+	@Max(value = 1)
+	private int registerStatus;
+
 	public byte[] getSalt() {
 		return salt;
 	}
@@ -107,5 +112,11 @@ public class UserDto {
 
 	public void setNrcel(String nrcel) {
 		this.nrcel = nrcel;
+	}
+	public int getRegisterStatus() {
+		return registerStatus;
+	}
+	public void setRegisterStatus(int registerStatus) {
+		this.registerStatus = registerStatus;
 	}
 }

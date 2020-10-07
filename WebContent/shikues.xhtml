@@ -2,19 +2,24 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:utils="http://xmlns.jcp.org/jsf/composite/utils">
 
 <h:head>
-  <title>Konferenca X 2020</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
-	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
+  <title>Shikues - Konferenca X 2020</title>
+
   <h:outputStylesheet library="css" name="styles.css"></h:outputStylesheet>
-  <h:outputStylesheet library="css" name="fonts.css"></h:outputStylesheet>
+  <h:outputStylesheet library="css" name="fonts.css"/>
+  <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+  <h:outputStylesheet library="css" name="primefaces_edit.css"></h:outputStylesheet>
+  
 </h:head>
 
 
 <h:body>
-	<div class="paneliKryesor fallingStar" style=" position: absolute; padding-top:10px;">
+<div align="center" >
+	<div class="paneliKryesor fallingStar" style=" padding-top:10px; margin-bottom: 50px;">
 
 				<div class="row " style="">
 					<h:panelGrid id="panel" columns="1" border="0"
@@ -26,24 +31,155 @@
 				</div>
 
 	<div align="center" >
+			
 			<h:panelGroup style = "display:block; text-align:center">
-         		<h:commandButton value = "Autoret" class="butonMenu" />
-     			<h:commandButton value = "Artikujt" class="butonMenu" />
-     			<h:commandButton value = "Shqyrtuesit" class="butonMenu" />
-     			<h:commandButton value = "Autor/Artikull" class="butonMenu" />
-     			<h:commandButton value = "Vleresimet" class="butonMenu" />
-        	</h:panelGroup>	
+				<h:outputText styleClass="headerLoginName" style="margin-right: 5px; font-size: 25px;" value="Mireseerdhet" />
+        	</h:panelGroup>
+        	
+        	<h:panelGroup style = "display:block; text-align:center">
+				<h:outputText styleClass="headerLoginName" style="margin-right: 5px; font-size: 20px; color: white; " value="Me poshte mund te gjeni te gjithe listen e artikujve qe do te trajtohen gjate konferences!" />
+        	</h:panelGroup>
+        	
+<h:form>       	
+            <h:panelGroup style="display:block; text-align:center; margin-top: 15px;">
+	         				<h:commandLink class="fontiOR textColor linkHov" immediate="true"
+	         							value="Rikthehuni tek faqja e Logimit" action="login.xhtml?faces-redirect=true"/>                  		
+            </h:panelGroup>
+</h:form>        		
 	</div>
 	</div>
+</div>	
 	
 	
 	
 	
-	
-	
-	
-	
+
+
+<h:form id="formaArtikujShqyrtues" >
+
+ <ui:repeat value="#{artikullBean.listaArtikuj}" var="artikull">
+	<div style="margin: 30px 70px; padding: 10px;" class="backgroundLayer loginWhite" >
+	<hr color="white" width="80%"/>
+		<div class="row" style=" margin: 20px;" align="center" >
 		
+			<div class="col-md-1"/>
+			<div class="col-md-2 centerDivAutorPanel"  >
+					<p:graphicImage style="width: 90%;
+  						height:auto; margin:10px; border-radius: 10%;" name="/uploads/artikullPics/#{artikull.docPicture}" />
+			</div>
+			
+			
+			<div class="col-md-2" >
+				<div class="row centerDivAutorPanel" style=" height: 100%;">
+							
+							<div class="col-md-12">
+									<h:outputText styleClass="titujText2" value="Titulli: " /><br/>
+									<h:outputText styleClass="contentText2" value="#{artikull.titulli}" /><br/><br/>
+							</div>							
+
+				</div>
+			
+			</div>
+			
+			
+			<hr style=" border-left:1px solid hsla(200, 10%, 50%,100); height:30vh; "/>
+			<div class="col-md-4">
+				<div class="row centerDivAutorPanel" style="height: 100%;">
+
+							<div class="col-md-12" align="center">		
+									<h:outputText styleClass="titujText2" value="Abstrakti" /><br/>
+									<h:outputText styleClass="contentText2" value="#{artikull.abstrakti}" /><br/><br/>
+							</div>
+							<div class="col-md-12" align="center">
+						
+									
+							</div>
+	
+				</div>
+			
+			
+			</div>
+			<hr style=" border-left:1px solid hsla(200, 10%, 50%,100); height:30vh; "/>
+			<div class="col-md-2 centerDivAutorPanel" >
+					<h:panelGrid style="width: auto;" id = "gridFushatVleresime" columns="1" 
+            				cellpadding = "10" cellspacing="1" >
+				        <p:commandLink id="shikoDokumentinLink" class="fontiOR textColor linkHov" immediate="true" actionListener="#{shqyrtuesBean.documentForView(artikull.docName)}"
+	         							value="Shfaq dokumentin!" update=":shikoArtikullDialog:dialogpdf" oncomplete="PF('panelPerDokumentin').show()" >
+	         							
+	         			</p:commandLink><br/>	
+					</h:panelGrid>
+			</div>
+			
+			
+		</div>
+		
+		
+		<hr color="white" width="80%"/>
+			
+		
+	</div>
+
+
+
+ </ui:repeat>
+</h:form>
+
+
+<h:form id="shikoArtikullDialog">
+		<p:dialog width="100%" 
+					height="90%" showEffect="fade" 
+					hideEffect="fade" id="dialogpdf" 
+					header="Dokumenti!" 
+					widgetVar="panelPerDokumentin" 
+					resizable="false" 
+					closable="false">
+
+				<p:media id="panelipdf" value="/resources/uploads/artikullDocs/#{shqyrtuesBean.docName}"
+					player="pdf" width="100%" height="600px">
+					<h:outputLink value="/resources/uploads/artikullDocs/#{shqyrtuesBean.docName}">
+					Kliko per te shkarkuar dokumentin.</h:outputLink>
+				</p:media>
+
+				<h:panelGroup
+					style="display:block; text-align:center; margin-top:10px;">
+					<p:commandButton value="Mbyll" oncomplete="PF('panelPerDokumentin').hide()">
+					</p:commandButton>
+				</h:panelGroup>
+
+		</p:dialog>  
+
+
+
+</h:form>
+
+
+
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 					
 <h:form id="formaDialogConfirmed">
 

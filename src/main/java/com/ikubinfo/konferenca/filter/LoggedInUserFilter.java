@@ -46,7 +46,7 @@ public class LoggedInUserFilter implements Filter {
 							httpResponse.sendError(403);
 						}else if((currentPath.contains("login.xhtml") || currentPath
 								.contains("accessDenied.xhtml")) && !allowed(currentPath)) {
-							httpResponse.sendRedirect("admin/kryesore.xhtml");
+							httpResponse.sendRedirect("admin/faqja1.xhtml");
 						}
 						break;
 					case "autor" :
@@ -55,7 +55,7 @@ public class LoggedInUserFilter implements Filter {
 							httpResponse.sendError(403);
 						}else if((currentPath.contains("login.xhtml") || currentPath
 								.contains("accessDenied.xhtml")) && !allowed(currentPath)) {
-							httpResponse.sendRedirect("autor_res/kryesore.xhtml");
+							httpResponse.sendRedirect("autor_res/faqja1.xhtml");
 						}
 						break;
 					case "shqyrtues":
@@ -64,7 +64,7 @@ public class LoggedInUserFilter implements Filter {
 							httpResponse.sendError(403);
 						}else if((currentPath.contains("login.xhtml") || currentPath
 								.contains("accessDenied.xhtml")) && !allowed(currentPath)) {
-							httpResponse.sendRedirect("admin/kryesore.xhtml");
+							httpResponse.sendRedirect("shqyrtues_res/faqja1.xhtml");
 						}
 						break;
 					default : 
@@ -76,8 +76,11 @@ public class LoggedInUserFilter implements Filter {
 			}else {
 				if (!(currentPath.contains("login.xhtml") || currentPath.contains("index.xhtml") 
 						|| currentPath.contains("regjistrim.xhtml") 
-						|| currentPath.contains("shikues.xhtml") 
-						|| currentPath.contains("harrimFjalekalimi.xhtml")) && !allowed(currentPath)){
+						|| currentPath.contains("shikues.xhtml")
+						|| currentPath.contains("perfundimRegjistrimi.xhtml")
+						|| currentPath.contains("harrimFjalekalimi.xhtml")
+						|| currentPath.contains("harrimFjalekalimiCodeSent.xhtml")
+						|| currentPath.contains("harrimFjalekalimiConfirm.xhtml")) && !allowed(currentPath)){
 					
 					httpResponse.sendRedirect(request.getServletContext().getContextPath().toString() + "/index.xhtml");
 				

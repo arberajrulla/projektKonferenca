@@ -3,18 +3,13 @@ package com.ikubinfo.konferenca.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
-import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.ikubinfo.konferenca.convert.ArtikullConverter;
 import com.ikubinfo.konferenca.convert.AutorConverter;
 import com.ikubinfo.konferenca.dao.AutorDao;
-import com.ikubinfo.konferenca.dto.ArtikullDto;
 import com.ikubinfo.konferenca.dto.AutorDto;
 import com.ikubinfo.konferenca.entity.Autor;
-import com.ikubinfo.konferenca.entity.User;
 import com.ikubinfo.konferenca.service.AutorService;
 import com.ikubinfo.konferenca.utils.UtilMessages;
 
@@ -53,7 +48,7 @@ public class AutorServiceImpl implements AutorService{
 		}else {		
 			try {
 				log.info(" SERVICE adding autor selected dropdown id: " + newAutor.getArtikullId());
-				autorDao.addAutor(AutorConverter.toNewAutor(newAutor)); 
+				autorDao.addAutor(autorConverter.toNewAutor(newAutor)); 
 				log.info("New Autor " + newAutor.getEmri() + " added successfully!");
 				
 				UtilMessages.addMessageSuccess("Sukses!", "Autori " + newAutor.getEmri() + " u shtua me sukses!");
@@ -81,21 +76,17 @@ public class AutorServiceImpl implements AutorService{
 
 	@Transactional
 	public void updateAutor(AutorDto autorDto) {
-		if (autorCheck(autorDto.getEmailId())) {
-			UtilMessages.addMessageError(null, "Error, Autori me kete E-mail ekziston!");
-		}else {	
 			try {
-				autorDao.updateAutor(AutorConverter.toAutorUpdate(autorDto)); 
+				autorDao.updateAutor(autorConverter.toAutorUpdate(autorDto)); 
 				log.info("Service updated Autor successfully!");
 				UtilMessages.addMessageSuccess("Sukses!", "Autori " + autorDto.getEmri() + " u modifikua me sukses!");
 			} catch (Exception e) {
 				log.error("Service layer, error during Autor update!", e);
 				UtilMessages.addMessageError(null, "Error, modifikimi nuk u krye!");
 			}
-		}
 	}
 
-	@Override
+	@Transactional
 	public boolean autorCheck(String email) {
 		try {
 			if(autorDao.checkAutorIfExists(email)) {
@@ -109,6 +100,34 @@ public class AutorServiceImpl implements AutorService{
 			log.error("Error, Service couldn't get Autor!", e);
 			UtilMessages.addMessageError(null, "Error, gjate kontrollit, ju lutemi provoni perseri!");
 			return true;
+		}
+	}
+
+	@Transactional
+	public AutorDto getAutor(String email) {
+		try {
+			AutorDto autorDto;
+			autorDto = autorConverter.toAutorDtoForVleresimeArtikulli(autorDao.getAutor(email));
+			return autorDto;
+		} catch (Exception e) {
+			log.error("Error, Service couldn't get Autor!", e);
+			UtilMessages.addMessageError(null, "Error, gjate marrjes se autorit, ju lutemi provoni perseri!");
+			return null;
+		}
+		
+	}
+
+	@Transactional
+	public AutorDto getAutorByArtikullId(int artikullId) {
+		try {
+			AutorDto autorDto;
+			log.info("Getting autor by id: " + artikullId);
+			autorDto = autorConverter.toAutorDtoForVleresimeArtikulli(autorDao.getAutorByArtikullId(artikullId));
+			return autorDto;
+		} catch (Exception e) {
+			log.error("Error, Service couldn't get Autor!", e);
+			UtilMessages.addMessageError(null, "Error, gjate marrjes se autorit, ju lutemi provoni perseri!");
+			return new AutorDto();
 		}
 	}
 }

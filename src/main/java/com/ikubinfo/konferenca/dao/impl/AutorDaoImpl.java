@@ -67,4 +67,20 @@ public class AutorDaoImpl implements AutorDao {
 		}
 		return false;
 	}
+
+	@Override
+	public Autor getAutor(String emailId) {
+		log.info("Getting autor " + emailId + " from DB!");
+		TypedQuery<Autor> fetchQuery = entityManager.createQuery("SELECT autor FROM Autor autor WHERE autor.emailId = :emailId", Autor.class);
+		Autor autor = fetchQuery.setParameter("emailId", emailId).getSingleResult();
+		return autor;
+	}
+
+	@Override
+	public Autor getAutorByArtikullId(int artikullId) {
+		log.info("Getting autor with Artikull Id " + artikullId + " from DB!");
+		TypedQuery<Autor> fetchQuery = entityManager.createQuery("SELECT autor FROM Autor autor WHERE autor.artikuj.artikullId = :artikullId", Autor.class);
+		Autor autor = fetchQuery.setParameter("artikullId", artikullId).getSingleResult();
+		return autor;
+	}
 }

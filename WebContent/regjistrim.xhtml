@@ -12,6 +12,8 @@
   <title>Regjistrohu - Konferenca X 2020</title>
   <h:outputStylesheet library="css" name="styles.css"></h:outputStylesheet>
   <h:outputStylesheet library="css" name="fonts.css"></h:outputStylesheet>
+  <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+  <h:outputStylesheet library="css" name="primefaces_edit.css"></h:outputStylesheet>
 </h:head>
 
 
@@ -59,24 +61,28 @@
             	
             	
             	<h:outputLabel class="fontiOSB textColor" value="Emri" />
-            	<p:inputText styleClass="inputFushat" id="fushaEmriR" value="#{userBean.newUser.emri}"
+            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey; border-radius: 5px !important;" 
+            					id="fushaEmriR" value="#{userBean.newUser.emri}"
             					>
             	</p:inputText>
 				
             	
             	
             	<h:outputLabel class="fontiOSB textColor" value="Mbiemri"  />
-            	<p:inputText styleClass="inputFushat" id="fushaMbiemriR" value="#{userBean.newUser.mbiemri}">          			
+            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey; border-radius: 5px !important;" 
+            				id="fushaMbiemriR" value="#{userBean.newUser.mbiemri}">          			
             	</p:inputText>
             	
             	
             	<h:outputLabel class="fontiOSB textColor" value="E-mail"  />
-            	<p:inputText styleClass="inputFushat" id="fushaEmailR" value="#{userBean.newUser.email}" >        			
+            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey; border-radius: 5px !important;" 
+            					id="fushaEmailR" value="#{userBean.newUser.email}" >        			
             	</p:inputText>
             	
             	
             	<h:outputLabel class="fontiOSB textColor" value="Id"  />
-            	<p:inputText styleClass="inputFushat" id="fushaIdR" value="#{userBean.newUser.username}">
+            	<p:inputText style="background-color:white; color:grey; border-radius: 5px !important;" 
+            					styleClass="inputFushat" id="fushaIdR" value="#{userBean.newUser.username}">
             	</p:inputText>
             	
 
@@ -90,14 +96,15 @@
 				
 
             	<h:outputLabel class="fontiOSB textColor" value="Numer kontakti"  />
-            	<p:inputText styleClass="inputFushat" id="fushaNrR" value="#{userBean.newUser.nrcel}">          			
+            	<p:inputText styleClass="inputFushat" style="background-color:white; color:grey; border-radius: 5px !important;" id="fushaNrR" value="#{userBean.newUser.nrcel}">          			
             	</p:inputText>
             	        	
             	
             	
             	
             	<h:outputLabel class="fontiOSB textColor" value="Fjalekalimi"  />
-            	<p:password placeholder="Fjalekalimi" id="fushaPswR" styleClass="inputFushat"
+            	<p:password placeholder="Fjalekalimi" id="fushaPswR" styleClass="inputFushat" 
+            				style="background-color:white; color:grey; border-radius: 5px !important;"
 			            
 			            	validatorMessage="Fjalekalimet nuk perputhen"
 			            	value="#{userBean.newUser.password}" match="fushaPswRe" />
@@ -106,7 +113,8 @@
             	
             	
             	<h:outputLabel class="fontiOSB textColor" value="Perserisni fjalekalimin"  />
-            	<p:password styleClass="inputFushat" id="fushaPswRe" value="#{userBean.newUser.password}"/>
+            	<p:password styleClass="inputFushat" style="background-color:white; color:grey; border-radius: 5px !important;" 
+            				id="fushaPswRe" value="#{userBean.newUser.password}"/>
 
             	<f:facet name="footer">
                		<h:panelGroup style="display:block; text-align:center">

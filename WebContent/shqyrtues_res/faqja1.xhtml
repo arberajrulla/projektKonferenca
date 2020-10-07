@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="kryesore.xhtml"
+     			xmlns:h="http://java.sun.com/jsf/html"
+      			xmlns:f="http://java.sun.com/jsf/core"
+      			xmlns:p="http://primefaces.org/ui"
+                xmlns:utils="http://xmlns.jcp.org/jsf/composite/utils">
+                
+	<ui:define name="title">Faqja kryesore</ui:define>
+	 
+    <ui:define name="content">
+	<div class="paneliKryesor fallingStar" style="padding-top:150px;">
+		<div class="row" align="center">
+			<div class="col-md-12" >
+				<p class= "fontiOEL textColor" style="font-size: 30px;">MIRESEERDHET</p>
+				
+				<p class="fontiOEL" style="margin-top:70px; font-size: 40px; color:white;">#{loggedUserBean.loggedUser.emri}
+				  #{loggedUserBean.loggedUser.mbiemri}
+				</p>
+				
+			</div>
+		</div>
+	</div>	
+	
+
+
+					
+<h:form id="formaDialogConfirmed">
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogConfirm" header="Sukses!" widgetVar="dialogSuccess" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" onclick="PF('dialogSuccess').hide()">
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>
+</p:dialog>  
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogGabim" header="Gabim!" widgetVar="dialogError" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+            	
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" 
+								onclick=" PF('dialogError').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>	
+</p:dialog>  
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogCust" header="Mesazh!" widgetVar="dialogCustom" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+            	
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" 
+								onclick=" PF('dialogCustom').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>	
+</p:dialog>  
+
+
+</h:form>
+
+
+
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,198 @@
+<!DOCTYPE HTML>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="kryesore.xhtml"
+     			xmlns:h="http://java.sun.com/jsf/html"
+      			xmlns:f="http://java.sun.com/jsf/core"
+      			xmlns:p="http://primefaces.org/ui"
+                xmlns:utils="http://xmlns.jcp.org/jsf/composite/utils">
+                
+	<ui:define name="title">Artikujt</ui:define>
+	 
+    <ui:define name="content">
+
+
+
+
+
+
+<h:form id="formaArtikujShqyrtues" >
+
+<ui:repeat value="#{shqyrtuesBean.shqyrtuesHolderBean.artikujPotencialePerVlersim}" var="artikull">
+	<div style="margin: 30px 70px; padding: 10px;" class="backgroundLayer loginWhite" >
+	<hr color="white" width="80%"/>
+		<div class="row" style=" margin: 20px;" align="center" >
+		
+			<div class="col-md-1"/>
+			<div class="col-md-2 centerDivAutorPanel"  >
+					<p:graphicImage style="width: 90%;
+  						height:auto; margin:10px; border-radius: 10%;" name="/uploads/artikullPics/#{artikull.docPicture}" />
+			</div>
+			
+			
+			<div class="col-md-2" >
+				<div class="row centerDivAutorPanel" style=" height: 100%;">
+							
+							<div class="col-md-12">
+									<h:outputText styleClass="titujText2" value="Titulli: " /><br/>
+									<h:outputText styleClass="contentText2" value="#{artikull.titulli}" /><br/><br/>
+							</div>							
+							<div class="col-md-12">
+									<h:outputText styleClass="titujText2" value="Dokumenti elektronik: " /><br/>
+									<h:outputText styleClass="contentText2" value="#{artikull.dokumentiElektronik}" /><br/><br/>
+							</div>
+							<div class="col-md-12">
+									<h:outputText styleClass="titujText2" value="Kontakti i autorit: " /><br/>
+									<h:outputText styleClass="contentText2" value="#{artikull.kontakt}" /><br/><br/>
+							</div>
+				</div>
+			
+			</div>
+			
+			
+			<hr style=" border-left:1px solid hsla(200, 10%, 50%,100); height:30vh; "/>
+			<div class="col-md-4">
+				<div class="row centerDivAutorPanel" style="height: 100%;">
+
+							<div class="col-md-12" align="center">		
+									<h:outputText styleClass="titujText2" value="Abstrakti" /><br/>
+									<h:outputText styleClass="contentText2" value="#{artikull.abstrakti}" /><br/><br/>
+							</div>
+							<div class="col-md-12" align="center">
+	         						<p:commandLink id="shikoDokumentinLink" class="fontiOR textColor linkHov" immediate="true" actionListener="#{shqyrtuesBean.documentForView(artikull.docName)}"
+	         							value="Shfaq dokumentin!" update=":shikoArtikullDialog:dialogpdf" oncomplete="PF('panelPerDokumentin').show()" >
+	         							
+	         							</p:commandLink><br/>							
+									
+							</div>
+	
+				</div>
+			
+			
+			</div>
+			<hr style=" border-left:1px solid hsla(200, 10%, 50%,100); height:30vh; "/>
+			<div class="col-md-1 centerDivAutorPanel" >
+				<h:panelGrid style="width: auto;" id = "gridFushatVleresime" columns="1" 
+            				cellpadding = "10" cellspacing="1" >
+   					<p:commandButton action="#{shqyrtuesBean.setArtikullPerTeVleresuar(artikull)}" value="Vlereso" style="width:100% !important;" />				              		
+               	</h:panelGrid>
+			</div>
+			<div class="col-md-1"/>
+			
+		</div>
+		
+		
+		<hr color="white" width="80%"/>
+			
+		
+	</div>	
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+</ui:repeat>
+</h:form>
+
+
+<h:form id="shikoArtikullDialog">
+		<p:dialog width="100%" 
+					height="90%" showEffect="fade" 
+					hideEffect="fade" id="dialogpdf" 
+					header="Dokumenti!" 
+					widgetVar="panelPerDokumentin" 
+					resizable="false" 
+					closable="false">
+
+				<p:media id="panelipdf" value="/resources/uploads/artikullDocs/#{shqyrtuesBean.docName}"
+					player="pdf" width="100%" height="600px">
+					<h:outputLink value="/resources/uploads/artikullDocs/#{shqyrtuesBean.docName}">
+					Kliko per te shkarkuar dokumentin.</h:outputLink>
+				</p:media>
+
+				<h:panelGroup
+					style="display:block; text-align:center; margin-top:10px;">
+					<p:commandButton value="Mbyll" oncomplete="PF('panelPerDokumentin').hide()">
+					</p:commandButton>
+				</h:panelGroup>
+
+		</p:dialog>  
+
+
+
+</h:form>
+
+
+
+
+
+		
+					
+<h:form id="formaDialogConfirmed">
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogConfirm" header="Sukses!" widgetVar="dialogSuccess" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" onclick="PF('dialogSuccess').hide()">
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>
+</p:dialog>  
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogGabim" header="Gabim!" widgetVar="dialogError" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+            	
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" 
+								onclick=" PF('dialogError').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>	
+</p:dialog>  
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogCust" header="Mesazh!" widgetVar="dialogCustom" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+            	
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" 
+								onclick=" PF('dialogCustom').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>	
+</p:dialog>  
+
+
+</h:form>
+		
+		
+
+
+    </ui:define>
+
+</ui:composition>

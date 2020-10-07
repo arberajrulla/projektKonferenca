@@ -244,6 +244,13 @@ html, body{
 	box-shadow: 0px 0px 30px #0090ff;
 }
 
+.loginWhite2{
+	border-radius: 0px;
+	box-shadow: 0px 0px 30px rgba(0, 144, 255, 0.2);
+	
+	
+}
+
 
 .fushaBoshRed{
 	box-shadow: 0px 0px 30px red;
@@ -312,17 +319,155 @@ body .ui-messages-error{
 
 .ui-selectonemenu-item, .ui-selectonemenu-list-item{
 	background: #002046 !important;
+	font-family: oswaldEL;
 }
 .ui-state-highlight{
 	color: #15dde8 !important;
 	background: #002f77 !important;
+	font-family: oswaldEL;
 }
 
 .ui-selectonemenu-trigger{
 	background: #002046 !important;
+	font-family: oswaldEL;
 }
 
  .ui-widget-content {
 	border: none !important;
 }
+
+
+
+/* Lista autor_res shqyrtues_res */
+
+div.repeatListaAutorShqyrtues{
+	background-color: rgba(0, 32, 70, 0.8) !important;
+
+	color: white;
+	border-radius:0px;
+	font-family: cinzelR !important;
+  	
+}
+
+
+
+.vleresimetPerArtikullinTimRepeatBottom{
+	margin: 20px 0px;
+}
+
+.vleresimetPerArtikullinTimRepeatTop{
+	margin: 20px 0px;
+}
+
+
+
+/* formatimi i tekstit autorPanel */
+
+.titujText{
+	color: #15dde8;
+	font-family: oswaldEL;
+	font-size: 20px;
+}
+
+.contentText{
+	color: white;
+	font-family: oswaldEL;
+	font-size: 25px;
+}
+
+
+.titujText2{
+	color: #15dde8;
+	font-family: oswaldEL;
+	font-size: 20px;
+}
+
+.contentText2{
+	color: white;
+	font-family: oswaldEL;
+	font-size: 18px;
+}
+
+.contentText3{
+	color: white;
+	font-family: oswaldL;
+	font-size: 22px;
+}
+
+/* formatimi i fushave h:inputtext */
+
+.hinputtextCustom{
+	color: black;
+	font-family: oswaldEL;
+	font-size: 22px;
+	outline: none;
+	width: 80%;
+}
+
+
+
+
+
+/* formatimi i background layer autorPanel */
+
+.backgroundLayer{
+	background-color: rgba(0, 32, 70, 0.8) !important;
+}
+
+.centerDivAutorPanel{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+
+
+/* formatimi i tekstit shqyrtuesPanel */
+
+.titujTextShq{
+	color: #15dde8;
+	font-family: oswaldEL;
+	font-size: 20px;
+}
+
+.contentTextShq{
+	color: white;
+	font-family: oswaldEL;
+	font-size: 25px;
+}
+
+
+.titujTextShq2{
+	color: #15dde8;
+	font-family: oswaldEL;
+	font-size: 20px;
+}
+
+.contentTextShq2{
+	color: white;
+	font-family: oswaldEL;
+	font-size: 18px;
+}
+
+.titujTextShq3{
+	color: #15dde8;
+	font-family: oswaldEL;
+	font-size: 16px;
+}
+
+
+.contentTextShq3{
+	color: white;
+	font-family: oswaldL;
+	font-size: 18px;
+}
+
+
+.vleresimeTextStars{
+	font-family: cinzelR;
+	color: #15dde8;
+	font-size: 16px;
+}
+
+
 

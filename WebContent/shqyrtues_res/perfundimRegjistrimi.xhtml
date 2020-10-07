@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+  <title>Perfundim Regjistrimi - Shqyrtues</title>
+  <h:outputStylesheet library="css" name="styles.css"></h:outputStylesheet>
+  <h:outputStylesheet library="css" name="fonts.css"/>
+  <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+  <h:outputStylesheet library="css" name="primefaces_edit.css"></h:outputStylesheet>
+</h:head>
+
+
+<h:body>
+
+<div class="row fallingStar">
+
+
+	<div class="paneliKryesor " style=" padding-top:10px;">
+
+				<div class="row " style="padding-top:30px;">
+					<h:panelGrid id="panel" columns="1" border="0"
+							     	cellpadding = "10" cellspacing="1">
+						<div class="fontiR mireseerdhet" style=" font-size: 45px;">KONFERENCA X 
+						<p class="fontiOEL" style="color:white; font-size: 30px;">2020</p>
+						</div>
+					</h:panelGrid>
+				</div>
+
+	<div align="center" style="padding-top:30px;">
+	
+		<p class="fontiOEL" style="color:#15dde8; font-size: 35px;">Mireseerdhet</p>
+		<p class="fontiOEL" style="color: white; font-size: 25px;">Edhe nje hap dhe jeni pjese e konferences.</p>
+		<p class="fontiOEL" style="color:white; font-size: 20px;">Per tu bashkuar si shqyrtues ju lutemi vendosni te dhenat per institucionin ku ju punoni aktualisht.</p>
+		
+	</div>
+	</div>
+</div>		
+	
+	
+
+<h:form id="forma1" >	
+<div class="row fallingStar">
+	<div class="col-md-12">
+		<div align="center"  style="margin: 40px;">
+		
+		
+           		<h:panelGroup  style="display:block; text-align:center; margin-bottom: 15px;">
+			        <h:outputText class="fontiOEL" style="color: #15dde8 !important; text-decoration: none; font-size: 20px;" value="Institucioni"/>
+   				</h:panelGroup>				
+
+	
+        <h:panelGrid  style="width: 27%;" id = "gridFushat" columns="1" 
+            	cellpadding = "10" cellspacing="1">
+				
+				<h:inputText id="instPerfundoRegjistrimin" class="fontiOEL hinputtextCustom" 
+							style=" font-size: 17px; width:100%" 
+							value="#{shqyrtuesBean.shqyrtuesIRi.institucioni}" />
+				<h:message for="instPerfundoRegjistrimin"/>			
+				
+				<f:facet name="footer">
+               		<h:panelGroup style="display:block; text-align:center">
+                  		<p:commandButton class="fontiOL btn btn-primary" value="Perfundo Regjistrimin"
+                  			 action="#{shqyrtuesBean.finishShqyrtuesRegistration()}" 
+                  			 process="@form" update="@form" >
+                  			 </p:commandButton>
+               		</h:panelGroup>
+            	</f:facet>
+
+         </h:panelGrid>
+         
+				
+              	<h:panelGroup style="display:block; text-align:center; margin-top: 30px;">
+       				<h:commandLink class="fontiOR textColor linkHov" immediate="true"
+       							value="Klikoni ketu per tu rikthyer tek faqja e logimit!" action="/login.xhtml?faces-redirect=true"/> 
+            	</h:panelGroup>
+               			               			
+</div>
+</div>               	
+</div>	
+</h:form>
+
+
+	
+
+</h:body>
+</html>
+
+
+
+
+
+

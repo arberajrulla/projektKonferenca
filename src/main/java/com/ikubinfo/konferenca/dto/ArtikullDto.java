@@ -1,5 +1,7 @@
 package com.ikubinfo.konferenca.dto;
 
+import java.util.List;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -14,7 +16,7 @@ public class ArtikullDto {
 	private String titulli;
 	
 	@NotNull(message = "Abstrakti nuk duhet te jete bosh")
-	@Size(message = "Abstrakti nuk mund te kete me shume se 250 karaktere!", max = 250)
+	@Size(message = "Abstrakti nuk mund te kete me shume se 1000 karaktere!", max = 1000)
 	private String abstrakti;
 	
 	@NotNull(message = "Dokumenti Elektronik nuk duhet te jete bosh")
@@ -25,7 +27,25 @@ public class ArtikullDto {
 	@Size(message = "Numri i kontaktit duhet te kete nga 8 deri 40 karaktere!", min= 8, max = 40)
 	@Pattern(regexp = "^[0-9+]*$", message = "Numri i kontaktit mund te permbaje vetem numra dhe simbolin \"+\"!")
 	private String kontakt;
+	
+	@NotNull
+	@Size(max = 200)
+	private String docName;
+	
+	@NotNull
+	@Size(max = 200)
+	private String docPicture;
+	
+	private List<AutorDto> autorDtoListForArtikull;
+	
+	
 
+	public List<AutorDto> getAutorDtoListForArtikull() {
+		return autorDtoListForArtikull;
+	}
+	public void setAutorDtoListForArtikull(List<AutorDto> autorDtoListForArtikull) {
+		this.autorDtoListForArtikull = autorDtoListForArtikull;
+	}
 	public int getArtikullId() {
 		return artikullId;
 	}
@@ -55,6 +75,18 @@ public class ArtikullDto {
 	}
 	public void setKontakt(String kontakt) {
 		this.kontakt = kontakt;
+	}
+	public String getDocName() {
+		return docName;
+	}
+	public void setDocName(String docName) {
+		this.docName = docName;
+	}
+	public String getDocPicture() {
+		return docPicture;
+	}
+	public void setDocPicture(String docPicture) {
+		this.docPicture = docPicture;
 	}
 
 }

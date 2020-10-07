@@ -1,5 +1,7 @@
 package com.ikubinfo.konferenca.dto;
 
+import java.util.List;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -28,6 +30,15 @@ public class ShqyrtuesDto {
 	@Size(message = "Institucioni nuk duhet te kete me shume se 250 karaktere!", max = 250)
 	private String institucioni;
 	
+	private List<ShqyrtuesArtikullDto> vleresimePerShqyrtues;
+	
+	
+	public List<ShqyrtuesArtikullDto> getVleresimePerShqyrtues() {
+		return vleresimePerShqyrtues;
+	}
+	public void setVleresimePerShqyrtues(List<ShqyrtuesArtikullDto> vleresimePerShqyrtues) {
+		this.vleresimePerShqyrtues = vleresimePerShqyrtues;
+	}
 	public String getIdEmail() {
 		return idEmail;
 	}

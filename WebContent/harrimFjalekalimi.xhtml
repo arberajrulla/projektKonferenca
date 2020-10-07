@@ -5,135 +5,200 @@
       xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-  <title>Hyrja ne sistem - Konferenca X 2020</title>
+  <title>Harrim fjalekalimi - Konferenca X 2020</title>
 
   	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
 	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"/>
 	
   <h:outputStylesheet library="css" name="styles.css"></h:outputStylesheet>
   <h:outputStylesheet library="css" name="fonts.css"></h:outputStylesheet>  
-  
+  <h:outputStylesheet library="css" name="primefaces_edit.css"></h:outputStylesheet>
 </h:head>
 
 
-<h:body>	
-	
-<div class="" style="padding: 0px 0px 30px 0px;">
+<h:body>
 
-<div class="row" style="padding: 30px 50px 0px 70px; height: 100%;">
-	
+	<div class="" style="padding: 0px 0px 30px 0px;">
 
-	<div class="col-md-6"  style="padding: 30px 50px 100px 50px; " >
-		<div class="row fallingStar" align="center" style=" background-color: yellow;">
-			<div class="fontiOL knf ">KONFERENCA&nbsp; X <br/>
-				<p class="fontiOEL" style="color:white; font-size: 27px;">2020 </p>
+		<div class="row" style="padding: 30px 50px 0px 70px; height: 100%;">
+
+
+			<div class="col-md-6" style="padding: 30px 50px 100px 50px;">
+				<div class="row fallingStar" align="center"
+					style="background-color: yellow;">
+					<div class="fontiOL knf ">
+						KONFERENCA&nbsp; X <br />
+						<p class="fontiOEL" style="color: white; font-size: 27px;">2020
+						</p>
+					</div>
+				</div>
 			</div>
-		</div>
-	</div>
 
-	
-	
-	<div class="col-md-6"  style=" padding: 30px 50px 50px 50px; ">
-		<div class="row" style="padding: 0px 0px 20px 0px;">
-			<div class="col-md-3" ></div>
-			<div class="col-md-5"  style="padding: 4px 0px 0px 0px; " >
-	           	<h2 class= "fontiOL textColor" style="padding: 0px 0px 5px 0px; font-size:20px;">
-	           	BEHUNI PJESE E KONFERENCES</h2>
-			</div>
-			
-			<div class="col-md-3" >
-				<h:form>
+
+
+			<div class="col-md-6" style="padding: 30px 50px 50px 50px;">
+				<div class="row" style="padding: 0px 0px 20px 0px;">
+					<div class="col-md-3"></div>
+					<div class="col-md-5" style="padding: 4px 0px 0px 0px;">
+						<h2 class="fontiOL textColor"
+							style="padding: 0px 0px 5px 0px; font-size: 20px;">BEHUNI
+							PJESE E KONFERENCES</h2>
+					</div>
+
+					<div class="col-md-3">
+						<h:form>
+							<h:panelGroup style="display:block; text-align:center">
+								<h:commandButton class="fontiOL btn btn-primary"
+									action="regjistrim" value="REGJISTROHU TANI" />
+							</h:panelGroup>
+						</h:form>
+					</div>
+					<div class="col-md-1"></div>
+				</div>
+				<br />
+
+				<h:panelGroup style="display:block; text-align:left">
+					<div class="fontiOL textColor">
+						KENI HARRUAR FJALEKALIMIN? <br /> JU LUTEMI NDIQNI PROCESIN E
+						MEPOSHTEM PER TA NDRYSHUAR.
+					</div>
+				</h:panelGroup>
+				<br />
+				<br />
+
+
+
+
+				<div align="center" class="loginWhite">
+
+
+					<h:form id="forma">
+						<h:panelGroup style="display:block; text-align:center">
+							<p class="fontiOL textColor"
+								style="padding: 40px 0px 10px 0px; font-size: 20px;">Ju
+								lutemi vendosni adresen e E-mail-it</p>
+						</h:panelGroup>
+
+
+						<h:panelGrid id="gridFushat" columns="3" cellpadding="13"
+							cellspacing="1">
+
+
+							<h:outputLabel class="fontiOSB textColor" value="E-MAIL" />
+							<h:inputText class="form-control" id="fushaEmailRes"
+								value="#{passwordRestoreBean.email}">
+
+							</h:inputText>
+							<h:message style="color:red;margin:8px;" for="fushaEmailRes"></h:message>
+
+
+							<f:facet name="footer">
+								<h:panelGroup style="display:block; text-align:center">
+									<h:commandButton id="vazhdobtnPs"
+										class="fontiOL btn btn-primary" value="VAZHDO"
+										action="#{passwordRestoreBean.sendEmail()}">
+										<f:ajax execute="@form" render="@form" />
+									</h:commandButton>
+								</h:panelGroup>
+								<h:panelGroup
+									style="display:block; text-align:center; margin-top: 15px;">
+									<h:commandLink class="fontiOR textColor linkHov"
+										immediate="true" value="Rikthehuni tek faqja e Logimit"
+										action="login.xhtml?faces-redirect=true" />
+								</h:panelGroup>
+							</f:facet>
+						</h:panelGrid>
+					</h:form>
+
+				</div>
+
+
+				<h:panelGroup style="display:block; text-align:center">
+					<p class="fontiOEL textColor"
+						style="padding: 70px 0px 0px 0px; font-size: 15px;">NESE
+						DESHIRONI NJE VESHTRIM TE PERGJITHSHEM MBI KONFERENCEN, MUND TE
+						VAZHDONI SI SHIKUES.</p>
+				</h:panelGroup>
+
+
+				<p class="fontiOEL textColor"></p>
+
+				<h:form id="shikuesButonForma">
 					<h:panelGroup style="display:block; text-align:center">
-						<h:commandButton class="fontiOL btn btn-primary" action="regjistrim" 
-		              					 value="REGJISTROHU TANI" />	
+						<h:commandButton class="fontiOL btn btn-primary"
+							value="Vazhdo si Shikues" action="shikues.xhtml" />
 					</h:panelGroup>
 				</h:form>
+
 			</div>
-			<div class="col-md-1"></div>
-		</div>	
-		<br/>	
-			
-		<h:panelGroup style = "display:block; text-align:left">
-        	<div class="fontiOL textColor">
-                   		KENI HARRUAR FJALEKALIMIN? <br />
-                  		JU LUTEMI NDIQNI PROCESIN E MEPOSHTEM PER TA NDRYSHUAR.                 		
-            </div>
-        </h:panelGroup>
-		<br/><br/>			
-
-			
-
-	
-	<div align="center" class="loginWhite">
-	
-	
-		<h:form id="forma">
-         	<h:panelGroup style = "display:block; text-align:center">
-				<p class= "fontiOL textColor" style="padding: 40px 0px 10px 0px; font-size:20px;">
-					Ju lutemi vendosni adresen e E-mail-it</p>
-			</h:panelGroup>
-
-
-        	<h:panelGrid id="gridFushat" columns="3" 
-            	cellpadding="13" cellspacing="1">
-				
-            	
-            	<h:outputLabel class="fontiOSB textColor" value="E-MAIL"  />
-            	<h:inputText class="form-control #{autentikim.stiliGabimRed(1)}" 
-            					id="fushaEmailRes" value="#{autentikim.email}"
-            					required="true"
-            					requiredMessage="Ju lutem plotesoni E-Mail" >
-            				
-            				</h:inputText>
-            	<h:message style="color:red;margin:8px;" for="fushaEmailRes" ></h:message>
-           
-            	
-            	<f:facet name="footer">
-               		<h:panelGroup style="display:block; text-align:center">
-                  		<h:commandButton id="vazhdobtnPs" class="fontiOL btn btn-primary" value="VAZHDO"
-                  		 action="#{autentikim.harrimFjalekalimi()}" >
-                  		 <f:ajax execute="@form" render="@form" />
-                  		 </h:commandButton>
-               		</h:panelGroup>
-           		    <h:panelGroup style="display:block; text-align:center; margin-top: 15px;">
-      						<h:commandLink class="fontiOR textColor linkHov" immediate="true"
-      							value="Rikthehuni tek faqja e Logimit" action="login.xhtml?faces-redirect=true"/>                  		
-           			</h:panelGroup>
-            	</f:facet>
-         </h:panelGrid>
-	</h:form>
-
-		</div>
-	
-		 <!-- h:form i ben te paaksesueshem komponentet nga JavaScript -->
-		 
-		 
-         	<h:panelGroup style="display:block; text-align:center">
-				<p class="fontiOEL textColor" style="padding: 70px 0px 0px 0px; font-size:15px;">
-		 			NESE DESHIRONI NJE VESHTRIM TE PERGJITHSHEM MBI KONFERENCEN,
-		 			MUND TE VAZHDONI SI SHIKUES.</p>
-			</h:panelGroup> 
-		 
-		 
-		 <p class="fontiOEL textColor" >
-
-		 </p>
-		 
-		 <h:form id="shikuesButonForma">
-		 	<h:panelGroup style="display:block; text-align:center">
-		 <h:commandButton class="fontiOL btn btn-primary" value="Vazhdo si Shikues"
-               		action="shikues.xhtml"/>      		
-               	</h:panelGroup>
-		 </h:form>
-   
-            	<!-- 
-            	<p:watermark for="fushaId" value="Search w" id="watermark" />
-            	 -->
-            	 
 		</div>
 	</div>
-</div>	
-	
+
+
+
+
+	<h:form id="formaDialogConfirmed">
+		<p:dialog showEffect="fade" hideEffect="fade" id="dialogConfirm"
+			header="Sukses!" closable="false" widgetVar="dialogSuccess"
+			resizable="false">
+			<p:outputPanel style="text-align:center;">
+				<p:messages showDetail="true" closable="false" globalOnly="true"
+					showIcon="false">
+					<p:autoUpdate />
+				</p:messages>
+
+				<h:panelGroup
+					style="display:block; text-align:center; margin-top:35px;">
+					<p:commandButton value="Vazhdo" ajax="false"
+						action="/harrimFjalekalimiCodeSent.xhtml?faces-redirect=true">
+					</p:commandButton>
+				</h:panelGroup>
+
+			</p:outputPanel>
+		</p:dialog>
+
+
+		<p:dialog showEffect="fade" hideEffect="fade" id="dialogGabim"
+			header="Gabim!" widgetVar="dialogError" resizable="false">
+			<p:outputPanel style="text-align:center;">
+				<p:messages showDetail="true" closable="false" globalOnly="true"
+					showIcon="false">
+					<p:autoUpdate />
+				</p:messages>
+
+				<h:panelGroup
+					style="display:block; text-align:center; margin-top:35px;">
+					<p:commandButton value="Mbyll" onclick=" PF('dialogError').hide()">
+					</p:commandButton>
+				</h:panelGroup>
+
+			</p:outputPanel>
+		</p:dialog>
+
+
+		<p:dialog showEffect="fade" hideEffect="fade" id="dialogCust"
+			header="Mesazh!" widgetVar="dialogCustom" resizable="false">
+			<p:outputPanel style="text-align:center;">
+				<p:messages showDetail="true" closable="false" globalOnly="true"
+					showIcon="false">
+					<p:autoUpdate />
+				</p:messages>
+
+				<h:panelGroup
+					style="display:block; text-align:center; margin-top:35px;">
+					<p:commandButton value="Mbyll" onclick=" PF('dialogCustom').hide()">
+					</p:commandButton>
+				</h:panelGroup>
+
+			</p:outputPanel>
+		</p:dialog>
+
+
+	</h:form>
+
+
+
+
 
 </h:body>
 </html>

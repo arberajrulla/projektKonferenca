@@ -1,5 +1,7 @@
 com\ikubinfo\konferenca\service\ArtikullService.class
 com\ikubinfo\konferenca\dto\ShqyrtuesDto.class
+com\ikubinfo\konferenca\filesOperations\UploadUtil.class
+com\ikubinfo\konferenca\utils\UtilMessages.class
 com\ikubinfo\konferenca\service\impl\UserServiceImpl.class
 com\ikubinfo\konferenca\service\VleresimeService.class
 com\ikubinfo\konferenca\dao\impl\ShqyrtuesArtikullDaoImpl.class
@@ -7,6 +9,7 @@ com\ikubinfo\konferenca\dto\ShqyrtuesArtikullDto.class
 com\ikubinfo\konferenca\managedBeans\LoggedUserBean.class
 com\ikubinfo\konferenca\utils\SessionFactoryUtil.class
 com\ikubinfo\konferenca\dao\ShqyrtuesDao.class
+com\ikubinfo\konferenca\managedBeans\FileOperationsBean.class
 com\ikubinfo\konferenca\service\impl\ArtikullServiceImpl.class
 com\ikubinfo\konferenca\convert\ShqyrtuesConverter.class
 com\ikubinfo\konferenca\convert\VleresimeConverter.class
@@ -38,6 +41,7 @@ com\ikubinfo\konferenca\exception\CustomExceptionHandler.class
 com\ikubinfo\konferenca\exception\ExceptionManagement.class
 com\ikubinfo\konferenca\service\ShqyrtuesService.class
 com\ikubinfo\konferenca\dto\ArtikullDto.class
+com\ikubinfo\konferenca\filesOperations\SearchFile.class
 com\ikubinfo\konferenca\service\impl\VleresimeServiceImpl.class
 com\ikubinfo\konferenca\exception\CustomExceptionHandlerFactory.class
 com\ikubinfo\konferenca\utils\HashSaltedPassword.class

@@ -1,0 +1,270 @@
+<!DOCTYPE HTML>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="kryesore.xhtml"
+     			xmlns:h="http://java.sun.com/jsf/html"
+      			xmlns:f="http://java.sun.com/jsf/core"
+      			xmlns:p="http://primefaces.org/ui"
+                xmlns:utils="http://xmlns.jcp.org/jsf/composite/utils">
+                
+	<ui:define name="title">Modifiko Artikullin</ui:define>
+	 
+    <ui:define name="content">
+<h:form id="formaModifiko" enctype="multipart/form-data">
+
+
+	<div style="margin: 30px 200px; padding: 10px;" class="backgroundLayer">
+		<div class="row" style=" margin: 30px; " >
+			<div class="col-md-4" align="center">
+				<div style="display: block;">
+				
+					<p:graphicImage id="artikullImageId"  style="width: 90%;
+  						height:auto; margin:20px; border-radius: 20%;" name="uploads/artikullPics/#{artikullBean.loggedUserBean.loggedAutor.artikullDto.docPicture}" />
+				
+				<br/>
+					<p:commandLink class="fontiOR textColor linkHov" immediate="true"
+	         						value="Ndrysho foton e kopertines!" onclick="PF('dialogNdryshoFotonArtikullit').show()"/> 
+				
+				</div>
+			</div>
+			<div class="col-md-5" >
+			
+				<div class="row" >
+					<div class="col-md-12">
+						<h:outputText styleClass="titujText" value="Titulli" /><br/>
+						<h:inputText styleClass="hinputtextCustom" value="#{loggedUserBean.loggedAutor.artikullDto.titulli}" /><br/>
+						<h:outputText styleClass="titujText" value="Dokumenti Elektronik" /><br/>
+						<h:inputText styleClass="hinputtextCustom" value="#{loggedUserBean.loggedAutor.artikullDto.dokumentiElektronik}" /><br/>
+						<h:outputText styleClass="titujText" value="Kontakt" /><br/>
+						<h:inputText styleClass="hinputtextCustom" value="#{loggedUserBean.loggedAutor.artikullDto.kontakt}" /><br/><br/>
+						<h:outputText styleClass="titujText" value="Vleresimi Total" /><br/>
+						<p:rating value="#{autorBean.averageStars()}" readonly="true" stars="10" cancel="false"/>
+						<h:outputText styleClass="contentText" style="font-size: 30px" value="#{autorBean.averagePoints()}" /><br/>
+						
+					</div>
+				</div>
+				
+			</div>
+			<div class="col-md-3">
+				<h:panelGroup style="display:block; text-align:center; margin-top: 20px; margin-bottom: 40px;">
+	         		<p:commandLink id="shikoDokumentinLink" class="fontiOR textColor linkHov" immediate="true" action="#"
+	         						value="Shiko dokumentin!"  onclick="PF('panelPerDokumentin').show()"/><br/>   
+	         		<p:commandLink class="fontiOR textColor linkHov" immediate="true" action="#"
+	         						value="Ndrysho Dokumentin!" onclick="PF('dialogNdryshoArtikullin').show()"/> 				              		
+               	</h:panelGroup>
+               	<hr color="white" />
+               	
+               	<h:outputText title="#{autorBean.bashkAutore()}" />
+               	<h:outputText styleClass="titujText" value="Bashkautore: " />
+               	<h:outputText styleClass="contentText" style="font-size: 20px" value=" #{autorBean.bashkAutoreCount}"/><br/>
+				<ui:repeat var="bashkautore" value="#{autorBean.bashkAutore()}" >
+					<h:outputText class="contentText3" value="#{bashkautore.emri} #{bashkautore.mbiemri}" immediate="true"/><br/>
+				</ui:repeat>
+				
+				
+			</div>
+		</div>
+		
+		
+		<hr color="white" width="80%"/>
+		<div class="row" style="margin: 30px;">
+			
+			<div class="col-md-12" style=" margin: 30px 0px;">
+						<h:outputText styleClass="titujText" value="Abstrakti" /><br/>
+						<p:inputTextarea rows="5" cols="40" styleClass="hinputtextCustom"
+										style="text-align: left !important; background-color: white !important; color:black !important; font-family:oswaldEL !important;
+										font-size: 22px; !important"
+										counter="karakteretLast" maxlength="1000" 
+										counterTemplate="{0} karaktere te mbetura." 
+										autoResize="false" 
+										value="#{loggedUserBean.loggedAutor.artikullDto.abstrakti}" 
+										/>
+							<br />
+    					<h:outputText styleClass="contentText2" id="karakteretLast" />
+			</div>
+				
+		</div>
+		
+		            <h:panelGroup style="display:block; text-align:center;">
+                  		<p:commandButton style="margin-top:30px;" class="fontiOL btn btn-primary" value="Ruaj ndryshimet"
+                  			 actionListener="#{loggedUserBean.updateLoggedAutorArtikull()}" 
+                  			 process="@form"  >
+                  			 </p:commandButton>
+               		</h:panelGroup>
+	
+		
+	</div>	
+	
+
+
+
+
+
+
+
+
+
+					
+
+		<p:dialog width="100%" 
+					dynamic="true"
+					height="90%" showEffect="fade" 
+					hideEffect="fade" id="panelPerdoc" 
+					header="Dokumenti!" 
+					widgetVar="panelPerDokumentin" 
+					resizable="false" >
+<h:form>
+				<p:media id="dokumentiViewMedia" value="/resources/uploads/artikullDocs/#{artikullBean.loggedUserBean.loggedAutor.artikullDto.docName}"
+					player="pdf"
+					width="100%" height="600px">
+					<h:outputLink value="/resources/uploads/artikullDocs/#{artikullBean.loggedUserBean.loggedAutor.artikullDto.docName}">
+					Kliko per te shkarkuar dokumentin.</h:outputLink>
+				</p:media>
+
+				<h:panelGroup
+					style="display:block; text-align:center; margin-top:10px;">
+					<p:commandButton value="Mbyll" oncomplete="PF('panelPerDokumentin').hide()">
+					</p:commandButton>
+				</h:panelGroup>
+</h:form>
+		</p:dialog>  
+
+
+
+
+		
+		
+
+<p:dialog showEffect="fade" hideEffect="fade" width="600" id="dialogChangeArtikull" header="Ndrysho artikullin" widgetVar="dialogNdryshoArtikullin" resizable="false" >
+	<div align="center" style="width: 100%;">
+	<p:outputPanel >
+        
+            	
+        <h:panelGrid id="panelGridDialogArtikull" style="width: 80%; font-size:15px" columns="3" styleClass="textColorGold fontiOL"
+            	cellpadding ="10" cellspacing="1">
+            	
+            	<h:outputLabel value="Ngarko dokumentin" />
+            	<p:fileUpload id="uploadButton" allowTypes="/(\.|\/)(pdf)$/"
+            				label="Ngarko" performVirusScan="true" 
+            				value="#{artikullBean.uploadedArtikull}" 
+            				mode="simple" skinSimple="true"/>
+            	<h:message for="uploadButton" styleClass="fontiOR" style="color:red; margin:8px;"/> 
+
+            	<f:facet name="footer">
+               		<h:panelGroup style="display:block; text-align:center">
+						<p:commandButton value="Ruaj ndryshimin" 
+								ajax="false"
+								actionListener="#{artikullBean.changeArtikullDocument()}" 
+								update="@form"
+								process="@this"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+            	</f:facet> 
+
+        </h:panelGrid>
+        </p:outputPanel>
+        </div>
+</p:dialog>  
+
+
+
+
+
+
+
+
+
+
+
+
+<p:dialog showEffect="fade" hideEffect="fade" width="600" id="dialogChangeKopertinaArtikull" header="Ndrysho foton e artikullit" widgetVar="dialogNdryshoFotonArtikullit" resizable="false" >
+	<div align="center" style="width: 100%;">
+	<p:outputPanel >
+            	
+        <h:panelGrid id="panelGridDialogFoto" style="width: 80%; font-size:15px" columns="3" styleClass="textColorGold fontiOL"
+            	cellpadding ="10" cellspacing="1">
+            	
+            	<h:outputLabel value="Ngarko foto per kopertinen e artikullit" />
+            	<p:fileUpload id="uploadButton2" allowTypes="/(\.|\/)(jpe?g|png|jpg|jpeg|bmp)$/"
+            				label="Ngarko" performVirusScan="true" 
+            				value="#{artikullBean.uploadedArtikullPicture}" 
+            				mode="simple" skinSimple="true">	
+            			</p:fileUpload>	
+            	<h:message for="uploadButton2" styleClass="fontiOR" style="color:red; margin:8px;"/> 
+            	
+
+            	<f:facet name="footer">
+               		<h:panelGroup style="display:block; text-align:center">
+						<p:commandButton value="Ruaj ndryshimin" 
+								ajax="false"
+								actionListener="#{artikullBean.changeArtikullPicture()}" 
+								update=":formaModifiko:artikullImageId"
+								process="@this" >
+						</p:commandButton>
+               		</h:panelGroup>
+            	</f:facet> 
+
+        </h:panelGrid>
+        </p:outputPanel>
+        </div>
+</p:dialog>  
+
+
+
+
+	
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogConfirm" header="Sukses!" widgetVar="dialogSuccess" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" process="@form"
+						action="/autor_res/modifikoArtikullin.xhtml?faces-redirect=true" onclick="PF('dialogSuccess').hide()">
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>
+</p:dialog>  
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogGabim" header="Gabim!" widgetVar="dialogError" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+            	
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" 
+								onclick=" PF('dialogError').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>	
+</p:dialog>  
+
+
+<p:dialog showEffect="fade" hideEffect="fade" id="dialogCust" header="Mesazh!" widgetVar="dialogCustom" resizable="false" >
+	<p:outputPanel style="text-align:center;">
+					<p:messages showDetail="true" closable="false" globalOnly="true" showIcon="false">
+			        	<p:autoUpdate/>
+			    	</p:messages>
+            	
+               		<h:panelGroup style="display:block; text-align:center; margin-top:35px;">
+						<p:commandButton value="Mbyll" 
+								onclick=" PF('dialogCustom').hide()"
+									 >
+						</p:commandButton>
+               		</h:panelGroup>
+         
+        </p:outputPanel>	
+</p:dialog>  
+</h:form>
+    </ui:define>
+
+</ui:composition>
