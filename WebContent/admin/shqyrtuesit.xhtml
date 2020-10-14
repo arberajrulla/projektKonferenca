@@ -79,7 +79,7 @@
     </p:column>
     
     <p:column styleClass="hiqOutline" headerText="E-mail" sortBy="#{shqyrtuesi.idEmail}" filterStyle="display:none" filterBy="#{shqyrtuesi.idEmail}">
-          <p:cellEditor>
+          <p:cellEditor disabled="true" >
               <f:facet name="output"><h:outputText style="display: block;" value="#{shqyrtuesi.idEmail}" /></f:facet>
               <f:facet name="input"><p:inputText value="#{shqyrtuesi.idEmail}" style="width:100%"/></f:facet>
           </p:cellEditor>        

@@ -33,7 +33,7 @@
             				color:#002f77; 
             				border-radius:4px;
             				width:100%;"
-			            	value="#{loggedUserBean.oldPassword}"/>			
+			            	value="#{loggedUserBean.loggedUser.oldPassword}"/>			
             	<h:message style="color:red;margin:8px;" for="fushaPassRes1" ></h:message>
            
            
@@ -43,12 +43,12 @@
             				color:#002f77; 
             				border-radius:4px;
             				width:100%;"
-			            	value="#{loggedUserBean.newPassword}" match="fushaPassRes3" />
+			            	value="#{loggedUserBean.loggedUser.newPassword}" match="fushaPassRes3" />
             	<h:message style="color:red;margin:8px;" for="fushaPassRes2" ></h:message>
             	
             	
             	<h:outputLabel class="fontiOSB textColor" value="Perserisni fjalekalimin e ri"  />
-            	<p:password id="fushaPassRes3" value="#{loggedUserBean.newPasswordConfirm}"
+            	<p:password id="fushaPassRes3" value="#{loggedUserBean.loggedUser.newPasswordConfirm}"
             				style="background-color: white !important;
             				color:#002f77; 
             				border-radius:4px;

@@ -58,7 +58,6 @@ public class AutorBean implements Serializable{
 		fillArtikujDropdownModify();
 	}
 	
-
 	public Map<String, Integer> getArtikujDropdown() {
 		return artikujDropdown;
 	}
@@ -154,26 +153,52 @@ public class AutorBean implements Serializable{
 	}
 
 	public void addAutor() {
-			autorService.addAutor(newAutor);
-			fillAutorList();
-			artikujDropdownFill();
+		if (autorService.autorCheck(newAutor.getEmailId())) {
+			UtilMessages.addMessageError(null, 
+					UtilMessages.bundle.getString("AUTOR_EXISTS"));
+		}else {
+			if (autorService.addAutor(newAutor)) {
+				UtilMessages.addMessageSuccess(null, 
+						UtilMessages.bundle.getString("AUTOR_ADD_SUCCESS"));
+				fillAutorList();
+				artikujDropdownFill();
+			} else {
+				UtilMessages.addMessageError(null, 
+						UtilMessages.bundle.getString("AUTOR_ADD_FAIL"));
+			}
+		}
 	}
 	
 	public void deleteAutor() {
 		log.info("Delete Autor called " + selectedAutore.get(0).getEmri());
-		autorService.deleteAutor(selectedAutore); 
-		fillAutorList();
-		artikujDropdownFill();
+		
+		if (autorService.deleteAutor(selectedAutore)) {
+			UtilMessages.addMessageSuccess(null, 
+					UtilMessages.bundle.getString("AUTOR_DELETE_SUCCESS"));
+			fillAutorList();
+			artikujDropdownFill();
+		} else {
+			UtilMessages.addMessageError(null, 
+					UtilMessages.bundle.getString("AUTOR_DELETE_FAIL"));
+		}
 	}
 	
     public void onRowEdit(RowEditEvent<AutorDto> event) {
 		log.info("Row edit called: " + event.getObject().getEmri());
-		autorService.updateAutor(event.getObject()); 
-		fillAutorList();
+		
+		if (autorService.updateAutor(event.getObject())) {
+			UtilMessages.addMessageSuccess(null, 
+					UtilMessages.bundle.getString("AUTOR_UPDATE_SUCCESS"));
+		} else {
+			UtilMessages.addMessageError(null, 
+					UtilMessages.bundle.getString("AUTOR_UPDATE_FAIL"));
+		}
 	}
      
     public void onRowCancel(RowEditEvent<AutorDto> event) {
     	log.info("Canceled the editing");
+    	UtilMessages.addCustomMessage(null, 
+    			UtilMessages.bundle.getString("INFO_CANCEL"));
     }
     
 	public void newDialogForNewArtikull() {
@@ -182,6 +207,8 @@ public class AutorBean implements Serializable{
 		current.executeScript("PF('dialogArtikullIRI').show()");
 	}
 	
+	
+	/* Autor Panel methods*/
 	
 	public void setFinishRegisterAsNewAutor() {
 		newAutor.setEmri(loggedUserBean.getTemporaryLoggedUser().getEmri());
@@ -196,7 +223,12 @@ public class AutorBean implements Serializable{
 		loggedUserBean.getLoggedUser().setRegisterStatus(1);
 		loggedUserBean.updateLoggedUserDetails();
 		AutorDto autorDto = autorService.getAutor(newAutor.getEmailId());
-		loggedUserBean.setLoggedAutor(autorDto);
+		if(autorDto==null) {
+			loggedUserBean=null;
+			throw new RuntimeException(UtilMessages.bundle.getString("EXCEPTION_AUTOR_NOT_REGISTERED_WITH_USER"));
+		}else {
+			loggedUserBean.setLoggedAutor(autorDto);
+		}
 		return "/autor_res/faqja1.xhtml?faces-redirect=true";
 	}
 	
@@ -214,10 +246,7 @@ public class AutorBean implements Serializable{
 				shuma += avgTemp/4;
 				counter++;
 			}	
-			
-			
 		}
-
 		if(counter > 0) {
 			return Math.round(shuma/counter * 1) / 1.0;
 		}else {

@@ -1,11 +1,16 @@
 package com.ikubinfo.konferenca.utils;
 
+import java.util.ResourceBundle;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.PrimeFaces;
 
 public class UtilMessages {
+	
+	public final static ResourceBundle bundle = ResourceBundle
+			.getBundle("com.ikubinfo.konferenca.message");
 	
 	public static void addMessageSuccess(String info, String incomingMessage) { 
 		PrimeFaces current = PrimeFaces.current();

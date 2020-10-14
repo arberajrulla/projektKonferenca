@@ -66,12 +66,13 @@ public class ShqyrtuesConverter {
 		shqyrtues.setMbiemri(shqyrtuesDto.getMbiemri());
 		shqyrtues.setInstitucioni(shqyrtuesDto.getInstitucioni());
 		
-		List<ShqyrtuesArtikull> shqyrtuesArtikull = new ArrayList<ShqyrtuesArtikull>();
-		for(ShqyrtuesArtikullDto shqyrtuesArtikullDto : shqyrtuesDto.getVleresimePerShqyrtues()) {
-			shqyrtuesArtikull.add(vleresimeConverter.toShqyrtuesArtikull(shqyrtuesArtikullDto));
+		if (shqyrtuesDto.getVleresimePerShqyrtues()!=null) {
+			List<ShqyrtuesArtikull> shqyrtuesArtikull = new ArrayList<ShqyrtuesArtikull>();
+			for(ShqyrtuesArtikullDto shqyrtuesArtikullDto : shqyrtuesDto.getVleresimePerShqyrtues()) {
+				shqyrtuesArtikull.add(vleresimeConverter.toShqyrtuesArtikull(shqyrtuesArtikullDto));
+			}
+			shqyrtues.setVleresime(shqyrtuesArtikull);
 		}
-		
-		shqyrtues.setVleresime(shqyrtuesArtikull);
 		
 		return shqyrtues;
 	}

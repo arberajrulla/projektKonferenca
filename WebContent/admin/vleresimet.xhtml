@@ -38,11 +38,7 @@
 	            </div>	
 	            <p:separator style="background: rgba(107, 247, 255, 0.2); border-color: rgba(107, 247, 255, 0.2);height:0.2px "/>
 	            <div style="padding-bottom:5px; margin-top:-7px;">
-		            <p:commandButton style="float: left; left: 10px;" process="tabelaVleresim" 
-		            			actionListener="#{vleresimeBean.deleteVleresim()}"
-	          	 				value="Fshi" update="tabelaVleresim">
-							<p:confirm header="Konfirmo" message="Kujdes, fushat e perzgjedhura do te fshihen!"/>
-	          		</p:commandButton>	        
+	        
 		                <h:outputText class="textColor fontiOEL" style="padding-right:10px; align: right; " value="Kerko:" />
 		                <p:inputText id="globalFilter" onkeyup="PF('tabelaAllVleresime').filter()" 
 		                	style="padding-right:10px; " styleClass="inputFushaFilterKerko"
@@ -55,11 +51,11 @@
         <p:ajax event="rowEditCancel" listener="#{vleresimeBean.onRowCancel}"/>
         
          
-	<p:column selectionMode="multiple" style="width:35px;text-align:center; margin:auto;"/>
+	<p:column visible="false" selectionMode="multiple" style="width:35px;text-align:center; margin:auto;"/>
     <p:column styleClass="hiqOutline" headerText="Emri i Shqyrtuesit" 
     			filterMatchMode="exact" sortBy="#{vleresimi.emriFull}"
     			filterStyle="display:none" filterBy="#{vleresimi.emriFull}">
-          <p:cellEditor>
+          <p:cellEditor disabled="true">
               <f:facet name="output"><h:outputText style="display: block;" value="#{vleresimi.emriFull}" /></f:facet>
               <f:facet name="input">
               		<p:inputText id="modelInput" value="#{vleresimi.emriFull}" style="width:100%" required="true">
@@ -121,42 +117,12 @@
               <f:facet name="input"><p:inputText value="#{vleresimi.rekomandim}" style="width:100%"/></f:facet>
           </p:cellEditor>
     </p:column>    
-    
-    <p:column style="width:80px" headerText="Modifiko" styleClass="editoBorderTabela">							     	
-          	<p:rowEditor/>
-    </p:column>
-	<!--     <p:column style="margin:auto;" >
-         <p:commandButton value="Fshi Rekordin" style="margin:auto; display: flex"/>
-    </p:column>
-     -->
+
+
     <f:facet name="footer">
-
-          	
-          	<p:commandButton process="@this"
-          	 value="Shto Vleresim"
-          	 oncomplete="PF('dialogVleresimIRI').show()" update="tabelaVleresim">
-          	</p:commandButton>
-
+    	<br/>
     </f:facet>
 </p:dataTable>
-
-
-<p:confirmDialog  id="konfirmoDialog" global="true" showEffect="fade" hideEffect="fade" >
-        <p:commandButton style="align:center;" value="Konfirmo" type="button" styleClass="ui-confirmdialog-yes" />
-        <p:commandButton style="align:center;" value="Kthehu" type="button" styleClass="ui-confirmdialog-no" />
-</p:confirmDialog>
-
-
-
-
-<p:contextMenu for="tabelaVleresim" widgetVar="menujacntx" >
-        <p:menuitem process="@form" actionListener="#{vleresimeBean.deleteVleresim()}"
-        			value="Fshi" update="tabelaVleresim">
-        			<p:confirm header="Konfirmim" message="Deshironi ta fshini kete vleresim?!"/>	
-        </p:menuitem>
-         <p:separator />
-         <p:menuitem value="Mbyll" onclick="PF('menujacntx').hide()"/>
-</p:contextMenu>
 
 </div>
 </h:form>

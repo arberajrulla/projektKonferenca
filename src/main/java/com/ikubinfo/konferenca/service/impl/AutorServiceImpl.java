@@ -24,69 +24,72 @@ public class AutorServiceImpl implements AutorService{
 	@Autowired
 	AutorConverter autorConverter;
 	
-	@Transactional
+	@Override
 	public List<AutorDto> getAllAutore() {
 		List<AutorDto> listaAutorDto = new ArrayList<AutorDto>();
 		try {
 			log.info("Service - Converting Autor objects retrieved from DB to AutorDto");
 			for(Autor autor : autorDao.getAllAutor()) {
-				listaAutorDto.add(autorConverter.toAutorDto(autor));
-			}
+				listaAutorDto.add(autorConverter.toAutorDto(autor));}
 			return listaAutorDto;
-			
 		}catch(Exception e) {
 			log.error("Something went wrong! Couldn't convert Autor list to DTO");
-			UtilMessages.addMessageError( null, "Problem ne marrjen e listes se autoreve!");
-			return new ArrayList<AutorDto>();
 		}
+		return listaAutorDto;
 	}
 
 	@Transactional
-	public void addAutor(AutorDto newAutor) {
-		if (autorCheck(newAutor.getEmailId())) {
-			UtilMessages.addMessageError(null, "Error, Autori me kete E-mail ekziston!");
-		}else {		
+	public boolean addAutor(AutorDto newAutor) {
 			try {
-				log.info(" SERVICE adding autor selected dropdown id: " + newAutor.getArtikullId());
 				autorDao.addAutor(autorConverter.toNewAutor(newAutor)); 
 				log.info("New Autor " + newAutor.getEmri() + " added successfully!");
-				
-				UtilMessages.addMessageSuccess("Sukses!", "Autori " + newAutor.getEmri() + " u shtua me sukses!");
+				return true;
 			}catch (Exception e) {
 				log.error("AUTOR SERVICE- Something went wrong! Couldn't add Autor", e);
-				UtilMessages.addMessageError(null, "Error, autori nuk u shtua");
 			}
-		}
+		return false;
 	}
 
+	
+	@Transactional
+	public boolean deleteSingleAutor(AutorDto autorDto) {
+		try {
+			autorDao.deleteAutor(autorDto.getEmailId());
+			log.info("Service layer, Autor deleted successfully");
+			return true;
+		}catch(Exception e) { 
+			log.error("Service layer, error during deletion of Autor!", e);
+		}
+		return false;
+	}
 
 	@Transactional
-	public void deleteAutor(List<AutorDto> selectedAutor) {
+	public boolean deleteAutor(List<AutorDto> selectedAutor) {
 		try {
 			for(AutorDto autorDto : selectedAutor) {
 				autorDao.deleteAutor(autorDto.getEmailId());}
 			log.info("Service layer, Selected Autor(s) deleted successfully");
-			UtilMessages.addMessageSuccess("Sukses!", "Fshirja u krye me sukses!");
+			return true;
 		}catch(Exception e) { 
 			log.error("Service layer, error during deletion of Autor!", e);
-			UtilMessages.addMessageError(null, "Error, fshirja nuk u krye!");
 		}
+		return false;
 	}
 		
 
 	@Transactional
-	public void updateAutor(AutorDto autorDto) {
+	public boolean updateAutor(AutorDto autorDto) {
 			try {
 				autorDao.updateAutor(autorConverter.toAutorUpdate(autorDto)); 
 				log.info("Service updated Autor successfully!");
-				UtilMessages.addMessageSuccess("Sukses!", "Autori " + autorDto.getEmri() + " u modifikua me sukses!");
+				return true;
 			} catch (Exception e) {
 				log.error("Service layer, error during Autor update!", e);
-				UtilMessages.addMessageError(null, "Error, modifikimi nuk u krye!");
 			}
+			return false;
 	}
 
-	@Transactional
+	@Override
 	public boolean autorCheck(String email) {
 		try {
 			if(autorDao.checkAutorIfExists(email)) {
@@ -98,12 +101,11 @@ public class AutorServiceImpl implements AutorService{
 			}
 		} catch (Exception e) {
 			log.error("Error, Service couldn't get Autor!", e);
-			UtilMessages.addMessageError(null, "Error, gjate kontrollit, ju lutemi provoni perseri!");
-			return true;
 		}
+		return true;
 	}
 
-	@Transactional
+	@Override
 	public AutorDto getAutor(String email) {
 		try {
 			AutorDto autorDto;
@@ -111,24 +113,22 @@ public class AutorServiceImpl implements AutorService{
 			return autorDto;
 		} catch (Exception e) {
 			log.error("Error, Service couldn't get Autor!", e);
-			UtilMessages.addMessageError(null, "Error, gjate marrjes se autorit, ju lutemi provoni perseri!");
-			return null;
 		}
-		
+		return null;
 	}
 
-	@Transactional
+	@Override
 	public AutorDto getAutorByArtikullId(int artikullId) {
+		AutorDto autorDto = new AutorDto();
 		try {
-			AutorDto autorDto;
 			log.info("Getting autor by id: " + artikullId);
 			autorDto = autorConverter.toAutorDtoForVleresimeArtikulli(autorDao.getAutorByArtikullId(artikullId));
 			return autorDto;
 		} catch (Exception e) {
 			log.error("Error, Service couldn't get Autor!", e);
-			UtilMessages.addMessageError(null, "Error, gjate marrjes se autorit, ju lutemi provoni perseri!");
-			return new AutorDto();
 		}
+		return autorDto;
 	}
+
 }
 

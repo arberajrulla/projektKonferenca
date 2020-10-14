@@ -17,6 +17,7 @@ import com.ikubinfo.konferenca.dto.ShqyrtuesDto;
 import com.ikubinfo.konferenca.service.ArtikullService;
 import com.ikubinfo.konferenca.service.ShqyrtuesService;
 import com.ikubinfo.konferenca.service.VleresimeService;
+import com.ikubinfo.konferenca.utils.UtilMessages;
 
 @ManagedBean(name = "vleresimeBean")
 @ViewScoped
@@ -42,8 +43,6 @@ public class VleresimeBean implements Serializable{
 	private Map<String,String> allShqyrtuesitDropdownList = new HashMap<>();
 	private Map<String,Integer> allArtikujtDropdownList = new HashMap<>();
  	
-
-
 
 	@PostConstruct
 	public void init() {
@@ -124,7 +123,6 @@ public class VleresimeBean implements Serializable{
 		}
 	}
 	
-
 	
 	public void fillAllVleresimeList() {
 		allVleresimeList = vleresimeService.getShqyrtuesArtikullList();
@@ -133,27 +131,56 @@ public class VleresimeBean implements Serializable{
 	
 	public void addVleresim() {
 		log.info("Message from vleresim " + newVleresim.getMeritaTeknike());
-		vleresimeService.addVleresim(newVleresim);
-		fillAllVleresimeList();
-		allShqyrtuesitDropdownListFill();
-		allArtikujtDropdownListFill();
+		if(vleresimeService.vleresimCheck(newVleresim.getShqrtid()
+				, newVleresim.getArid())) {
+			UtilMessages.addMessageError(null, 
+					UtilMessages.bundle.getString("ARTIKULL_ALREADY_REVIEWED"));
+		}else {
+			if (vleresimeService.addVleresim(newVleresim)) {
+				UtilMessages.addMessageSuccess(null, 
+						UtilMessages.bundle.getString("VLERESIM_ADD_SUCCESS"));
+				fillAllVleresimeList();
+				allShqyrtuesitDropdownListFill();
+				allArtikujtDropdownListFill();
+			} else {
+				UtilMessages.addMessageError(null, 
+						UtilMessages.bundle.getString("VLERESIM_ADD_FAIL"));
+			}
+		}
 	}
 	
 	public void deleteVleresim() {
 		log.info("Delete Vleresim called " + selectedVleresime.get(0).getEmriFull());
-		vleresimeService.deleteVleresim(selectedVleresime); 
-		fillAllVleresimeList();
-		allShqyrtuesitDropdownListFill();
-		allArtikujtDropdownListFill();
+		
+		if (vleresimeService.deleteVleresim(selectedVleresime)) {
+			UtilMessages.addMessageSuccess(null, 
+					UtilMessages.bundle.getString("VLERESIM_DELETE_SUCCESS"));
+			fillAllVleresimeList();
+			allShqyrtuesitDropdownListFill();
+			allArtikujtDropdownListFill();
+		} else {
+			UtilMessages.addMessageError(null, 
+					UtilMessages.bundle.getString("VLERESIM_DELETE_FAIL"));
+		}
 	}
 	
     public void onRowEdit(RowEditEvent<ShqyrtuesArtikullDto> event) {
 		log.info("Row edit called: " + event.getObject().getEmriFull());
-		vleresimeService.updateVleresim(event.getObject());
+		
+		if (vleresimeService.updateVleresim(event.getObject())) {
+			UtilMessages.addMessageSuccess(null, 
+					UtilMessages.bundle.getString("VLERESIM_UPDATE_SUCCESS"));
+		} else {
+			UtilMessages.addMessageError(null, 
+					UtilMessages.bundle.getString("VLERESIM_UPDATE_FAIL"));
+		}
+		
     }
      
     public void onRowCancel(RowEditEvent<ShqyrtuesArtikullDto> event) {
     	log.info("Canceled the editing");
+    	UtilMessages.addCustomMessage(null, 
+    			UtilMessages.bundle.getString("INFO_CANCEL"));
     }
 	
 	

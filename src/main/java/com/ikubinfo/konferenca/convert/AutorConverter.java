@@ -29,7 +29,8 @@ public class AutorConverter {
 	
 	@Autowired
 	ShqyrtuesConverter shqyrtuesConverter;
-
+	
+	
 	public AutorDto toAutorDto(Autor autor) {
 		AutorDto autorDto = new AutorDto();
 		autorDto.setEmailId(autor.getEmailId());
@@ -48,7 +49,6 @@ public class AutorConverter {
 		autorDto.setEmri(autor.getEmri());
 		autorDto.setMbiemri(autor.getMbiemri());
 		
-		
 		List<ShqyrtuesArtikullDto> vleresimeDtoList = new ArrayList<ShqyrtuesArtikullDto>(); 
 		
 		Artikull artikull = new Artikull();
@@ -62,7 +62,6 @@ public class AutorConverter {
 		}
 		autorDto.setVleresimeDto(vleresimeDtoList);
 		log.info("vleresimeDTO LISTA : " + vleresimeDtoList.size());
-		
 		
 		ArtikullDto artDto = artikullConverter.toArtikullDto(autor.getArtikuj());
 		List<AutorDto> autorDtoForArtikull = new ArrayList<>();
@@ -78,8 +77,6 @@ public class AutorConverter {
 	}
 	
 	
-	
-	
 	public Autor toAutor(AutorDto autorDto) {
 		Autor autor = new Autor();
 		autor.setEmailId(autorDto.getEmailId());
@@ -90,7 +87,8 @@ public class AutorConverter {
 		autor.setArtikuj(artikull);	
 		return autor;
 	}
-
+	
+	
 	public Autor toNewAutor(AutorDto newAutor) {
 		Autor autor = new Autor();
 		autor.setEmailId(newAutor.getEmailId());
@@ -103,16 +101,14 @@ public class AutorConverter {
 		return autor;
 	}
 	
+	
 	public Autor toAutorUpdate(AutorDto autorDto) {
 		Autor autor = new Autor();
 		autor.setEmailId(autorDto.getEmailId());
 		autor.setEmri(autorDto.getEmri());
 		autor.setMbiemri(autorDto.getMbiemri());
 		
-		Artikull artikull = new Artikull();
-		artikull.setArtikullId(autorDto.getArtikullId());
-		artikull.setTitulli(autorDto.getArtikullName());
-		autor.setArtikuj(artikull);
 		return autor;
 	}
+
 }

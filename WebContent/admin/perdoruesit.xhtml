@@ -82,7 +82,7 @@
     </p:column>
  
     <p:column styleClass="hiqOutline" headerText="E-mail" sortBy="#{userDto.email}" filterStyle="display:none" filterBy="#{userDto.email}">
-          <p:cellEditor>
+          <p:cellEditor disabled="true" >
               <f:facet name="output"><h:outputText style="display: block;" value="#{userDto.email}" /></f:facet>
               <f:facet name="input"><p:inputText value="#{userDto.email}" style="width:100%"/></f:facet>
           </p:cellEditor>        
@@ -97,7 +97,7 @@
     
     
     <p:column styleClass="hiqOutline" headerText="Kategoria" sortBy="#{userDto.kategoria}" filterStyle="display:none" filterBy="#{userDto.kategoria}">
-          <p:cellEditor>
+          <p:cellEditor disabled="true" >
               <f:facet name="output"><h:outputText style="display: block;" value="#{userDto.kategoria}" /></f:facet>
               <f:facet name="input"><p:selectOneMenu  style="width:100%" styleClass="inputFushat" value="#{userDto.kategoria}"> 
 					   					<f:selectItem itemValue="#{null}" itemLabel="--Zgjidh--" />

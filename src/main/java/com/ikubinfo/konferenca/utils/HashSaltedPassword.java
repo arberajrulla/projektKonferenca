@@ -3,6 +3,7 @@ package com.ikubinfo.konferenca.utils;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.primefaces.component.log.Log;
@@ -24,9 +25,8 @@ public class HashSaltedPassword {
 			byte[] hash = dig.digest(plainPassword.getBytes());
 			return bytesToStringHex(hash);
 		} catch (NoSuchAlgorithmException | NullPointerException e) {
-			log.error("Couldn't generate hashed password!");
-			e.printStackTrace();
-			return "";
+			log.error("Couldn't generate hashed password!", e);
+			throw new RuntimeException("Error, Fjalekalimi nuk u gjenerua, ju lutemi provoni perseri me vone!");
 		}
 	}
 
@@ -50,6 +50,7 @@ public class HashSaltedPassword {
 		secureRandom.nextBytes(bytes);
 		return bytes;
 	}
+	
 	
 
 }

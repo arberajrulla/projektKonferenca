@@ -21,83 +21,89 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	UserDao userDao;
 
-	@Transactional
+	
+	@Override
 	public UserDto getUserForLoggin(String username) {
-		User user = new User();
 		UserDto userDto = new UserDto();
 		try {
-			user = userDao.getUserForLogin(username);
-			userDto = UserConverter.toUserDto(user);
+			userDto = UserConverter.toUserDto(userDao.getUserForLogin(username));
 			log.info("Service retrieved user for login successfully!");
 			return userDto;
 		} catch (Exception e) {
 			log.error("Service couldn't retrieve the User for login!", e);
-			UtilMessages.addMessageError( null, "Problem ne marrjen e perdoruesit per login!");
-			return new UserDto();
 		}
+		return null;
 	}
 
-	@Transactional
-	public ArrayList<UserDto> getAllUsers() {
-		ArrayList<UserDto> usersDto = new ArrayList<UserDto>();
-		
+	
+	@Override
+	public List<UserDto> getAllUsers() {
+		List<UserDto> usersDto = new ArrayList<UserDto>();
 		try {
-			ArrayList<User> user = userDao.getAllUser();
-			for(User u : user) {
-				usersDto.add(UserConverter.toUserDto(u));
-			}
+			for(User u : userDao.getAllUser()) {
+				usersDto.add(UserConverter.toUserDto(u));}
 			log.info("Service retrieved user list successfully!");
 			return usersDto;
 		} catch (Exception e) {
 			log.error("Service couldn't retrieve the User list!", e);
-			UtilMessages.addMessageError( null, "Problem ne marrjen e listes se perdoruesve!");
-			return new ArrayList<UserDto>();
 		}
+		return usersDto;
 	}
 
+	
 	@Transactional
-	public void addUser(UserDto userDto) {
-		if (userCheck(userDto.getEmail(), userDto.getUsername())) {
-			UtilMessages.addMessageError(null, "Error, Perdoruesi me kete Username ose E-mail ekziston!");
-		}else {
+	public boolean addUser(UserDto userDto) {
 			try {
 				userDao.addUser(UserConverter.toNewUser(userDto));
 				log.info("New User " + userDto.getEmri() + " " + userDto.getMbiemri() + " added successfully!");
-				UtilMessages.addMessageSuccess("Sukses!", "Perdoruesi " + userDto.getEmri() + " u shtua me sukses!");
+				return true;
 			} catch (Exception e) {
 				log.error("User Service couldn't add new user!",e);
-				UtilMessages.addMessageError(null, "Error, perdoruesi nuk u shtua");
 			}
-		}
+		return false;
 	}
 
+	
 	@Transactional
-	public void updateUser(UserDto userDto) {
+	public boolean updateUser(UserDto userDto) {
 			try {
 				userDao.updateUser(UserConverter.userUpdate(userDto)); 
 				log.info("Service updated user successfully!");
-				UtilMessages.addMessageSuccess("Sukses!", "Perdoruesi " + userDto.getEmri() + " u modifikua me sukses!");
+				return true;
 			} catch (Exception e) {
 				log.error("Service couldn't update the user!", e);
-				UtilMessages.addMessageError(null, "Error, modifikimi nuk u krye!");
 			}
-		
+		return false;
 	}
 
-
+	
 	@Transactional
-	public void deleteUser(List<UserDto> userListToDelete) {
+	public boolean deleteSingleUser(String username) {
+		try {
+			userDao.deleteUser(username);
+			log.info("Service deleted user successfully!");
+			return true;
+		} catch (Exception e) {
+			log.error("Couldn't delete user, error occurred!", e);
+		}
+		return false;
+	}
+
+	
+	@Transactional
+	public boolean deleteUser(List<UserDto> userListToDelete) {
 		try {
 			for(UserDto userDto : userListToDelete) {
 			userDao.deleteUser(userDto.getUsername());}
 			log.info("Service deleted user successfully!");
-			UtilMessages.addMessageSuccess("Sukses!", "Fshirja u krye me sukses!");
+			return true;
 		} catch (Exception e) {
 			log.error("Couldn't delete user, error occurred!", e);
-			UtilMessages.addMessageError(null, "Error, fshirja nuk u krye!");
 		}
+		return false;
 	}
 
+	
 	@Override
 	public boolean userCheck(String email, String username) {
 		try {
@@ -110,11 +116,11 @@ public class UserServiceImpl implements UserService{
 			}
 		} catch (Exception e) {
 			log.error("Error, Service couldn't get user!", e);
-			UtilMessages.addMessageError(null, "Error, gjate kontrollit, ju lutemi provoni perseri!");
-			return true;
 		}
+		return true;
 	}
 
+	
 	@Override
 	public UserDto getSingleUser(String email) {
 		UserDto userDto = new UserDto();
@@ -124,21 +130,21 @@ public class UserServiceImpl implements UserService{
 			return userDto;
 		} catch (Exception e) {
 			log.error("Service couldn't retrieve the User!", e);
-			UtilMessages.addMessageError(null, "Error, ky perdorues nuk ekziston!");
-			return new UserDto();
 		}
+		return null;
 	}
 
-	@Override
-	public void recoverUserPassword(UserDto userDto) {
+	
+	@Transactional
+	public boolean recoverUserPassword(UserDto userDto) {
 		try {
 			userDao.updateUser(UserConverter.userPasswordReturn(userDto)); 
 			log.info("Service recovered user password successfully!");
-			UtilMessages.addMessageSuccess("Sukses!", "Fjalekalimi u ruajt me sukses!");
+			return true;
 		} catch (Exception e) {
 			log.error("Service couldn't update the user password!", e);
-			UtilMessages.addMessageError(null, "Error, modifikimi nuk u krye!");
 		}
-		
+		return false;
 	}
+
 }

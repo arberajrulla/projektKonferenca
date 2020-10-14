@@ -89,7 +89,7 @@
          	
             	<h:outputLabel class="fontiOSB textColor" value="USERNAME" />
             	<h:inputText class="form-control" 
-            				id="fushaId" value="#{authentikimBean.username}" >
+            				id="fushaId" value="#{authentikimBean.loggingUser.username}" >
             				</h:inputText>
             	<h:message styleClass="fontiOL" style="color:red; margin:8px;" for="fushaId" ></h:message>
            
@@ -97,7 +97,7 @@
             	
             	<h:outputLabel class="fontiOSB textColor" value="FJALEKALIMI"  />
             	<h:inputSecret class="form-control" 
-            					id="fushaPassword" value="#{authentikimBean.password}">
+            					id="fushaPassword" value="#{authentikimBean.loggingUser.password}">
             	</h:inputSecret>
             	<h:message styleClass="fontiOL" style="color:red; margin:8px;" for="fushaPassword" ></h:message>
             	

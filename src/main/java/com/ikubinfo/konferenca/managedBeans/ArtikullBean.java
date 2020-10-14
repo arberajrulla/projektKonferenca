@@ -16,6 +16,7 @@ import org.primefaces.model.file.UploadedFile;
 import com.ikubinfo.konferenca.dto.ArtikullDto;
 import com.ikubinfo.konferenca.filesOperations.UploadUtil;
 import com.ikubinfo.konferenca.service.ArtikullService;
+import com.ikubinfo.konferenca.utils.UtilMessages;
 
 @ManagedBean(name = "artikullBean")
 @ViewScoped
@@ -77,7 +78,6 @@ public class ArtikullBean implements Serializable {
 	}
 	public void setSelectedArtikuj(List<ArtikullDto> selectedArtikuj) {
 		this.selectedArtikuj = selectedArtikuj;
-		log.info("settingSelectedArtikuj " + selectedArtikuj.size());
 	}
 	public AutorBean getAutorBean() {
 		return autorBean;
@@ -121,15 +121,27 @@ public class ArtikullBean implements Serializable {
 		artikullIRi.setDocName(emriRiDoc);
 		
 		if(!(emriRiPic.isEmpty() || emriRiDoc.isEmpty())) {
-			artikullService.addArtikull(artikullIRi);
-			log.info("Artikull added succesfully");
-			fillListaArtikuj();
-			autorBean.artikujDropdownFill();
+			
+			if (!artikullService.artikullCheck(artikullIRi.getDokumentiElektronik())) {
+				if (artikullService.addArtikull(artikullIRi)) {
+					log.info("Artikull added succesfully");
+					UtilMessages.addMessageSuccess(null, 
+							UtilMessages.bundle.getString("ARTIKULL_ADD_SUCCESS"));
+					fillListaArtikuj();
+					autorBean.artikujDropdownFill();
+				} else {
+					UtilMessages.addMessageError(null, 
+							UtilMessages.bundle.getString("ARTIKULL_ADD_FAIL"));
+				}
+			} else {
+				UtilMessages.addMessageError(null, 
+						UtilMessages.bundle.getString("ARTIKULL_EDOC_EXISTS"));
+			}
 		}
 	}
 	
+	
 	public void changeArtikullDocument() {
-		//log.info("emri artikullit live: " + uploadedArtikull.getFileName().toString());
 		String emriVjeter = loggedUserBean.getLoggedAutor().getArtikullDto().getDocName();
 		String emriRiDoc = UploadUtil.nameGenerator(uploadedArtikull);
 		
@@ -140,14 +152,21 @@ public class ArtikullBean implements Serializable {
 		
 			log.info("Artikull document updated succesfully");
 			docDelete(emriVjeter);
-			artikullService.updateArtikull(aDto);
+			
+			if (artikullService.updateArtikull(aDto)) {
+				UtilMessages.addMessageSuccess(null, 
+						UtilMessages.bundle.getString("ARTIKULL_UPDATE_SUCCESS"));
+			} else {
+				UtilMessages.addMessageError(null, 
+						UtilMessages.bundle.getString("ARTIKULL_UPDATE_FAIL"));
+			}
+			
 			loggedUserBean.getLoggedAutor().getArtikullDto().setDocName(emriRiDoc);
 		}
 	}
-
+	
 	
 	public void changeArtikullPicture() {
-		//log.info("emri fotos live: " + uploadedArtikullPicture.getFileName().toString());
 		String emriVjeter = loggedUserBean.getLoggedAutor().getArtikullDto().getDocPicture();
 		String emriRiPic = UploadUtil.nameGenerator(uploadedArtikullPicture);
 		
@@ -159,7 +178,13 @@ public class ArtikullBean implements Serializable {
 		
 			log.info("Artikull picture updated succesfully");
 			docDelete(emriVjeter);
-			artikullService.updateArtikull(aDto);
+			if (artikullService.updateArtikull(aDto)) {
+				UtilMessages.addMessageSuccess(null, 
+						UtilMessages.bundle.getString("ARTIKULL_PIC_UPDATE_SUCCESS"));
+			} else {
+				UtilMessages.addMessageError(null, 
+						UtilMessages.bundle.getString("ARTIKULL_PIC_UPDATE_FAIL"));
+			}
 			loggedUserBean.getLoggedAutor().getArtikullDto().setDocPicture(emriRiPic);
 		}
 	}
@@ -167,23 +192,48 @@ public class ArtikullBean implements Serializable {
 	
 	public void deleteArtikull() {
 		log.info("Delete Artikull called " + selectedArtikuj.toString() + selectedArtikuj.size());
-		artikullService.deleteArtikull(selectedArtikuj);
-		fillListaArtikuj();
+		if (selectedArtikuj.isEmpty()) {
+			UtilMessages.addMessageError(null, 
+					UtilMessages.bundle.getString("SELECTION_EMPTY"));
+		} else {
+			if (artikullService.deleteArtikull(selectedArtikuj)) {
+				UtilMessages.addMessageSuccess(null, 
+						UtilMessages.bundle.getString("ARTIKULL_DELETE_SUCCESS"));
+				fillListaArtikuj();
+			}else {
+				UtilMessages.addMessageError(null, 
+						UtilMessages.bundle.getString("ARTIKULL_DELETE_FAIL"));
+			}
+		}
+
 	}
+	
 	
     public void onRowEdit(RowEditEvent<ArtikullDto> event) {
 		log.info("Row edit called: " + event.getObject().getTitulli());
-		artikullService.updateArtikull(event.getObject());
+		
+		if (artikullService.updateArtikull(event.getObject())) {
+			UtilMessages.addMessageSuccess(null, 
+					UtilMessages.bundle.getString("ARTIKULL_UPDATE_SUCCESS"));
+		} else {
+			UtilMessages.addMessageError(null, 
+					UtilMessages.bundle.getString("ARTIKULL_UPDATE_FAIL"));
+		}
     }
      
+    
     public void onRowCancel(RowEditEvent<ArtikullDto> event) {
     	log.info("Canceled the editing");
+    	UtilMessages.addCustomMessage(null, 
+    			UtilMessages.bundle.getString("INFO_CANCEL"));
     }
+    
     
     public void fileUpload(UploadedFile upFile, String emriRi, String pathFromRes) {
 		UploadUtil.saveFile(upFile, emriRi, pathFromRes);
 		log.info("document upload: " + upFile.getFileName());
     }
+    
     
     public void docDelete(String emriFile) {
     	if(emriFile==null) {
@@ -193,6 +243,5 @@ public class ArtikullBean implements Serializable {
         	log.info("document delete: " + emriFile);
     	}
     }
-    
     
 }

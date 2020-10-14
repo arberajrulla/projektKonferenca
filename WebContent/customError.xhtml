@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <h:head>
   <title>Error</title>
@@ -26,10 +27,19 @@
 				</div>
 
 	<div align="center" style="padding-top:30px;">
-	
+	<h:form>
 		<p class="fontiOEL" style="color:#15dde8; font-size: 35px;">Error page</p>
 		<p class="fontiOEL" style="color: white; font-size: 20px;">Mesazhi Error</p>
 		<p class="fontiOEL" style="color:white; font-size: 16px;">#{requestScope['error-message']}</p>
+		
+		<br/>
+
+		
+		     <h:panelGroup style="display:block; text-align:center; margin-top: 15px;">
+	         		<h:commandLink class="fontiOR textColor linkHov" immediate="true"
+	         						value="Klikoni ketu per tu rikthyer!" action="login.xhtml?faces-redirect=true"/>                  		
+             </h:panelGroup>
+        </h:form>	
 	</div>
 	</div>
 	

@@ -62,7 +62,7 @@
 							<h:outputText
 								value="Kodi i vendosur nuk eshte i sakte, ju lutemi provoni perseri ose ridergoni e-mail!"
 								style="color:red; font-family:oswaldB; font-size:18px;"
-								rendered="#{passwordRestoreBean.errorKey}" />
+								rendered="#{passwordRestoreBean.passwordResetUser.errorKey}" />
 						</h:panelGroup>
 						<h:panelGroup style="display:block; text-align:center">
 							<h:outputText styleClass="titujText"
@@ -78,7 +78,7 @@
 							<h:panelGroup style="display:block; text-align:center">
 								<h:inputText id="codeKonfirmoFusha" styleClass="contentText"
 									style="color:black; font-size: 18px !important; outline:none !important;"
-									value="#{passwordRestoreBean.enteredKodi}" />
+									value="#{passwordRestoreBean.passwordResetUser.enteredKodi}" />
 								<br />
 							</h:panelGroup>
 							<h:panelGroup style="display:block; text-align:center">

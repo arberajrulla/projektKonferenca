@@ -8,8 +8,9 @@ import com.ikubinfo.konferenca.dto.ArtikullDto;
 public interface ArtikullService {
 	
 	List<ArtikullDto> getArtikujLista();
-	void addArtikull(ArtikullDto artikullIRi);
-	void deleteArtikull(List<ArtikullDto> selectedArtikuj);
-	void updateArtikull(ArtikullDto artikullDto);
+	boolean addArtikull(ArtikullDto artikullIRi);
+	boolean deleteSingleArtikull(ArtikullDto artikullToDelete);
+	boolean deleteArtikull(List<ArtikullDto> selectedArtikuj);
+	boolean updateArtikull(ArtikullDto artikullDto);
 	boolean artikullCheck(String dokumentiElektronik);
 }

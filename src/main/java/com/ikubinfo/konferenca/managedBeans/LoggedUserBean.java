@@ -40,27 +40,10 @@ public class LoggedUserBean {
 	@ManagedProperty (value = "#{artikullService}")
 	ArtikullService artikullService;
 
-	private UserDto loggedUser;
-	
-	private UserDto temporaryLoggedUser;
-	
+	private UserDto loggedUser = new UserDto();
+	private UserDto temporaryLoggedUser = new UserDto();
 	private AutorDto loggedAutor = new AutorDto();
-	
 	private ShqyrtuesDto loggedShqyrtues = new ShqyrtuesDto();
-
-	@NotEmpty(message = "Fjalekalimi nuk mund te jete bosh!")
-	@Size(min=6, max=20, message = "Fjalekalimi duhet te kete nga 6 deri 20 karaktere!")
-	private String oldPassword;
-
-	@NotEmpty(message = "Fjalekalimi nuk mund te jete bosh!")
-	@Size(min=6, max=20, message = "Fjalekalimi duhet te kete nga 6 deri 20 karaktere!")
-	@Pattern(regexp = "^(?=.*\\d)(?=.*[a-zA-Z])(?=.*[@!#$%^&+=]).{6,}$", message = "Fjalekalimi duhet te permbaje te pakten nje numer dhe nje karakter special (@,!,#,$,%,^,&,+,=)!")
-	private String newPassword;
-	
-	@NotEmpty(message = "Fjalekalimi nuk mund te jete bosh!")
-	@Size(min=6, max=20, message = "Fjalekalimi duhet te kete nga 6 deri 20 karaktere!")
-	@Pattern(regexp = "^(?=.*\\d)(?=.*[a-zA-Z])(?=.*[@!#$%^&+=]).{6,}$", message = "Fjalekalimi duhet te permbaje te pakten nje numer dhe nje karakter special (@,!,#,$,%,^,&,+,=)!")
-	private String newPasswordConfirm;
 
 	public UserDto getLoggedUser() {
 		return loggedUser;
@@ -73,24 +56,6 @@ public class LoggedUserBean {
 	}
 	public void setUserService(UserService userService) {
 		this.userService = userService;
-	}
-	public String getNewPassword() {
-		return newPassword;
-	}
-	public void setNewPassword(String newPassword) {
-		this.newPassword = newPassword;
-	}
-	public String getNewPasswordConfirm() {
-		return newPasswordConfirm;
-	}
-	public void setNewPasswordConfirm(String newPasswordConfirm) {
-		this.newPasswordConfirm = newPasswordConfirm;
-	}
-	public String getOldPassword() {
-		return oldPassword;
-	}
-	public void setOldPassword(String oldPassword) {
-		this.oldPassword = oldPassword;
 	}
 	public UserDto getTemporaryLoggedUser() {
 		return temporaryLoggedUser;
@@ -129,36 +94,42 @@ public class LoggedUserBean {
 		this.artikullService = artikullService;
 	}
 	
-	
+	/* First login after completing the final registration successfully */
 	
 	public void temporaryToPermanentLoggedUser() {
 		loggedUser=temporaryLoggedUser;
 	}
-	
-	
-	public void logout() {
-		this.loggedAutor = null;
-		this.loggedUser = null;
-		this.loggedShqyrtues = null;
-        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-	}
-	
-    public void updateLoggedUserDetails() {
-		log.info("Preparing to update Logged user details");
-		userService.updateUser(loggedUser);
-    }
+
+    
+    /* Autor panel methods */
     
     public void updateLoggedAutorDetails() {
     	loggedAutor.setEmri(loggedUser.getEmri());
     	loggedAutor.setMbiemri(loggedUser.getMbiemri());
     	loggedAutor.setEmailId(loggedUser.getEmail());
     	loggedAutor.setArtikullId(loggedAutor.getArtikullDto().getArtikullId());
-    	autorService.updateAutor(loggedAutor);
-    	userService.updateUser(loggedUser);
+    	updateLoggedAutor(loggedAutor);
+    	updateUser(loggedUser);
     }
     
     public void updateLoggedAutorArtikull() {
-    	artikullService.updateArtikull(loggedAutor.getArtikullDto());
+    	if(artikullService.updateArtikull(loggedAutor.getArtikullDto())) {
+    		UtilMessages.addMessageSuccess(null, 
+    				UtilMessages.bundle.getString("ARTIKULL_UPDATE_SUCCESS"));
+    	}else {
+    		UtilMessages.addMessageError(null, 
+    				UtilMessages.bundle.getString("ARTIKULL_UPDATE_FAIL"));
+    	}
+    }
+    
+    public void updateLoggedAutor(AutorDto autorDto) {
+		if(autorService.updateAutor(autorDto)) {
+			UtilMessages.addMessageSuccess(null, 
+					UtilMessages.bundle.getString("AUTOR_PROFILE_UPDATE_SUCCESS"));
+		}else {
+			UtilMessages.addMessageError(null, 
+					UtilMessages.bundle.getString("AUTOR_PROFILE_UPDATE_FAIL"));
+		}
     }
     
     
@@ -168,56 +139,109 @@ public class LoggedUserBean {
     	loggedShqyrtues.setEmri(loggedUser.getEmri());
     	loggedShqyrtues.setMbiemri(loggedUser.getMbiemri());
     	loggedShqyrtues.setIdEmail(loggedUser.getEmail());
-    	shqyrtuesService.updateLoggedShqyrtues(loggedShqyrtues);
-    	userService.updateUser(loggedUser);
-    }    
+    	updateLoggedShqyrtues(loggedShqyrtues);
+    	updateUser(loggedUser);
+    }
     
+
+    public void updateLoggedShqyrtues(ShqyrtuesDto shqyrtuesDto) {
+		if(shqyrtuesService.updateLoggedShqyrtues(shqyrtuesDto)) {
+			UtilMessages.addMessageSuccess(null, 
+					UtilMessages.bundle.getString("SHQYRTUES_PROFILE_UPDATE_SUCCESS"));
+		}else {
+			UtilMessages.addMessageError(null, 
+					UtilMessages.bundle.getString("SHQYRTUES_PROFILE_UPDATE_FAIL"));
+		}
+    }
+    
+    
+    /* Change current Logged User password */
     
     public void changePassword() {
     	HashSaltedPassword hashSaltGenerator = new HashSaltedPassword();
     	if(loggedUser.getPassword()
-    			.equals(hashSaltGenerator.hashGenerate(oldPassword, loggedUser.getSalt())) ) {
+    			.equals(hashSaltGenerator.hashGenerate(loggedUser.getOldPassword(), loggedUser.getSalt())) ) {
     		log.info("Old password is correct! Attempting to change the password now!");
-    		if(newPassword.equals(newPasswordConfirm) && !oldPassword.equals(newPasswordConfirm)) {
+    		
+    		if(loggedUser.getNewPassword().equals(loggedUser.getNewPasswordConfirm()) 
+    				&& !loggedUser.getOldPassword().equals(loggedUser.getNewPasswordConfirm())) {
     			byte[] salt = hashSaltGenerator.createSalt();
-    			loggedUser.setPassword(hashSaltGenerator.hashGenerate(newPasswordConfirm, salt));
+    			loggedUser.setPassword(hashSaltGenerator.hashGenerate(loggedUser.getNewPasswordConfirm(), salt));
     			loggedUser.setSalt(salt);
-    			userService.updateUser(loggedUser);
-    			log.info("Password changed successfully!");
-    			UtilMessages.addMessageSuccess("Sukses!", "Fjalekalimi u ndryshua me sukses!");
+    			if (userService.updateUser(loggedUser)) {
+        			log.info("Password changed successfully!");
+        			UtilMessages.addMessageSuccess(null, 
+        					UtilMessages.bundle.getString("PASSWORD_CHANGE_SUCCESS"));
+				}else {
+	    			log.error("Error, password wasn't changed!");
+	    			UtilMessages.addMessageError(null, 
+	    					UtilMessages.bundle.getString("PASSWORD_CHANGE_FAIL"));
+				}
+    			
     		}else {
     			log.error("Passwords weren't entered correctly!");
-    			UtilMessages.addMessageError("Error! ", "Fjalekalimet jane futur gabim!");
+    			UtilMessages.addMessageError(null, 
+    					UtilMessages.bundle.getString("PASSWORDS_DO_NOT_MATCH"));
     		}
     	}else {
     		log.error("Old password is incorrect! ");
-    		UtilMessages.addMessageError("Error! ", "Fjalekalimi i vjeter nuk eshte i sakte!");
+    		UtilMessages.addMessageError(null, 
+    				UtilMessages.bundle.getString("INCORRECT_OLD_PASSWORD"));
     	}
     }
     
+    /* Update current Logged User info */
+	
+    public void updateLoggedUserDetails() {
+		log.info("Preparing to update Logged user details");
+		updateUser(loggedUser);
+    }
+    
+    public void updateUser(UserDto userDto) {
+		if(userService.updateUser(userDto)) {
+			UtilMessages.addMessageSuccess(null, 
+					UtilMessages.bundle.getString("USER_UPDATE_SUCCESS"));
+		}else {
+			UtilMessages.addMessageError(null, 
+					UtilMessages.bundle.getString("USER_UPDATE_FAIL"));
+		}
+    }
+    
+    /* Delete current Logged User */
+    
 	public String deleteLoggedUser() {
-		List<UserDto> lst = new ArrayList<UserDto>();
-		lst.add(loggedUser);
-		userService.deleteUser(lst);
-		this.loggedUser = null;
-		
-		if(loggedAutor!=null && !loggedAutor.getEmailId().isEmpty()) {
-			List<AutorDto> lstA = new ArrayList<AutorDto>();
-			lstA.add(loggedAutor);
-			autorService.deleteAutor(lstA);
-			this.loggedAutor = null;
+		try {
+			if (userService.deleteSingleUser(loggedUser.getUsername())) {
+				this.loggedUser = null;
+			}
+			
+			if(loggedAutor!=null && !loggedAutor.getEmailId().isEmpty()) {
+				if (autorService.deleteSingleAutor(loggedAutor)) {
+					this.loggedAutor = null;
+				}
+			}
+			
+			if(loggedShqyrtues!=null && !loggedShqyrtues.getIdEmail().isEmpty()) {
+				if(shqyrtuesService.deleteSingleShqyrtues(loggedShqyrtues)) {
+					this.loggedShqyrtues = null;
+				}
+			}
+	        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+	        return("/login.xhtml?faces-redirect=true");
+		}catch(Exception e){
+			log.error("User couldn't be deleted! ", e);
 		}
-		
-		if(loggedShqyrtues!=null && !loggedShqyrtues.getIdEmail().isEmpty()) {
-			List<ShqyrtuesDto> lstS = new ArrayList<ShqyrtuesDto>();
-			lstS.add(loggedShqyrtues);
-			shqyrtuesService.deleteShqyrtues(lstS);
-			this.loggedShqyrtues = null;
-		}
-        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return("/login.xhtml?faces-redirect=true");
+		UtilMessages.addMessageError(null, 
+				UtilMessages.bundle.getString("USER_DELETE_FAIL"));
+		return null;
 	}
-
+	
+	public void logout() {
+		this.loggedAutor = null;
+		this.loggedUser = null;
+		this.loggedShqyrtues = null;
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+	}
     
 }
 

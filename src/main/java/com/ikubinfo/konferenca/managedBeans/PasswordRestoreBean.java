@@ -20,38 +20,15 @@ import com.ikubinfo.konferenca.service.AutorService;
 import com.ikubinfo.konferenca.service.ShqyrtuesService;
 import com.ikubinfo.konferenca.service.UserService;
 import com.ikubinfo.konferenca.utils.MailUtil;
+import com.ikubinfo.konferenca.utils.UtilMessages;
 
 
 @ManagedBean(name = "passwordRestoreBean")
 @SessionScoped
 public class PasswordRestoreBean {
 
-	private static Logger log = Logger.getLogger(PasswordRestoreBean.class);
-	
-	@NotNull(message = "E-mail nuk duhet te jete bosh")
-	@Size(message = "E-mail duhet te kete nga 2 deri 40 karaktere!", min= 2, max = 40)
-	@Email(message = "Formati i e-mail nuk eshte i sakte!")
-	private String email;
-	
-	private String kodi;
-	private boolean errorKey = false;
+	private static Logger log = Logger.getLogger(PasswordRestoreBean.class);	
 
-	@NotNull(message = "Kodi nuk duhet te jete bosh")
-	@Size(message = "Kodi duhet te kete 6 karaktere!", min= 6, max = 6)
-	private String enteredKodi;
-	
-	@NotEmpty(message = "Fjalekalimi nuk mund te jete bosh!")
-	@Size(min=6, max=20, message = "Fjalekalimi duhet te kete nga 6 deri 20 karaktere!")
-	@Pattern(regexp = "^(?=.*\\d)(?=.*[a-zA-Z])(?=.*[@!#$%^&+=]).{6,}$", message = "Fjalekalimi duhet te permbaje te pakten nje numer dhe nje karakter special (@,!,#,$,%,^,&,+,=)!")
-	private String newPassword;
-
-	@NotEmpty(message = "Fjalekalimi nuk mund te jete bosh!")
-	@Size(min=6, max=20, message = "Fjalekalimi duhet te kete nga 6 deri 20 karaktere!")
-	@Pattern(regexp = "^(?=.*\\d)(?=.*[a-zA-Z])(?=.*[@!#$%^&+=]).{6,}$", message = "Fjalekalimi duhet te permbaje te pakten nje numer dhe nje karakter special (@,!,#,$,%,^,&,+,=)!")
-	private String newPasswordConfirm;
-	
-	
-	
 	@ManagedProperty(value = "#{userService}")
 	UserService userService;
 
@@ -64,7 +41,7 @@ public class PasswordRestoreBean {
 	@ManagedProperty (value = "#{shqyrtuesService}")
 	ShqyrtuesService shqyrtuesService;
 	
-	
+	private UserDto passwordResetUser = new UserDto();
 
 	public AutorService getAutorService() {
 		return autorService;
@@ -78,24 +55,6 @@ public class PasswordRestoreBean {
 	public void setShqyrtuesService(ShqyrtuesService shqyrtuesService) {
 		this.shqyrtuesService = shqyrtuesService;
 	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getKodi() {
-		return kodi;
-	}
-	public void setKodi(String kodi) {
-		this.kodi = kodi;
-	}
-	public String getEnteredKodi() {
-		return enteredKodi;
-	}
-	public void setEnteredKodi(String enteredKodi) {
-		this.enteredKodi = enteredKodi;
-	}
 	public UserService getUserService() {
 		return userService;
 	}
@@ -108,63 +67,59 @@ public class PasswordRestoreBean {
 	public void setLoggedUserBean(LoggedUserBean loggedUserBean) {
 		this.loggedUserBean = loggedUserBean;
 	}
-	public boolean isErrorKey() {
-		return errorKey;
+	public UserDto getPasswordResetUser() {
+		return passwordResetUser;
 	}
-	public void setErrorKey(boolean errorKey) {
-		this.errorKey = errorKey;
+	public void setPasswordResetUser(UserDto passwordResetUser) {
+		this.passwordResetUser = passwordResetUser;
 	}
-	public String getNewPassword() {
-		return newPassword;
-	}
-	public void setNewPassword(String newPassword) {
-		this.newPassword = newPassword;
-	}
-	public String getNewPasswordConfirm() {
-		return newPasswordConfirm;
-	}
-	public void setNewPasswordConfirm(String newPasswordConfirm) {
-		this.newPasswordConfirm = newPasswordConfirm;
-	}
-	
 	
 	
 	public void sendEmail() {
-		UserDto userDto = userService.getSingleUser(email);
-		if(userDto.getEmail().equals(email)) {
-			kodi = MailUtil.codeGenerate();
-			log.info("kodi per resetim : " + kodi);
-			MailUtil.sendResetMail(email, kodi);
+		UserDto userDto = userService.getSingleUser(passwordResetUser.getEmail());
+		if (userDto!=null) {
+			if(userDto.getEmail().equals(passwordResetUser.getEmail())) {
+				passwordResetUser.setKodi(MailUtil.codeGenerate());
+				MailUtil.sendResetMail(passwordResetUser.getEmail(), passwordResetUser.getKodi());
+			}
+		} else {
+			UtilMessages.addMessageError(null, 
+					UtilMessages.bundle.getString("USER_NOT_EXISTS_EMAIL"));
 		}
+
 	}
 	
 	public String verifikoKodin() {
-		if(kodi.equals(enteredKodi)) {
-			UserDto userDto = userService.getSingleUser(email);
+		if(passwordResetUser.getKodi().equals(passwordResetUser.getEnteredKodi())) {
+			UserDto userDto = userService.getSingleUser(passwordResetUser.getEmail());
 			loggedUserBean.setLoggedUser(userDto);
-			errorKey = false;
+			passwordResetUser.setErrorKey(false);
 			return "/harrimFjalekalimiConfirm.xhtml?faces-redirect=true";
 		}else {
-			errorKey = true;
+			passwordResetUser.setErrorKey(true);
 			return null;
 		}
-		
 	}
 	
 	public String setNewPassword() {
-		if(newPassword.equals(newPasswordConfirm)) {
+		if(passwordResetUser.getNewPassword().equals(passwordResetUser.getNewPasswordConfirm())) {
 			UserDto u = new UserDto();
-			userService.recoverUserPassword(u);
+			u.setPassword(passwordResetUser.getNewPasswordConfirm());
 			
-			return loginAfterPaswordReset();
+			if(userService.recoverUserPassword(u)) {
+				return loginAfterPaswordReset();
+			}
 		}else {
-			return null;
+			UtilMessages.addMessageError(null, 
+					UtilMessages.bundle.getString("PASSWORDS_DO_NOT_MATCH"));
 		}
+		return null;
 	}
+	
 	
 	public String loginAfterPaswordReset() {
 
-		UserDto userDto = userService.getSingleUser(email);
+		UserDto userDto = userService.getSingleUser(passwordResetUser.getEmail());
 		switch (userDto.getKategoria()) {
 		case "admin":
 			loggedUserBean.setLoggedUser(userDto);
@@ -191,6 +146,8 @@ public class PasswordRestoreBean {
 			}	
 
 		default:
+			UtilMessages.addMessageError(null, 
+					UtilMessages.bundle.getString("ERROR_LOGIN"));
 			return null;
 		}
 		

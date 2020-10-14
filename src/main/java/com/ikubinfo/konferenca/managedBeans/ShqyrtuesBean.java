@@ -14,6 +14,7 @@ import com.ikubinfo.konferenca.dto.ShqyrtuesArtikullDto;
 import com.ikubinfo.konferenca.dto.ShqyrtuesDto;
 import com.ikubinfo.konferenca.service.ShqyrtuesService;
 import com.ikubinfo.konferenca.service.VleresimeService;
+import com.ikubinfo.konferenca.utils.UtilMessages;
 
 @ManagedBean(name = "shqyrtuesBean")
 @ViewScoped
@@ -135,31 +136,68 @@ public class ShqyrtuesBean implements Serializable{
 	
 	public void addShqyrtues() {
 		log.info("Starting the process to add new Shqyrtues");
-		shqyrtuesService.addShqyrtues(shqyrtuesIRi); 
-		fillListaShqyrtues();
+		
+		if (!(shqyrtuesService.shqyrtuesCheck(shqyrtuesIRi.getIdEmail()))) {
+			if (shqyrtuesService.addShqyrtues(shqyrtuesIRi)) {
+				UtilMessages.addMessageSuccess(null, 
+						UtilMessages.bundle.getString("SHQYRTUES_ADD_SUCCESS"));
+				fillListaShqyrtues();
+			}else {
+				UtilMessages.addMessageError(null, 
+						UtilMessages.bundle.getString("SHQYRTUES_ADD_FAIL"));
+			}
+		} else {
+			UtilMessages.addMessageError(null, 
+					UtilMessages.bundle.getString("SHQYRTUES_EXISTS"));
+		}
 	}
+	
 	
 	
 	public void deleteShqyrtues() {
 		log.info("Starting the process to delete Shqyrtues list "+ selectedShqyrtuesa.toString() );
-		shqyrtuesService.deleteShqyrtues(selectedShqyrtuesa); 
-		fillListaShqyrtues();
+		
+		if (shqyrtuesService.deleteShqyrtues(selectedShqyrtuesa)) {
+			UtilMessages.addMessageSuccess(null, 
+					UtilMessages.bundle.getString("SHQYRTUES_DELETE_SUCCESS"));
+			fillListaShqyrtues();
+		} else {
+			UtilMessages.addMessageError(null, 
+					UtilMessages.bundle.getString("SHQYRTUES_DELETE_FAIL"));
+		}
 	}
+	
+	
 	
     public void onRowEdit(RowEditEvent<ShqyrtuesDto> event) {
 		log.info("Row edit called: " + event.getObject().getEmri());
-		shqyrtuesService.updateShqyrtues(event.getObject()); 
+		if (shqyrtuesService.updateShqyrtues(event.getObject())) {
+			UtilMessages.addMessageSuccess(null, 
+					UtilMessages.bundle.getString("SHQYRTUES_UPDATE_SUCCESS"));
+		} else {
+			UtilMessages.addMessageError(null, 
+					UtilMessages.bundle.getString("SHQYRTUES_UPDATE_FAIL"));
+		}
     }
      
+    
+    
     public void onRowCancel(RowEditEvent<ShqyrtuesDto> event) {
     	log.info("Canceled the editing");
+    	UtilMessages.addCustomMessage(null, 
+    			UtilMessages.bundle.getString("INFO_CANCEL"));
     }
+    
+    
+    
+    /* Shqyrtues Panel methods*/
     
 	public void setFinishRegisterAsNewShqyrtues() {
 		shqyrtuesIRi.setEmri(loggedUserBean.getTemporaryLoggedUser().getEmri());
 		shqyrtuesIRi.setMbiemri(loggedUserBean.getTemporaryLoggedUser().getMbiemri());
 		shqyrtuesIRi.setIdEmail(loggedUserBean.getTemporaryLoggedUser().getEmail());
 	}
+	
 	
 	public String finishShqyrtuesRegistration() {
 		setFinishRegisterAsNewShqyrtues();
@@ -171,13 +209,14 @@ public class ShqyrtuesBean implements Serializable{
 		return "/shqyrtues_res/faqja1.xhtml?faces-redirect=true";
 	}
 	
+	
 	public String setVleresimToEdit(ShqyrtuesArtikullDto shaDto) {
 		shqyrtuesHolderBean.setVleresimEdit(shaDto);
 		return "/shqyrtues_res/modifikoVleresimin.xhtml?faces-redirect=true";
 	}
 	
+	
 	public String setArtikullPerTeVleresuar(ArtikullDto aDto ) {
-		
 		shqyrtuesHolderBean.setArtikullPerVleresim(aDto);
 		shqyrtuesHolderBean.fillAutoretPerArtikull();
 		return "/shqyrtues_res/shtoVleresim.xhtml?faces-redirect=true";
@@ -186,21 +225,45 @@ public class ShqyrtuesBean implements Serializable{
 	public void ruajVleresimIRi() {
 		shqyrtuesHolderBean.getVleresimIRi().setArid(shqyrtuesHolderBean.getArtikullPerVleresim().getArtikullId());
 		shqyrtuesHolderBean.getVleresimIRi().setShqrtid(loggedUserBean.getLoggedUser().getEmail());
-		vleresimeService.addVleresim(shqyrtuesHolderBean.getVleresimIRi());
+		
+		if(vleresimeService.vleresimCheck(shqyrtuesHolderBean.getVleresimIRi().getShqrtid()
+				, shqyrtuesHolderBean.getVleresimIRi().getArid())) {
+			UtilMessages.addMessageError(null, 
+					UtilMessages.bundle.getString("ARTIKULL_ALREADY_REVIEWED"));
+		}else {
+			if (vleresimeService.addVleresim(shqyrtuesHolderBean.getVleresimIRi())) {
+				UtilMessages.addMessageSuccess(null, 
+						UtilMessages.bundle.getString("VLERESIM_ADD_SUCCESS"));
+			} else {
+				UtilMessages.addMessageError(null, 
+						UtilMessages.bundle.getString("VLERESIM_ADD_FAIL"));
+			}
+		}
 		shqyrtuesHolderBean.setVleresimIRi(new ShqyrtuesArtikullDto());
 	}
 	
 	
 	public void modifikoVleresimin() {
-		vleresimeService.updateVleresim(shqyrtuesHolderBean.getVleresimEdit());	
-		shqyrtuesHolderBean.fillListaVleresimetEMia();
+		if (vleresimeService.updateVleresim(shqyrtuesHolderBean.getVleresimEdit())) {
+			UtilMessages.addMessageSuccess(null, 
+					UtilMessages.bundle.getString("VLERESIM_UPDATE_SUCCESS"));
+			shqyrtuesHolderBean.fillListaVleresimetEMia();
+		}else {
+			UtilMessages.addMessageError(null, 
+					UtilMessages.bundle.getString("VLERESIM_UPDATE_FAIL"));
+		}
 	}
 	
+	
 	public void fshiVleresimin(ShqyrtuesArtikullDto shaDTO) {
-		List<ShqyrtuesArtikullDto> selectedVleresim = new ArrayList<ShqyrtuesArtikullDto>();
-		selectedVleresim.add(shaDTO);
-		vleresimeService.deleteVleresim(selectedVleresim);	
-		shqyrtuesHolderBean.fillListaVleresimetEMia();
+		if(vleresimeService.deleteSingleVleresim(shaDTO)) {
+			UtilMessages.addMessageSuccess(null, 
+					UtilMessages.bundle.getString("VLERESIM_DELETE_SUCCESS"));
+			shqyrtuesHolderBean.fillListaVleresimetEMia();
+		}else {
+			UtilMessages.addMessageError(null, 
+					UtilMessages.bundle.getString("VLERESIM_DELETE_FAIL"));
+		}
 	}
 	
 	
@@ -208,20 +271,19 @@ public class ShqyrtuesBean implements Serializable{
 		this.docName = docView;
 	}
 	
+	
 	public String shqyrtuesPanelArtikuj() {
 		shqyrtuesHolderBean.setListaVleresimetEMia(null);
 		shqyrtuesHolderBean.setArtikujPotencialePerVlersim(null);
-		
 		return shqyrtuesHolderBean.shqyrtuesArtikujListaOpen();
 	}
+	
 	
 	public String shqyrtuesPanelVleresimetEMia() {
 		shqyrtuesHolderBean.setListaVleresimetEMia(null);
 		shqyrtuesHolderBean.setArtikujPotencialePerVlersim(null);
-		
 		return shqyrtuesHolderBean.shqyrtuesVleresimetEMia();
 	}
 	
 
-    
 }

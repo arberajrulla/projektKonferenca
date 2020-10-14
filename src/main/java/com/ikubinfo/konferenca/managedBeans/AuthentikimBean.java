@@ -19,20 +19,19 @@ import com.ikubinfo.konferenca.service.AutorService;
 import com.ikubinfo.konferenca.service.ShqyrtuesService;
 import com.ikubinfo.konferenca.service.UserService;
 import com.ikubinfo.konferenca.utils.HashSaltedPassword;
+import com.ikubinfo.konferenca.utils.UtilMessages;
 
 @ManagedBean(name = "authentikimBean")
 @RequestScoped
 public class AuthentikimBean {
+	
+	private static Logger log = Logger.getLogger(AuthentikimBean.class);
 
 	@ManagedProperty(value = "#{userService}")
 	UserService uService;
 
-
 	@ManagedProperty(value = "#{loggedUserBean}")
 	LoggedUserBean loggedUserBean;
-	
-	@ManagedProperty(value = "#{shqyrtuesBean}")
-	ShqyrtuesBean shqyrtuesBean;
 	
 	@ManagedProperty(value = "#{autorService}")
 	AutorService autorService;
@@ -40,41 +39,20 @@ public class AuthentikimBean {
 	@ManagedProperty(value = "#{shqyrtuesService}")
 	ShqyrtuesService shqyrtuesService;
 
-	@ManagedProperty(value = "#{autorBean}")
-	AutorBean autorBean;
-
-
-	private static Logger log = Logger.getLogger(AuthentikimBean.class);
-	
-	@NotEmpty(message = "Username nuk mund te jete bosh!")
-	@Size(min=6, max=20, message = "Username duhet te kete nga 6 deri 20 karaktere!")
-	@Pattern(regexp = "^[a-zA-Z0-9]*$", message = "Username duhet te permbaje vetem shkronja dhe numra!")
-	private String username;
-	
-	@NotEmpty(message = "Fjalekalimi nuk mund te jete bosh!")
-	@Size(min=6, max=20, message = "Fjalekalimi duhet te kete nga 6 deri 20 karaktere!")
-	private String password;
-	
-	
+	private UserDto loggingUser = new UserDto();
 	private boolean credentialsKey = false;
 	
+	public UserDto getLoggingUser() {
+		return loggingUser;
+	}
+	public void setLoggingUser(UserDto loggingUser) {
+		this.loggingUser = loggingUser;
+	}
 	public boolean isCredentialsKey() {
 		return credentialsKey;
 	}
 	public void setCredentialsKey(boolean credentialsKey) {
 		this.credentialsKey = credentialsKey;
-	}
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String email) {
-		this.username = email;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
 	}	
 	public UserService getuService() {
 		return uService;
@@ -88,23 +66,11 @@ public class AuthentikimBean {
 	public void setLoggedUserBean(LoggedUserBean loggedUserBean) {
 		this.loggedUserBean = loggedUserBean;
 	}
-	public ShqyrtuesBean getShqyrtuesBean() {
-		return shqyrtuesBean;
-	}
-	public void setShqyrtuesBean(ShqyrtuesBean shqyrtuesBean) {
-		this.shqyrtuesBean = shqyrtuesBean;
-	}
 	public AutorService getAutorService() {
 		return autorService;
 	}
 	public void setAutorService(AutorService autorService) {
 		this.autorService = autorService;
-	}
-	public AutorBean getAutorBean() {
-		return autorBean;
-	}
-	public void setAutorBean(AutorBean autorBean) {
-		this.autorBean = autorBean;
 	}
 	public ShqyrtuesService getShqyrtuesService() {
 		return shqyrtuesService;
@@ -114,14 +80,13 @@ public class AuthentikimBean {
 	}
 	
 	
-	
 	public String authentikim() {
 		UserDto userDto;
-		userDto = uService.getUserForLoggin(username);
+		userDto = uService.getUserForLoggin(loggingUser.getUsername());
 		if(userDto!=null) {
 			HashSaltedPassword hashCheck = new HashSaltedPassword();
 			
-				if(userDto.getPassword().equals(hashCheck.hashGenerate(password, userDto.getSalt()))) {
+				if(userDto.getPassword().equals(hashCheck.hashGenerate(loggingUser.getPassword(), userDto.getSalt()))) {
 					
 					credentialsKey = false;
 					log.info("Login successful");
@@ -131,6 +96,10 @@ public class AuthentikimBean {
 						return ("admin/faqja1.xhtml?faces-redirect=true");
 					case "autor":
 						AutorDto autorDto = autorService.getAutor(userDto.getEmail());
+						if(autorDto==null && userDto.getRegisterStatus()==1) {
+							throw new RuntimeException(UtilMessages.bundle.getString("EXCEPTION_USER_EXISTS_WITHOUT_CATEGORY"));
+						}
+						
 						if (userDto.getRegisterStatus()==0) {
 							loggedUserBean.setTemporaryLoggedUser(userDto);
 							return ("autor_res/perfundimRegjistrimi.xhtml?faces-redirect=true");
@@ -139,8 +108,14 @@ public class AuthentikimBean {
 							loggedUserBean.setLoggedAutor(autorDto);
 							return ("autor_res/faqja1.xhtml?faces-redirect=true");
 						}
+						
+						
 					case "shqyrtues":
 						ShqyrtuesDto shqyrtuesDto = shqyrtuesService.getShqyrtues(userDto.getEmail());
+						if(shqyrtuesDto==null && userDto.getRegisterStatus()==1) {
+							throw new RuntimeException(UtilMessages.bundle.getString("EXCEPTION_USER_EXISTS_WITHOUT_CATEGORY"));
+						}
+						
 						if (userDto.getRegisterStatus()==0) {
 							loggedUserBean.setTemporaryLoggedUser(userDto);
 							return ("shqyrtues_res/perfundimRegjistrimi.xhtml?faces-redirect=true");

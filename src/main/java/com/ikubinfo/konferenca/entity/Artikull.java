@@ -45,11 +45,11 @@ public class Artikull {
 	@Column(name = "doc_picture")	
 	private String docPicture;
 	
-	@OneToMany(mappedBy = "artikuj", cascade=CascadeType.REMOVE)
+	@OneToMany(mappedBy = "artikuj", cascade= {CascadeType.REMOVE, CascadeType.DETACH})
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Autor> autoret = new ArrayList<Autor>();
 	
-	@OneToMany(mappedBy = "artikullVleresim", fetch = FetchType.EAGER, cascade= CascadeType.REMOVE)
+	@OneToMany(mappedBy = "artikullVleresim", fetch = FetchType.EAGER, cascade= {CascadeType.REMOVE, CascadeType.DETACH})
 	private List<ShqyrtuesArtikull> shqyrtuesArtikull = new ArrayList<ShqyrtuesArtikull>();
 	
 

@@ -6,8 +6,9 @@ import com.ikubinfo.konferenca.dto.ShqyrtuesArtikullDto;
 public interface VleresimeService {
 	List<ShqyrtuesArtikullDto> getShqyrtuesArtikullList();
 	List<ShqyrtuesArtikullDto> getShqyrtuesArtikullListForShqyrtues();
-	void addVleresim(ShqyrtuesArtikullDto newVleresim);
-	void deleteVleresim(List<ShqyrtuesArtikullDto> selectedVleresime);
-	void updateVleresim(ShqyrtuesArtikullDto vleresim);
+	boolean addVleresim(ShqyrtuesArtikullDto newVleresim);
+	boolean deleteSingleVleresim(ShqyrtuesArtikullDto vleresimToDelete);
+	boolean deleteVleresim(List<ShqyrtuesArtikullDto> selectedVleresime);
+	boolean updateVleresim(ShqyrtuesArtikullDto vleresim);
 	boolean vleresimCheck(String shqrtid, int arid);
 }

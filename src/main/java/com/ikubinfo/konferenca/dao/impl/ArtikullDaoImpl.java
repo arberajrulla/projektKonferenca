@@ -13,7 +13,6 @@ import com.ikubinfo.konferenca.entity.Autor;
 import com.ikubinfo.konferenca.entity.User;
 
 @Repository(value = "ArtikullDao")
-//@Scope("singleton")
 public class ArtikullDaoImpl implements ArtikullDao {
 	
 	private static Logger log = Logger.getLogger(ArtikullDaoImpl.class);

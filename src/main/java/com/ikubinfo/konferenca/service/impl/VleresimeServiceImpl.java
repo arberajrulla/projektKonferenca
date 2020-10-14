@@ -26,68 +26,91 @@ public class VleresimeServiceImpl implements VleresimeService{
 	@Autowired
 	VleresimeConverter vleresimeConverter;
 	
-	@Transactional
+	
+	@Override
 	public List<ShqyrtuesArtikullDto> getShqyrtuesArtikullList() {
 		List<ShqyrtuesArtikullDto> listaVleresimeDto = new ArrayList<ShqyrtuesArtikullDto>();
-		try {		
-			
+		try {
 			for(ShqyrtuesArtikull shqyrtuesArtikull : shqyrtuesArtikullDao.getAllShqyrtuesArtikull()) {
-				listaVleresimeDto.add(vleresimeConverter.toShqyrtuesArtikullDto(shqyrtuesArtikull));
-			}
+				listaVleresimeDto.add(vleresimeConverter.toShqyrtuesArtikullDto(shqyrtuesArtikull));}
 			return listaVleresimeDto;
 		} catch (Exception e) {
 			log.error("Something went wrong! Couldn't convert ShqyrtuesArtikull list to DTO", e);
-			UtilMessages.addMessageError( null, "Problem ne marrjen e listes se vleresimeve!");
-			return new ArrayList<ShqyrtuesArtikullDto>();
 		}
+		return listaVleresimeDto;
 	}
 
+	
 	@Transactional
-	public void addVleresim(ShqyrtuesArtikullDto newVleresim) {
-		if (vleresimCheck(newVleresim.getShqrtid(), newVleresim.getArid())) {
-			UtilMessages.addMessageError(null, "Error, Shqyrtuesi e ka vleresuar njehere kete artikull!");
-		}else {
+	public boolean addVleresim(ShqyrtuesArtikullDto newVleresim) {
 			try {
 				shqyrtuesArtikullDao.addShqyrtuesArtikull(vleresimeConverter.toNewShqyrtuesArtikull(newVleresim));
 				log.info("New Vleresim for " + newVleresim.getArtikull() + " added successfully!");
-				UtilMessages.addMessageSuccess("Sukses!", "Vleresimi per " + newVleresim.getArtikull() + " u shtua me sukses!");
+				return true;
 			} catch (Exception e) {
 				log.error("Vleresim Service couldn't add new Vleresim!", e);
-				UtilMessages.addMessageError(null, "Error, vleresimi nuk u shtua");
 			}
+			return false;
+	}
+	
+	
+	@Transactional
+	public boolean deleteSingleVleresim(ShqyrtuesArtikullDto vleresimToDelete) {
+		try {
+			shqyrtuesArtikullDao.deleteShqyrtuesArtikull(vleresimToDelete.getVleresimId());
+			return true;
+		} catch (Exception e) {
+			log.error("Couldn't delete, error occurred!", e);
 		}
+		return false;
 	}
 
+	
 	@Transactional
-	public void deleteVleresim(List<ShqyrtuesArtikullDto> selectedVleresime) {
+	public boolean deleteVleresim(List<ShqyrtuesArtikullDto> selectedVleresime) {
 		try {
 			for(ShqyrtuesArtikullDto shqyrtuesArtikullDto : selectedVleresime) {
 				shqyrtuesArtikullDao.deleteShqyrtuesArtikull(shqyrtuesArtikullDto.getVleresimId());
 			}
-			UtilMessages.addMessageSuccess("Sukses!", "Fshirja u krye me sukses!");
+			return true;
 		} catch (Exception e) {
 			log.error("Couldn't delete, error occurred!", e);
-			UtilMessages.addMessageError(null, "Error, fshirja nuk u krye!");
 		}
+		return false;
 	}
 
+	
 	@Transactional
-	public void updateVleresim(ShqyrtuesArtikullDto vleresim) {
+	public boolean updateVleresim(ShqyrtuesArtikullDto vleresim) {
 			try {
 				shqyrtuesArtikullDao.updateShqyrtuesArtikull(vleresimeConverter.toShqyrtuesArtikull(vleresim)); 
 				log.info("Service updated Vleresim successfully!");
-				UtilMessages.addMessageSuccess("Sukses!", "Vleresimi nga shqyrtuesi " + vleresim.getEmriFull() + " u modifikua me sukses!");
+				return true;
 			} catch (Exception e) {
 				log.error("Service couldn't update the Vleresim!");
-				UtilMessages.addMessageError(null, "Error, modifikimi nuk u krye!");
 			}
-		
+			return false;
 	}
+	
 
+	@Override
+	public List<ShqyrtuesArtikullDto> getShqyrtuesArtikullListForShqyrtues() {
+		List<ShqyrtuesArtikullDto> listaVleresimeDto = new ArrayList<ShqyrtuesArtikullDto>();
+		try {
+			for(ShqyrtuesArtikull shqyrtuesArtikull : shqyrtuesArtikullDao.getAllShqyrtuesArtikull()) {
+				listaVleresimeDto.add(vleresimeConverter.toShqyrtuesArtikullDtoForShqyrtuesConverter(shqyrtuesArtikull));
+			}
+			return listaVleresimeDto;
+		} catch (Exception e) {
+			log.error("Something went wrong! Couldn't convert ShqyrtuesArtikull list to DTO", e);
+		}
+		return listaVleresimeDto;
+	}
+	
+	
 	@Override
 	public boolean vleresimCheck(String shqrtid, int arid) {
 		try {
-			
 			if(shqyrtuesArtikullDao.checkShqyrtuesArtikullIfExists(shqrtid, arid)) {
 				log.error("Vleresim with this combination exists!");
 				return true;
@@ -97,26 +120,8 @@ public class VleresimeServiceImpl implements VleresimeService{
 			}
 		} catch (Exception e) {
 			log.error("Error, Service couldn't get Vleresim!", e);
-			UtilMessages.addMessageError(null, "Error, gjate kontrollit, ju lutemi provoni perseri!");
-			return true;
 		}
+		return true;
 	}
-	
-	@Transactional
-	public List<ShqyrtuesArtikullDto> getShqyrtuesArtikullListForShqyrtues() {
-		List<ShqyrtuesArtikullDto> listaVleresimeDto = new ArrayList<ShqyrtuesArtikullDto>();
-		try {		
-			
-			for(ShqyrtuesArtikull shqyrtuesArtikull : shqyrtuesArtikullDao.getAllShqyrtuesArtikull()) {
-				listaVleresimeDto.add(vleresimeConverter.toShqyrtuesArtikullDtoForShqyrtuesConverter(shqyrtuesArtikull));
-			}
-			return listaVleresimeDto;
-		} catch (Exception e) {
-			log.error("Something went wrong! Couldn't convert ShqyrtuesArtikull list to DTO", e);
-			return new ArrayList<ShqyrtuesArtikullDto>();
-		}
-	}
-	
-	
 
 }

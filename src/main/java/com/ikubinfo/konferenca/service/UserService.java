@@ -7,11 +7,12 @@ import com.ikubinfo.konferenca.dto.UserDto;
 
 public interface UserService {
 	UserDto getUserForLoggin(String username);
-	ArrayList<UserDto> getAllUsers(); 
-	void addUser(UserDto userDto);
-	void updateUser(UserDto userDto);
-	void deleteUser(List<UserDto> userListToDelete);
+	List<UserDto> getAllUsers(); 
+	boolean addUser(UserDto userDto);
+	boolean updateUser(UserDto userDto);
+	boolean deleteSingleUser(String username);
+	boolean deleteUser(List<UserDto> userListToDelete);
 	boolean userCheck(String email, String username);
 	UserDto getSingleUser(String email);
-	void recoverUserPassword(UserDto userDto);
+	boolean recoverUserPassword(UserDto userDto);
 }

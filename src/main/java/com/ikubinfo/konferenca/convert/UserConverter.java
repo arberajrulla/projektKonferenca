@@ -72,8 +72,8 @@ public class UserConverter {
 		User user = new User();
 		HashSaltedPassword encrypt = new HashSaltedPassword();
 		byte[] salt = encrypt.createSalt();
-		uDto.setPassword(encrypt.hashGenerate(uDto.getPassword(), salt));
-		uDto.setSalt(salt);
+		user.setPassword(encrypt.hashGenerate(uDto.getPassword(), salt));
+		user.setSalt(salt);
 		return user;
 	}
 	

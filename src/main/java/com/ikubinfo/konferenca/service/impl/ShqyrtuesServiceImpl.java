@@ -24,73 +24,76 @@ public class ShqyrtuesServiceImpl implements ShqyrtuesService{
 	@Autowired
 	ShqyrtuesConverter shqyrtuesConverter;
 	
-	@Transactional
+	@Override
 	public List<ShqyrtuesDto> getAllShqyrtuesList() {
 		List<ShqyrtuesDto> listaShqyrtues = new ArrayList<ShqyrtuesDto>();
 		try {
 			for(Shqyrtues shqyrtues : shqyrtuesDao.getAllShqyrtues()) {
-				listaShqyrtues.add(shqyrtuesConverter.toShqyrtuesDto(shqyrtues));
-			}
+				listaShqyrtues.add(shqyrtuesConverter.toShqyrtuesDto(shqyrtues));}
 			return listaShqyrtues;
 		} catch (Exception e) {
 			log.error("Error, Service got an empty Shqyrtues list", e);
-			UtilMessages.addMessageError( null, "Problem ne marrjen e listes se shqyrtuesve!");
-			return new ArrayList<ShqyrtuesDto>();
 		}
+		return listaShqyrtues;
 	}
 
 	@Transactional
-	public void addShqyrtues(ShqyrtuesDto shqyrtuesDto) {
-		if (shqyrtuesCheck(shqyrtuesDto.getIdEmail())) {
-			UtilMessages.addMessageError(null, "Error, Shqyrtuesi me kete E-mail ekziston!");
-		}else {
-			try {
-				shqyrtuesDao.addShqyrtues(shqyrtuesConverter.toShqyrtues(shqyrtuesDto)); 
-				log.info("New Shqyrtues " + shqyrtuesDto.getEmri() + " " + shqyrtuesDto.getMbiemri() + " added successfully!");
-				UtilMessages.addMessageSuccess("Sukses!", "Shqyrtuesi " + shqyrtuesDto.getEmri() + " u shtua me sukses!");
-			} catch (Exception e) {
-				log.error("Shqyrtues Service couldn't add new Shqyrtues!", e);
-				UtilMessages.addMessageError(null, "Error, shqyrtuesi nuk u shtua");
-			}
+	public boolean addShqyrtues(ShqyrtuesDto shqyrtuesDto) {
+		try {
+			shqyrtuesDao.addShqyrtues(shqyrtuesConverter.toShqyrtues(shqyrtuesDto)); 
+			log.info("New Shqyrtues " + shqyrtuesDto.getEmri() + " " + shqyrtuesDto.getMbiemri() + " added successfully!");
+			return true;
+		} catch (Exception e) {
+			log.error("Shqyrtues Service couldn't add new Shqyrtues!", e);
 		}
+		return false;
 	}
 
 	@Transactional
-	public void updateShqyrtues(ShqyrtuesDto shqyrtuesDto) {		
+	public boolean updateShqyrtues(ShqyrtuesDto shqyrtuesDto) {		
 			try {
 				shqyrtuesDao.updateShqyrtues(shqyrtuesConverter.toShqyrtuesUpdate(shqyrtuesDto)); 
 				log.info("Service updated shqyrtues successfully!");
-				UtilMessages.addMessageSuccess("Sukses!", "Shqyrtuesi " + shqyrtuesDto.getEmri() + " u modifikua me sukses!");
+				return true;
 			} catch (Exception e) {
 				log.error("Service couldn't update the shqyrtues!", e);
-				UtilMessages.addMessageError(null, "Error, modifikimi nuk u krye!");
 			}
+			return false;
 	}
 	
 	@Transactional
-	public void updateLoggedShqyrtues(ShqyrtuesDto shqyrtuesDto) {		
+	public boolean updateLoggedShqyrtues(ShqyrtuesDto shqyrtuesDto) {		
 			try {
 				shqyrtuesDao.updateShqyrtues(shqyrtuesConverter.toLoggedShqyrtuesUpdate(shqyrtuesDto)); 
 				log.info("Service updated logged shqyrtues successfully!");
-				UtilMessages.addMessageSuccess("Sukses!", "Profili u modifikua me sukses!");
+				return true;
 			} catch (Exception e) {
 				log.error("Service couldn't update the logged shqyrtues!", e);
-				UtilMessages.addMessageError(null, "Error, modifikimi nuk u krye!");
 			}
+			return false;
 	}	
 	
-	
+	@Transactional
+	public boolean deleteSingleShqyrtues(ShqyrtuesDto shqyrtuesToDelete) {
+		try {
+			shqyrtuesDao.deleteShqyrtues(shqyrtuesToDelete.getIdEmail());
+			return true;
+		} catch (Exception e) {
+			log.error("Deletion error occurred!", e);
+		}
+		return false;
+	}
 
 	@Transactional
-	public void deleteShqyrtues(List<ShqyrtuesDto> shqyrtuesListToDelete) {
+	public boolean deleteShqyrtues(List<ShqyrtuesDto> shqyrtuesListToDelete) {
 		try {
 			for(ShqyrtuesDto shqyrtuesDto : shqyrtuesListToDelete) {
 				shqyrtuesDao.deleteShqyrtues(shqyrtuesDto.getIdEmail());}
-			UtilMessages.addMessageSuccess("Sukses!", "Fshirja u krye me sukses!");
+			return true;
 		} catch (Exception e) {
 			log.error("Breaking from deletion loop, error occurred!", e);
-			UtilMessages.addMessageError(null, "Error, fshirja nuk u krye!");
 		}
+		return false;
 	}
 
 	@Override
@@ -105,21 +108,19 @@ public class ShqyrtuesServiceImpl implements ShqyrtuesService{
 			}
 		} catch (Exception e) {
 			log.error("Error, Service couldn't get Shqyrtues!", e);
-			UtilMessages.addMessageError(null, "Error, gjate kontrollit, ju lutemi provoni perseri!");
 			return true;
 		}
 	}
 
 	@Override
 	public ShqyrtuesDto getShqyrtues(String email) {
+		ShqyrtuesDto shqyrtuesDto = new ShqyrtuesDto();
 		try {
-			ShqyrtuesDto shqyrtuesDto;
 			shqyrtuesDto = shqyrtuesConverter.toShqyrtuesDtoForAutor(shqyrtuesDao.getShqyrtues(email));
-			return shqyrtuesDto;
 		} catch (Exception e) {
 			log.error("Error, Service couldn't get Shqyrtues!", e);
-			UtilMessages.addMessageError(null, "Error, gjate marrjes se shqyrtuesit, ju lutemi provoni perseri!");
-			return null;
 		}
+		return shqyrtuesDto;
 	}
+
 }
