@@ -72,7 +72,7 @@
 		<servlet-api.version>2.5</servlet-api.version>
 
 		<!-- el-ri Version -->
-		<el-ri.version>1.0</el-ri.version>
+		<el-ri.version>3.0.4</el-ri.version>
 
 		<!-- javaee-web-api Version -->
 		<javaee-web-api.version>7.0</javaee-web-api.version>
